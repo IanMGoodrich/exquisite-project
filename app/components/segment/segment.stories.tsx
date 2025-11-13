@@ -48,9 +48,7 @@ export const Expandable: Story = {
   },
   decorators: [
     (Story) => (
-      // <div style={{width: '300px', height: 'auto'}}>
       <Story />
-      // </div>
     ),
   ],
 };
