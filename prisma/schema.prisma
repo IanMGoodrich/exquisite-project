@@ -1,3 +1,6 @@
+// THIS IS A COPY OF THE PRISMA SCHEMA BEFORE IMPLEMENTATION OF BETTER-AUTH
+// SAVING FOR REFERENCE PURPOSES ONLY
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -12,4 +15,53 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Story {
+  id           String    @id @default(uuid())
+  title        String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  completed    Boolean   @default(false)
+  completedAt  DateTime?
+  contributors User[]
+  content      Segment[]
+}
+
+model Segment {
+  id        String        @id @default(uuid())
+  author    User          @relation("SegmentAuthor", fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  story     Story         @relation(fields: [storyId], references: [id])
+  storyId   String
+  content   String
+  likedBy   SegmentLike[]
+
+  @@index([authorId])
+  @@index([storyId])
+}
+
+model SegmentLike {
+  id        String   @id @default(uuid())
+  segment   Segment  @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+  segmentId String
+  user      User     @relation("SegmentLikes", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@unique([segmentId, userId])
+  @@index([userId])
+}
+
+model User {
+  id               String        @id @default(uuid())
+  name             String
+  email            String        @unique
+  phone            Int
+  authoredSegments Segment[]     @relation("SegmentAuthor")
+  likedSegments    SegmentLike[] @relation("SegmentLikes")
+  stories          Story[]
+  loggedOn         Boolean       @default(false)
 }
