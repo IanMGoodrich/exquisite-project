@@ -10,9 +10,16 @@ import {
 const meta: Meta<typeof Input> = {
   component: Input,
   tags: ["autodocs"],
+  argTypes: {
+    type: {
+      control: { type: "select" },
+      options: ["text", "password", "email", "number", "tel", "url"],
+      defaultValue: { summary: "'text'" },
+    },
+  },
   parameters: {
     controls: {
-      include: [  "label", "id", "type", "placeholder"],
+      include: ["type", "label", "id", "placeholder"],
     },
     docs: {
       page: () => (
@@ -26,11 +33,11 @@ const meta: Meta<typeof Input> = {
     },
   },
   args: {
+    type: "text",
     label: "Your name",
     id: "name",
-    type: "text",
     placeholder: "Enter your name",
-  },  
+  },
 };
 
 export default meta;
@@ -38,12 +45,5 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
-  decorators: [
-    (Story) => (
-      // <div style={{width: '300px', height: 'auto'}}>
-      <Story />
-      // </div>
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 };
-

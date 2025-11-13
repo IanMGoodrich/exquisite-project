@@ -9,7 +9,7 @@ type InputProps = {
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, id, ...props }, ref) => {
     return (
-      <p>
+      <p className={`input-wrapper input--${props.type || 'text'}`}>
         <label htmlFor={id}>{label}</label>
         <input id={id} name={id} ref={ref} {...props} />
       </p>
