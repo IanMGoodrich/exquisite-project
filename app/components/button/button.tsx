@@ -14,11 +14,11 @@ type LinkProps = {
 const Button: FC<ButtonProps | LinkProps> = ({...props}) => {
   if (props.el === "link") {
     return (
-      <a className="button" {...props} />
+      <a className="button as-link" {...props} />
     );
   }
   return (
-    <button className="button" {...props} />
+    <button className="button as-button" {...props} />
   );
 }
 
