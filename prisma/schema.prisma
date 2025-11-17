@@ -58,8 +58,10 @@ model SegmentLike {
 model User {
   id               String        @id @default(uuid())
   name             String
+  nameFirst        String?
+  nameLast         String?
   email            String        @unique
-  phone            Int
+  phone            Int?
   authoredSegments Segment[]     @relation("SegmentAuthor")
   likedSegments    SegmentLike[] @relation("SegmentLikes")
   stories          Story[]
@@ -71,6 +73,10 @@ model User {
   sessions         Session[]
   accounts         Account[]
 
+  userName        String?
+  displayUsername String?
+
+  @@unique([userName])
   @@map("user")
 }
 
