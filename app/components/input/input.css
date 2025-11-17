@@ -8,7 +8,7 @@
     font-weight: 600;
   }
 
-  &.input--text,  &.input--password,
+  &.input--text, &.input--password, &.input--tel,
   &.input--email  {
     input {
       padding: 8px 12px;
