@@ -6,7 +6,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Alice Goasker",
     email: "alice@prisma.io",
-    phone: 503-555-1234,
+    phone: "503-555-1234",
     nameFirst: "Alice",
     nameLast: "Goasker",
     userName: "WonderLander",
@@ -14,7 +14,7 @@ const userData: Prisma.UserCreateInput[] = [
   {
     name: "Bob Burger",
     email: "bob@prisma.io",
-    phone: 541-555-5678,
+    phone: "541-555-5678",
     nameFirst: "Bob",
     nameLast: "Burger",
     userName: "SpecialOTheDay",
