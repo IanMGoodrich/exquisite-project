@@ -1,4 +1,11 @@
+button {
+  all:unset;
+}
+a {
+  all:unset;
+}
 .button {
+  cursor: pointer;
 
   &.as-button {
     background-color: #0070f3;
@@ -26,4 +33,12 @@
       text-decoration: underline;
     }
   }
+
+  &.as-button:disabled,
+  &.as-link:disabled {
+      background-color: #cccccc;
+      color: #666666;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
 }
