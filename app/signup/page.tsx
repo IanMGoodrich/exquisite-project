@@ -66,7 +66,7 @@ export default function SignupPage() {
       }
 
       console.log("User signed up and profile updated");
-      router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       setError(`An unexpected error occurred`);
       console.error(error);
