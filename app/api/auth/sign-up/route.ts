@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         userName: userName ? userName : `${firstName}${lastName[0]}`,
         nameFirst: firstName,
         nameLast: lastName,
-        phone: phoneNumber ? parseInt(phoneNumber, 10) : null,
+        phone: phoneNumber,
       },
     });
 
