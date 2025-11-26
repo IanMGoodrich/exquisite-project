@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Input from "../components/input/input";
-import Button from "../components/button/button";
-import {signUp} from "../../lib/auth-client";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
+import {signUp} from "../../../lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function SignupPage() {

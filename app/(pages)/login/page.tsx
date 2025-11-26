@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import Input from "../components/input/input";
-import Button from "../components/button/button";
+import Input from "../../components/input/input";
+import Button from "../../components/button/button";
 import { useRouter } from "next/navigation";
-import { signIn } from "../../lib/auth-client";
+import { signIn } from "../../../lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -29,7 +29,12 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/");
+      if (result.data && result.data.user) {
+        const user = result.data.user;
+        console.log(result);
+        router.push(`/${user.id}`);
+      }
+      
     } catch (error) {
       setError(`An unexpected error occurred`);
       console.error(error);
