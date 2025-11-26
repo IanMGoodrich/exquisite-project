@@ -1,14 +1,16 @@
 "use client";
-
-import Button from "../button/button"
+import Link from 'next/link';
+import Button from "../button/button";
 import { getSession, signOut } from "../../../lib/auth-client";
 import { useEffect, useState, startTransition } from "react";
-import { usePathname } from "next/navigation";
-import { link } from "fs";
+import { usePathname, useRouter } from "next/navigation";
+import "./header.css";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     let mounted = true;
@@ -17,9 +19,17 @@ const Header = () => {
       try {
         const { data } = await getSession();
         if (!mounted) return;
-        startTransition(() => {
-          setIsLoggedIn(Boolean(data?.session && data?.user));
-        });
+
+        if (data?.session && data?.user) {          
+          startTransition(() => {
+            setIsLoggedIn(Boolean(data.session && data.user));
+            setUserId(data.user.id);
+          });
+        } else {
+          startTransition(() => {            
+            return setIsLoggedIn(false)
+          });
+        }
       } catch (error) {
         console.error("session check failed", error);
         if (!mounted) return;
@@ -32,7 +42,7 @@ const Header = () => {
     return () => {
       mounted = false;
     };
-  }, [pathname]);
+  }, [pathname, isLoggedIn]);
 
   const handleSignOut = async () => {
     await signOut({
@@ -40,6 +50,7 @@ const Header = () => {
         onSuccess: () => {
           startTransition(() => {
             setIsLoggedIn(false);
+            router.push("/")
           });
         },
       },
@@ -47,16 +58,40 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <p>isLoggedIn: {isLoggedIn ? "true" : "false"}</p>
-      <nav>
+    <header className="header">
+      <Link href={"/"}>
+        <p className="logo">EXCRP</p>
+      </Link>
+      <nav className="main-nav">
         <ul>
           <li>
-            <Button el="link" href="/">Home</Button>
+            <Button el="link" href="/">
+              Home
+            </Button>
           </li>
-          <li>
-            {!isLoggedIn && <Button el="link" href="/login">Login</Button>}
+          {!isLoggedIn && (
+            <>
+            <li>
+              <Button el="link" href="/login">
+                Login
+              </Button>
+            </li>
+            <li>
+              <Button el="link" href="/signup">
+                Signup
+              </Button>
+            </li>
+            </>
+            )
+            }
             {isLoggedIn && (
+              <>
+              <li>
+                <Button el="link" href={`/${userId}/profile`}>
+                  Profile
+                </Button>
+              </li>
+              <li>
               <Button
                 el="button"
                 as="link"
@@ -67,11 +102,9 @@ const Header = () => {
               >
                 Log Out
               </Button>
+              </li>
+              </>
             )}
-          </li>
-          <li>
-            <Button el="link" href="/signup">Signup</Button>
-          </li>
         </ul>
       </nav>
     </header>
