@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ userId: string; }> }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     const { userId } = await params;
@@ -31,3 +31,31 @@ export async function PUT(
     );
   }
 }
+
+// GET USER BY USERNAME AUTOCOMPLETE
+export async function GET(
+  request: NextRequest
+) {
+  // get the request url and get the
+  const { searchParams } = new URL(request.url);
+  const query = (searchParams.get("q") ?? "").trim();
+
+  if (!query) return NextResponse.json([]);
+
+  const users = await prisma.user.findMany({
+    where: {
+      userName: {
+        contains: query,
+        mode: "insensitive",
+      },
+    },
+    select: {
+      id: true,
+      userName: true,
+      name: true,
+    },
+    take: 10,
+  });
+  return NextResponse.json(users);
+}
+
