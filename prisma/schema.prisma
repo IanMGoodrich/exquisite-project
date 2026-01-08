@@ -18,14 +18,17 @@ datasource db {
 }
 
 model Story {
-  id           String    @id @default(uuid())
-  title        String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  completed    Boolean   @default(false)
-  completedAt  DateTime?
-  contributors User[]
-  content      Segment[]
+  id                String    @id @default(uuid())
+  title             String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  completed         Boolean   @default(false)
+  completedAt       DateTime?
+  contributors      User[]
+  content           Segment[]
+  nextContributorId String
+  rounds            Int       @default(3)
+  completedRounds   Int       @default(0)
 }
 
 model Segment {
@@ -38,6 +41,7 @@ model Segment {
   storyId   String
   content   String
   likedBy   SegmentLike[]
+  reveal    String?
 
   @@index([authorId])
   @@index([storyId])
@@ -73,8 +77,7 @@ model User {
   sessions         Session[]
   accounts         Account[]
 
-  userName        String?
-  displayUsername String?
+  userName String?
 
   @@unique([userName])
   @@map("user")
