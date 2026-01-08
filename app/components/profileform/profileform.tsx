@@ -37,7 +37,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
 
       if (props.variant === "update") {
         
-        const result = await fetch(`/api/users/${props.user.id}`, {
+        const result = await fetch(`/api/${props.user.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
