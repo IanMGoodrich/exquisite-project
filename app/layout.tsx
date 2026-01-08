@@ -1,16 +1,62 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import LocalFont from "next/font/local";
+import { Special_Elite } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import Header from "./components/header/header";
+import Container from "./components/container/container";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const specialEliteFont = Special_Elite({
   subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal"],
+  variable: "--ff-special-elite",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const bespokeFont = LocalFont({
+  src: [
+    { path: "../public/fonts/BespokeSerif-Variable.woff2", style: "normal" },
+    {
+      path: "../public/fonts/BespokeSerif-VariableItalic.woff2",
+      style: "italic",
+    },
+  ],
+  variable: "--ff-bespoke",
+  display: "swap",
+});
+
+const manropeFont = LocalFont({
+  src: [{ path: "../public/fonts/Manrope-Variable.woff2", style: "normal" }],
+  variable: "--ff-manrope",
+  display: "swap",
+});
+
+const melodramaFont = LocalFont({
+  src: [{ path: "../public/fonts/Melodrama-Variable.woff2", style: "normal" }],
+  variable: "--ff-melodrama",
+  display: "swap",
+});
+
+const satoshiFont = LocalFont({
+  src: [
+    { path: "../public/fonts/Satoshi-Variable.woff2", style: "normal" },
+    { path: "../public/fonts/Satoshi-VariableItalic.woff2", style: "italic" },
+  ],
+  variable: "--ff-satoshi",
+  display: "swap",
+});
+
+const tekoFont = LocalFont({
+  src: [{ path: "../public/fonts/Teko-Variable.woff2", style: "normal" }],
+  variable: "--ff-teko",
+  display: "swap",
+});
+
+const nippoFont = LocalFont({
+  src: [{ path: "../public/fonts/Nippo-Variable.woff2", style: "normal" }],
+  variable: "--ff-nippo",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,11 +70,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header />
-
-        {children}
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${specialEliteFont.variable} ${bespokeFont.variable} ${manropeFont.variable} ${melodramaFont.variable} ${satoshiFont.variable} ${tekoFont.variable} ${nippoFont.variable}`}
+    >
+      <body>
+        <ThemeProvider attribute="data-theme" defaultTheme="default" themes={["default", "typewriter", "floral", "sprawl", "monitor"]}>
+          <Header />
+          <Container classes="main-content" tag="main">
+            {children}
+          </Container>
+        </ThemeProvider>
       </body>
     </html>
   );
