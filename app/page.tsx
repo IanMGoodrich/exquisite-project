@@ -18,8 +18,8 @@ export default async function Home() {
   }
   
   return (
-    <div className="container page home">
-      <h1>Welcome to Crazy Uncle Ian's shockingly ugly</h1>
+    <div className="page home">
+      <h1>Welcome to Crazy Uncle Ian&apos;s shockingly ugly</h1>
       <h2>Exquisite Corpse game!!</h2>
       <div className="page form auth">
         <Button el="link" href="/login">
