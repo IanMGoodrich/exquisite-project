@@ -1,0 +1,396 @@
+:root {
+  /* Font Sizes: Clamped to 640px - 1440px */
+
+  /* 10px - 12px */
+  --fs-legal: clamp(0.625rem, 0.525rem + 0.25vw, 0.75rem);
+  /* 14px - 16px */
+  --fs-eyebrow: clamp(0.875rem, 0.775rem + 0.25vw, 1rem);
+  /* 16px - 20px */
+  --fs-body: clamp(1rem, 0.8rem + 0.5vw, 1.25rem);
+  /* 14px */
+  --fs-static-14: 14px;
+
+  /* 18px - 22px */
+  --fs-heading-6: clamp(1.125rem, 0.925rem + 0.5vw, 1.375rem);
+  /* 20px - 26px */
+  --fs-heading-5: clamp(1.25rem, 0.95rem + 0.75vw, 1.625rem);
+  /* 24px - 32px */
+  --fs-heading-4: clamp(1.5rem, 1.1rem + 1vw, 2rem);
+  /* 30px - 48px */
+  --fs-heading-3: clamp(1.875rem, 0.975rem + 2.25vw, 3rem);
+  /* 38px - 56px */
+  --fs-heading-2: clamp(2.375rem, 1.475rem + 2.25vw, 3.5rem);
+  /* 44px - 66px */
+  --fs-heading-1: clamp(2.75rem, 1.65rem + 2.75vw, 4.125rem);
+
+  /* General Colors */
+  --cl-charcoal-darkest: #141414;
+  --cl-charcoal-lighter: #5e5b5b;
+  --cl-lavender-lightest: #fbfaff;
+  --cl-chartreuse-lightest: #e5ffee;
+  --cl-lemon-lightest: #c2c2bc;
+  --cl-white: #ffff;
+  --cl-off-white-blue: #f2f2f3;
+  --cl-display-dull: #bab08d;
+  --cl-golden: #fecf49;
+  --cl-dark-mango: #FF9D00;
+  --cl-mango: #ffc056;
+  --cl-golden-light: #fee7a9;
+  --cl-coffee: #32170E;
+  --cl-orange-hot: #ca3d21;
+  --cl-red-vibrant: #ed0707;
+  --cl-red-light: #fde8e8;
+  --cl-hot-pink: #f05177;
+  --cl-powder-blue: #4287f5;
+  --cl-powder-blue-light: #cbfefb;
+  --cl-powder-blue-dark: #336ab8;
+  --cl-blue-vibrant: #1d28fc;
+  --cl-blue-lavender: #543dff;
+  --cl-green-dark: #017803;
+  --cl-monitor-green: #b6fa8c;
+  --cl-monitor-dark-green: #22c55e;
+  --cl-monitor-avocado: #5c692f;
+  --cl-monitor-black-green: #041202;
+  --cl-mint-pale: #cefee2;
+  --cl-text-default-dark: var(--cl-charcoal-darkest);
+  --cl-text-default-light: var(--cl-lavender-lightest);
+
+
+  --paper-texture-background: url("data:image/svg+xml,%3Csvg viewBox='0 0 305 305' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+  /* Fluid Spacing: Names in relation to min/max rem sizes by way of percentage. For example 100-350 means 1rem - 3.5rem*/
+  --spacing-100-175: clamp(1rem, 0.4rem + 1.5vw, 1.75rem);
+  --spacing-75-125: clamp(0.75rem, 0.35rem + 1vw, 1.25rem);
+  --spacing-50-100: clamp(0.5rem, 0.1rem + 1vw, 1rem);
+
+  /* Default Vars */
+  --default-background: var(--cl-white);
+  --default-ff: var(--ff-manrope);
+  --default-container-padding: clamp(1.25rem, 0.25rem + 2.5vw, 2.5rem);
+  --default-container-max-width: 1440px;
+  --default-background-image: none;
+  --default-pseudo-content: "";
+  --default-text-indent: 1.5rem;
+
+  /* Light Mode Theme Vars */
+  --pseudo-content: var( --theme-pseudo-content, var(--default-pseudo-content));
+  --text-indent: var(--theme-text-indent, var(--default-text-indent));
+  --ff-primary: var(--theme-font-primary, var(--default-ff));
+  --background: var(--theme-background, var(--default-background));
+  --background-image: var(--theme-background-image, var(--default-background-image));
+  --logo-color: var(--theme-logo-color, var(--cl-chartreuse-lightest));
+  --logo-color-hover: var(--theme-logo-color-hover, var(--cl-chartreuse-lightest));
+  --text-body-primary: var(--theme-text-body-primary,
+   var(--cl-lavender-lightest));
+  --text-body-secondary: var(--theme-text-body-secondary, var(--cl-charcoal-lighter));
+
+  /** Headings */
+  --heading-primary: var(--theme-heading-primary, var(--cl-lavender-lightest));
+  --heading-primary-hover: var(--theme-heading-primary-hover, var(--cl-white));
+  --heading-secondary: var(--theme-heading-secondary,
+    var(--cl-charcoal-lighter));
+  --heading-secondary-hover: var(--theme-heading-secondary-hover,
+    var(--cl-white));
+  /** Links */
+  --link-primary: var(--theme-link-primary, var(--cl-powder-blue));
+  --link-secondary: var(--theme-link-secondary, var(--cl-monitor-black-green));
+  --link-primary-hover: var(--theme-link-primary-hover, var(--cl-powder-blue));
+  --link-secondary-hover: var(--theme-link-secondary-hover,
+    var(--cl-monitor-green));
+
+  /** Buttons */
+  --button-background-primary: var(--theme-button-background-primary,var(--cl-monitor-black-green));
+  --button-background-primary-hover: var(--theme-button-background-primary-hover, var(--cl-monitor-green));
+  --button-color-primary: var(--theme-button-color-primary, var(--cl-lavender-lightest));
+  --button-color-primary-hover: var(--theme-button-color-primary-hover, var(--cl-white));
+  --button-background-secondary: var(--theme-button-background-secondary, var(--cl-charcoal-lighter));
+  --button-background-secondary-hover: var(--theme-button-background-secondary-hover, var(--cl-white));
+  --button-color-secondary: var(--theme-button-foreground-secondary, var(--cl-charcoal-darkest));
+  --button-color-secondary-hover: var(--theme-button-foreground-secondary-hover, var(--cl-black));
+  --button-border-primary: var(--theme-button-border-primary, var(--cl-monitor-green));
+  --button-border-secondary: var(--theme-button-border-secondary,var(--cl-white));
+  --button-border-secondary-hover: var(--theme-button-border-secondary-hover,var(--cl-monitor-green));
+  --button-border-primary-hover: var(--theme-button-border-primary-hover, var(--cl-powder-blue));
+  
+    /* Theme Variants */
+  &[data-theme="typewriter"] {
+    --theme-font-primary: var(--ff-special-elite);
+    --theme-background: var(--cl-off-white-blue);
+    --theme-text-body-primary: var(--cl-charcoal-darkest);
+    --theme-background-image: var(--paper-texture-background);
+    --theme-pseudo-content: "";
+    /* --theme-text-body-secondary:  */
+    --theme-heading-primary: var(--cl-monitor-black-green);
+    /* --theme-heading-primary-hover: */
+    /* --theme-heading-secondary: */
+    /* --theme-heading-secondary-hover: */
+    --theme-link-primary: var(--cl-powder-blue-dark);
+    /* --theme-link-secondary: */
+    --theme-link-primary-hover: var(--cl-red-vibrant);
+    --theme-logo-color: var(--cl-charcoal-lighter);
+    --theme-logo-color-hover: var(--cl-charcoal-darkest);
+    /* --theme-link-secondary-hover:
+    --theme-button-background-primary:
+    --theme-button-background-primary-hover:
+    --theme-button-color-primary:
+    --theme-button-color-primary-hover:
+    --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover:
+    --theme-button-border-primary:
+    --theme-button-border-secondary:
+    --theme-button-border-secondary-hover:
+    --theme-button-border-primary-hover: */
+  }
+  &[data-theme="sprawl"] {
+    --theme-font-primary: var(--ff-nippo);
+    --theme-background: var(--cl-mango);
+    --theme-text-body-primary: var(--cl-coffee);
+    --theme-text-body-secondary: var(--cl-monitor-dark-green);
+    --theme-logo-color: var(--cl-monitor-avocado);
+    --theme-logo-color-hover: var(--cl-coffee);
+    --theme-heading-primary: var(--cl-coffee);
+    --theme-text-indent: 0;
+    /* --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover: */
+    --theme-link-primary: var(--cl-monitor-avocado);
+    --theme-link-secondary: var(--cl-monitor-avocado);
+    --theme-link-primary-hover: var(--cl-coffee);
+    --theme-link-secondary-hover: var(--cl-golden);
+    --theme-button-background-primary: var(--cl-coffee);
+    --theme-button-background-primary-hover: var(--cl-monitor-avocado);
+    --theme-button-color-primary: var(--cl-mango);
+    --theme-button-color-primary-hover: var(--cl-mango);
+    /* --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover: */
+    --theme-button-border-primary: var(--cl-monitor-avocado);
+    /* --theme-button-border-secondary:
+    --theme-button-border-secondary-hover: */
+    --theme-button-border-primary-hover: var(--cl-dark-mango);
+  }
+  &[data-theme="monitor"] {
+    --theme-font-primary: var(--ff-nippo);
+    --theme-background: var(--cl-lavender-lightest);
+    --theme-text-body-primary: var(--cl-charcoal-darkest);
+    --theme-text-body-secondary: var(--cl-monitor-dark-green);
+    --theme-logo-color: var(--cl-golden);
+    --theme-logo-color-hover: var(--cl-monitor-avocado);
+    --theme-heading-primary: var(--cl-monitor-black-green);
+    /* --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover: */
+    --theme-link-primary: var(--cl-monitor-avocado);
+    --theme-link-secondary: var(--cl-monitor-avocado);
+    --theme-link-primary-hover: var(--cl-golden);
+    --theme-link-secondary-hover: var(--cl-golden);
+    --theme-button-background-primary:
+    --theme-button-background-primary-hover:
+    --theme-button-color-primary:
+    --theme-button-color-primary-hover:
+    --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover:
+    --theme-button-border-primary:
+    --theme-button-border-secondary:
+    --theme-button-border-secondary-hover:
+    --theme-button-border-primary-hover:
+  }
+  &[data-theme="floral"] {
+    --theme-font-primary: var(--ff-bespoke);
+    --theme-background: var(--cl-display-dull);
+    --theme-text-body-primary: var(--cl-charcoal-darkest);
+    --theme-text-body-secondary: 
+    --theme-heading-primary:
+    --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover:
+    --theme-link-primary: var(--cl-golden);
+    --theme-link-secondary:
+    --theme-link-primary-hover:
+    --theme-link-secondary-hover:
+    --theme-button-background-primary:
+    --theme-button-background-primary-hover:
+    --theme-button-color-primary:
+    --theme-button-color-primary-hover:
+    --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover:
+    --theme-button-border-primary:
+    --theme-button-border-secondary:
+    --theme-button-border-secondary-hover:
+    --theme-button-border-primary-hover:
+  }
+
+  /* Dark Mode Theme Vars */
+  @media (prefers-color-scheme: dark) {
+    &[data-theme="typewritter"] {
+    --theme-background-dark: var(--cl-monitor-black-green);
+    --theme-text-body-primary-dark: var(--cl-monitor-dark-green);
+    --theme-text-body-secondary-dark:
+    --theme-heading-primary-dark:
+    --theme-heading-primary-hover-dark:
+    --theme-heading-secondary-dark:
+    --theme-heading-secondary-hover-dark:
+    --theme-link-primary-dark: var(--cl-golden);
+    --theme-link-secondary-dark:
+    --theme-link-primary-hover-dark: var(--cl-lemon-lightest);
+    --theme-link-secondary-hover-dark:
+    --theme-button-background-primary-dark:
+    --theme-button-background-primary-hover-dark:
+    --theme-button-color-primary-dark:
+    --theme-button-color-primary-hover-dark:
+    --theme-button-background-secondary-dark:
+    --theme-button-background-secondary-hover-dark:
+    --theme-button-color-secondary-dark:
+    --theme-button-color-secondary-hover-dark:
+    --theme-button-border-primary-dark:
+    --theme=button-border-secondary-dark:
+    --theme-button-border-secondary-hover-dark:
+    --theme-button-border-primary-hover-dark:
+    }
+    
+    &[data-theme="sprawl"] {
+    --theme-font-primary: var(--ff-nippo);
+    --theme-background-dark: var(--cl-monitor-black-green);
+    --theme-logo-color-dark: var(--cl-golden);
+    --theme-text-body-primary-dark: var(--cl-monitor-green);
+    --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
+    --theme-heading-primary-dark: var(--cl-mint-pale);
+    --theme-heading-primary-hover-dark: var(--cl-green-dark);
+    --theme-heading-secondary-dark: var(--cl-green-dark);
+    --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
+    --theme-link-primary-dark: var(--cl-golden);
+    --theme-link-secondary-dark: var(--cl-lemon-lightest);
+    --theme-link-primary-hover-dark: var(--cl-chartreuse-lightest);
+    --theme-link-secondary-hover-dark: var(--cl-golden);
+    --theme-button-background-primary-dark: 
+    --theme-button-background-primary-hover-dark:
+    --theme-button-color-primary-dark:
+    --theme-button-color-primary-hover-dark:
+    --theme-button-background-secondary-dark:
+    --theme-button-background-secondary-hover-dark:
+    --theme-button-color-secondary-dark:
+    --theme-button-color-secondary-hover-dark:
+    --theme-button-border-primary-dark:
+    --theme=button-border-secondary-dark:
+    --theme-button-border-secondary-hover-dark:
+    --theme-button-border-primary-hover-dark:
+    }
+    &[data-theme="monitor"] {
+    --theme-font-primary: var(--ff-nippo);
+    --theme-background-dark: var(--cl-monitor-black-green);
+    --theme-logo-color-dark: var(--cl-golden);
+    --theme-text-body-primary-dark: var(--cl-monitor-green);
+    --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
+    --theme-heading-primary-dark: var(--cl-mint-pale);
+    --theme-heading-primary-hover-dark: var(--cl-green-dark);
+    --theme-heading-secondary-dark: var(--cl-green-dark);
+    --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
+    --theme-link-primary-dark: var(--cl-golden);
+    --theme-link-secondary-dark: var(--cl-lemon-lightest);
+    --theme-link-primary-hover-dark: var(--cl-chartreuse-lightest);
+    --theme-link-secondary-hover-dark: var(--cl-golden);
+    --theme-button-background-primary-dark: 
+    --theme-button-background-primary-hover-dark:
+    --theme-button-color-primary-dark:
+    --theme-button-color-primary-hover-dark:
+    --theme-button-background-secondary-dark:
+    --theme-button-background-secondary-hover-dark:
+    --theme-button-color-secondary-dark:
+    --theme-button-color-secondary-hover-dark:
+    --theme-button-border-primary-dark:
+    --theme=button-border-secondary-dark:
+    --theme-button-border-secondary-hover-dark:
+    --theme-button-border-primary-hover-dark:
+    }
+    
+    &[data-theme="floral"] {
+    --theme-background-dark: var(--cl-monitor-black-green);
+    --theme-text-body-primary-dark: var(--cl-monitor-dark-green);
+    --theme-text-body-secondary-dark:
+    --theme-heading-primary-dark:
+    --theme-heading-primary-hover-dark:
+    --theme-heading-secondary-dark:
+    --theme-heading-secondary-hover-dark:
+    --theme-link-primary-dark: var(--cl-golden);
+    --theme-link-secondary-dark:
+    --theme-link-primary-hover-dark: var(--cl-lemon-lightest);
+    --theme-link-secondary-hover-dark:
+    --theme-button-background-primary-dark:
+    --theme-button-background-primary-hover-dark:
+    --theme-button-color-primary-dark:
+    --theme-button-color-primary-hover-dark:
+    --theme-button-background-secondary-dark:
+    --theme-button-background-secondary-hover-dark:
+    --theme-button-color-secondary-dark:
+    --theme-button-color-secondary-hover-dark:
+    --theme-button-border-primary-dark:
+    --theme=button-border-secondary-dark:
+    --theme-button-border-secondary-hover-dark:
+    --theme-button-border-primary-hover-dark:
+    }
+    --ff-primary: var(--theme-font-primary-dark, var(--ff-manrope));
+    --default-dark-background: var(--cl-charcoal-darkest);
+    --logo-color: var(--theme-logo-color-dark, var(--cl-chartreuse-lightest));
+    --background: var(--theme-background-dark, var(--default-background-dark));
+    --text-body-primary: var(--theme-text-body-primary-dark,
+      var(--cl-lavender-lightest));
+    --text-body-secondary: var(--theme-text-body-secondary-dark,
+      var(--cl-charcoal-lighter));
+    --heading-primary: var(--theme-heading-primary-dark,
+      var(--cl-lavender-lightest));
+    --heading-primary-hover: var(--theme-heading-primary-hover-dark,
+      var(--cl-white));
+    --heading-secondary: var(--theme-heading-secondary-dark,
+      var(--cl-charcoal-lighter));
+    --heading-secondary-hover: var(--theme-heading-secondary-dark-hover,
+      var(--cl-white));
+    --link-primary: var(--theme-link-primary-dark, var(--cl-powder-blue-dark));
+    --link-secondary: var(--theme-link-secondary-dark,
+      var(--cl-monitor-black-green));
+    --link-primary-hover: var(--theme-link-primary-hover-dark,
+      var(--cl-powder-blue));
+    --link-secondary-hover: var(--theme-link-secondary-dark-hover,
+      var(--cl-monitor-dark-green));
+    --button-background-dark: var(--theme-button-background-primary-dark,
+      var(--cl-monitor-black-green));
+    --button-background-primary-hover: var(
+        --theme-button-background-primary-dark-hover
+      ,
+      var(--cl-monitor-dark-green));
+    --button-color-primary: var(--theme-button-foreground-primary-dark,
+      var(--cl-lavender-lightest));
+    --button-color-primary-hover: var(
+        --theme-button-foreground-primary-dark-hover
+      ,
+      var(--cl-white));
+    --button-background-secondary: var(--theme-button-background-secondary-dark,
+      var(--cl-charcoal-lighter));
+    --button-background-secondary-hover: var(
+        --theme-button-background-secondary-dark-hover
+      ,
+      var(--cl-white));
+    --button-color-secondary: var(--theme-button-foreground-secondary-dark,
+      var(--cl-charcoal-darkest));
+    --button-color-secondary-hover: var(
+        --theme-button-foreground-secondary-dark-hover
+      ,
+      var(--cl-black));
+    --button-border-primary: var(--theme-button-border-primary-dark,
+      var(--cl-monitor-dark-green));
+    --button-border-secondary: var(--theme-button-border-secondary-dark,
+      var(--cl-white));
+    --button-border-secondary-hover: var(
+        --theme-button-border-secondary-dark-hover
+      ,
+      var(--cl-monitor-dark-green));
+    --button-border-primary-hover: var(--theme-button-border-primary-dark-hover,
+      var(--cl-powder-blue));
+  }
+}
