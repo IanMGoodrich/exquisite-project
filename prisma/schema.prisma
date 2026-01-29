@@ -20,11 +20,13 @@ datasource db {
 model Story {
   id                String    @id @default(uuid())
   title             String
+  createdBy         User      @relation("StoryCreator", fields: [createdById], references: [id])
+  createdById       String
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   completed         Boolean   @default(false)
   completedAt       DateTime?
-  contributors      User[]
+  contributors      User[]    @relation("StoryContributors")
   content           Segment[]
   nextContributorId String
   rounds            Int       @default(3)
@@ -37,7 +39,7 @@ model Segment {
   authorId  String
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  story     Story         @relation(fields: [storyId], references: [id])
+  story     Story         @relation(fields: [storyId], references: [id], onDelete: Cascade)
   storyId   String
   content   String
   likedBy   SegmentLike[]
@@ -68,7 +70,8 @@ model User {
   phone            String?
   authoredSegments Segment[]     @relation("SegmentAuthor")
   likedSegments    SegmentLike[] @relation("SegmentLikes")
-  stories          Story[]
+  stories          Story[]       @relation("StoryContributors")
+  createdStories   Story[]       @relation("StoryCreator")
   loggedOn         Boolean       @default(false)
   emailVerified    Boolean       @default(false)
   image            String?
