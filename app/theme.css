@@ -25,12 +25,17 @@
 
   /* General Colors */
   --cl-charcoal-darkest: #141414;
+  --cl-charcoal-medium: #333030;
   --cl-charcoal-lighter: #5e5b5b;
+  --cl-charcoal-lightest: #e0e0e0;
   --cl-lavender-lightest: #fbfaff;
   --cl-chartreuse-lightest: #e5ffee;
+  --cl-aged-paper: #fcf4e8;
   --cl-lemon-lightest: #c2c2bc;
   --cl-white: #ffff;
+  --cl-off-white: #f5f5f5;
   --cl-off-white-blue: #f2f2f3;
+  --cl-off-white-red: #fff7f7;
   --cl-display-dull: #bab08d;
   --cl-golden: #fecf49;
   --cl-dark-mango: #FF9D00;
@@ -41,21 +46,30 @@
   --cl-red-vibrant: #ed0707;
   --cl-red-light: #fde8e8;
   --cl-hot-pink: #f05177;
+  --cl-hot-pink-light: #faacbe;
   --cl-powder-blue: #4287f5;
   --cl-powder-blue-light: #cbfefb;
   --cl-powder-blue-dark: #336ab8;
+  --cl-aqua-blue: #1af4fd;
   --cl-blue-vibrant: #1d28fc;
+  --cl-burgundy: #620120;
+  --cl-burgundy-light: #92002e;
   --cl-blue-lavender: #543dff;
   --cl-green-dark: #017803;
+  --cl-green-darker: #054106;
   --cl-monitor-green: #b6fa8c;
   --cl-monitor-dark-green: #22c55e;
   --cl-monitor-avocado: #5c692f;
+  --cl-monitor-avocado-dark: #444d25;
   --cl-monitor-black-green: #041202;
   --cl-mint-pale: #cefee2;
   --cl-text-default-dark: var(--cl-charcoal-darkest);
   --cl-text-default-light: var(--cl-lavender-lightest);
 
-
+  --newspaper-button-background-gradient: repeating-linear-gradient(45deg, var(--cl-off-white-blue) 0, var(--cl-off-white-blue)  0.5px,  var(--cl-charcoal-lightest) 0, var(--cl-charcoal-lightest) 50%);
+  --newspaper-button-background-gradient-hover: repeating-linear-gradient(45deg, var(--cl-charcoal-darkest) 0, var(--cl-charcoal-darkest) 0.5px,  var(--cl-charcoal-lighter) 0, var(--cl-charcoal-lighter) 50%);
+  --newspaper-button-background-gradient-dark: repeating-linear-gradient(45deg, var(--cl-charcoal-medium) 0, var(--cl-charcoal-medium) 0.5px,  var(--cl-charcoal-lighter) 0, var(--cl-charcoal-lighter) 50%);
+  --newspaper-button-background-gradient-hover-dark: repeating-linear-gradient(45deg, var(--cl-lavender-lightest) 0, var(--cl-lavender-lightest)  0.5px,  var(--cl-charcoal-lighter) 0, var(--cl-charcoal-lightest) 50%);
   --paper-texture-background: url("data:image/svg+xml,%3Csvg viewBox='0 0 305 305' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='8.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 
   /* Fluid Spacing: Names in relation to min/max rem sizes by way of percentage. For example 100-350 means 1rem - 3.5rem*/
@@ -64,85 +78,116 @@
   --spacing-50-100: clamp(0.5rem, 0.1rem + 1vw, 1rem);
 
   /* Default Vars */
-  --default-background: var(--cl-white);
+  --default-background: var(--cl-off-white);
   --default-ff: var(--ff-manrope);
   --default-container-padding: clamp(1.25rem, 0.25rem + 2.5vw, 2.5rem);
   --default-container-max-width: 1440px;
   --default-background-image: none;
   --default-pseudo-content: "";
+  --default-logo-color: var(--cl-coffee);
+  --default-logo-color-hover: var(--cl-orange-hot);
   --default-text-indent: 1.5rem;
-
-  /* Light Mode Theme Vars */
+  --default-text-body-primary: var(--cl-coffee);
+  --default-heading-primary: var(--cl-coffee);
+  --default-heading-primary-hover: var(--cl-orange-hot);
+  --default-link-primary: var(--cl-burgundy);
+  --default-link-primary-hover: var(--cl-orange-hot);
+  --default-button-background-primary: var(--cl-coffee);
+  --default-button-background-primary-hover: var(--cl-orange-hot);
+  --default-button-color-primary: var(--cl-lavender-lightest);
+  --default-button-color-primary-hover: var(--cl-white);
+  --default-button-border-primary: var(--cl-burgundy-light);
+  --default-button-border-primary-hover: var(--cl-burgundy);
+  --default-button-background-image-primary: none;
+  --default-button-background-image-primary-hover: none;
+  --default-button-background-size-primary: auto;
+  
+  /* Shared Theme  Vars */
   --pseudo-content: var( --theme-pseudo-content, var(--default-pseudo-content));
   --text-indent: var(--theme-text-indent, var(--default-text-indent));
   --ff-primary: var(--theme-font-primary, var(--default-ff));
+  
+  /* Light Mode Theme Vars */
   --background: var(--theme-background, var(--default-background));
   --background-image: var(--theme-background-image, var(--default-background-image));
-  --logo-color: var(--theme-logo-color, var(--cl-chartreuse-lightest));
-  --logo-color-hover: var(--theme-logo-color-hover, var(--cl-chartreuse-lightest));
+  --background-image-hover: var(--theme-background-image-hover, var(--default-background-image-hover));
+  --logo-color: var(--theme-logo-color, var(--default-logo-color));
+  --logo-color-hover: var(--theme-logo-color-hover, var(--default-logo-color-hover));
   --text-body-primary: var(--theme-text-body-primary,
-   var(--cl-lavender-lightest));
-  --text-body-secondary: var(--theme-text-body-secondary, var(--cl-charcoal-lighter));
+   var(--default-text-body-primary));
+   
+   /** Headings */
+   --heading-primary: var(--theme-heading-primary, var(--default-heading-primary));
+   --heading-primary-hover: var(--theme-heading-primary-hover, var(--cl-white));
+   
+   /** Links */
+   --link-primary: var(--theme-link-primary, var(--default-link-primary));
+   --link-primary-hover: var(--theme-link-primary-hover, var(--default-link-primary-hover));
+   
+   /** Buttons */
+   --button-color-primary: var(--theme-button-color-primary, var(--default-button-color-primary));
+   --button-color-primary-hover: var(--theme-button-color-primary-hover, var(--default-button-color-primary-hover));
+   --button-background-primary: var(--theme-button-background-primary, var(--default-button-background-primary));
+   --button-background-primary-hover: var(--theme-button-background-primary-hover, var(--default-button-background-primary-hover));
+   --button-border-primary: var(--theme-button-border-primary, var(--default-button-border-primary));
+   --button-border-primary-hover: var(--theme-button-border-primary-hover, var(--default-button-border-primary-hover));
+   --button-background-image-primary: var(--theme-button-background-image-primary, var(--default-button-background-image-primary));
+   --button-background-image-primary-hover: var(--theme-button-background-image-primary-hover, var(--default-button-background-image-primary-hover));
+   --button-background-size-primary: var(--theme-button-background-size-primary, var(--default-button-background-size-primary));
 
-  /** Headings */
-  --heading-primary: var(--theme-heading-primary, var(--cl-lavender-lightest));
-  --heading-primary-hover: var(--theme-heading-primary-hover, var(--cl-white));
-  --heading-secondary: var(--theme-heading-secondary,
+  /* Secondary Vars TBD */
+    /* --text-body-secondary: var(--theme-text-body-secondary, var(--default-text-body-secondary));
+    --heading-secondary: var(--theme-heading-secondary,
     var(--cl-charcoal-lighter));
-  --heading-secondary-hover: var(--theme-heading-secondary-hover,
+    --heading-secondary-hover: var(--theme-heading-secondary-hover,
     var(--cl-white));
-  /** Links */
-  --link-primary: var(--theme-link-primary, var(--cl-powder-blue));
-  --link-secondary: var(--theme-link-secondary, var(--cl-monitor-black-green));
-  --link-primary-hover: var(--theme-link-primary-hover, var(--cl-powder-blue));
-  --link-secondary-hover: var(--theme-link-secondary-hover,
+    --link-secondary: var(--theme-link-secondary, var(--cl-monitor-black-green));
+    --link-secondary-hover: var(--theme-link-secondary-hover,
     var(--cl-monitor-green));
-
-  /** Buttons */
-  --button-background-primary: var(--theme-button-background-primary,var(--cl-monitor-black-green));
-  --button-background-primary-hover: var(--theme-button-background-primary-hover, var(--cl-monitor-green));
-  --button-color-primary: var(--theme-button-color-primary, var(--cl-lavender-lightest));
-  --button-color-primary-hover: var(--theme-button-color-primary-hover, var(--cl-white));
-  --button-background-secondary: var(--theme-button-background-secondary, var(--cl-charcoal-lighter));
-  --button-background-secondary-hover: var(--theme-button-background-secondary-hover, var(--cl-white));
-  --button-color-secondary: var(--theme-button-foreground-secondary, var(--cl-charcoal-darkest));
-  --button-color-secondary-hover: var(--theme-button-foreground-secondary-hover, var(--cl-black));
-  --button-border-primary: var(--theme-button-border-primary, var(--cl-monitor-green));
-  --button-border-secondary: var(--theme-button-border-secondary,var(--cl-white));
-  --button-border-secondary-hover: var(--theme-button-border-secondary-hover,var(--cl-monitor-green));
-  --button-border-primary-hover: var(--theme-button-border-primary-hover, var(--cl-powder-blue));
+    --button-color-secondary: var(--theme-button-foreground-secondary, var(--cl-charcoal-darkest));
+    --button-color-secondary-hover: var(--theme-button-foreground-secondary-hover, var(--cl-black));
+    --button-background-secondary: var(--theme-button-background-secondary, var(--cl-charcoal-lighter));
+    --button-background-secondary-hover: var(--theme-button-background-secondary-hover, var(--cl-white));
+    --button-border-secondary: var(--theme-button-border-secondary,var(--cl-white));
+    --button-border-secondary-hover: var(--theme-button-border-secondary-hover,var(--cl-monitor-green)); */
   
-    /* Theme Variants */
+  /* Theme Variants */
   &[data-theme="typewriter"] {
     --theme-font-primary: var(--ff-special-elite);
     --theme-background: var(--cl-off-white-blue);
     --theme-text-body-primary: var(--cl-charcoal-darkest);
     --theme-background-image: var(--paper-texture-background);
     --theme-pseudo-content: "";
-    /* --theme-text-body-secondary:  */
     --theme-heading-primary: var(--cl-monitor-black-green);
-    /* --theme-heading-primary-hover: */
-    /* --theme-heading-secondary: */
-    /* --theme-heading-secondary-hover: */
     --theme-link-primary: var(--cl-powder-blue-dark);
-    /* --theme-link-secondary: */
     --theme-link-primary-hover: var(--cl-red-vibrant);
     --theme-logo-color: var(--cl-charcoal-lighter);
     --theme-logo-color-hover: var(--cl-charcoal-darkest);
-    /* --theme-link-secondary-hover:
-    --theme-button-background-primary:
-    --theme-button-background-primary-hover:
-    --theme-button-color-primary:
-    --theme-button-color-primary-hover:
+    --theme-button-background-image-primary: var(--newspaper-button-background-gradient);
+    --theme-button-background-image-primary-hover: var(--newspaper-button-background-gradient-hover);
+    --theme-button-background-size-primary: 5px 5px;
+    --theme-button-color-primary: var(--cl-charcoal-darkest);
+    --theme-button-color-primary-hover: var(--cl-charcoal-lightest);
+    --theme-button-background-primary: var(--cl-off-white);
+    --theme-button-background-primary-hover: var(--cl-charcoal-lightest);
+    --theme-button-border-primary: var(--cl-charcoal-lighter);
+    --theme-button-border-primary-hover: var(--cl-charcoal-darkest);
+
+    /* Secondary vars TBD */
+    /* --theme-text-body-secondary: 
+    --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover:
     --theme-button-background-secondary:
     --theme-button-background-secondary-hover:
     --theme-button-color-secondary:
     --theme-button-color-secondary-hover:
-    --theme-button-border-primary:
     --theme-button-border-secondary:
     --theme-button-border-secondary-hover:
-    --theme-button-border-primary-hover: */
+    --theme-link-secondary:
+    --theme-link-secondary-hover: */
   }
+
   &[data-theme="sprawl"] {
     --theme-font-primary: var(--ff-nippo);
     --theme-background: var(--cl-mango);
@@ -152,9 +197,6 @@
     --theme-logo-color-hover: var(--cl-coffee);
     --theme-heading-primary: var(--cl-coffee);
     --theme-text-indent: 0;
-    /* --theme-heading-primary-hover:
-    --theme-heading-secondary:
-    --theme-heading-secondary-hover: */
     --theme-link-primary: var(--cl-monitor-avocado);
     --theme-link-secondary: var(--cl-monitor-avocado);
     --theme-link-primary-hover: var(--cl-coffee);
@@ -163,213 +205,271 @@
     --theme-button-background-primary-hover: var(--cl-monitor-avocado);
     --theme-button-color-primary: var(--cl-mango);
     --theme-button-color-primary-hover: var(--cl-mango);
-    /* --theme-button-background-secondary:
-    --theme-button-background-secondary-hover:
-    --theme-button-color-secondary:
-    --theme-button-color-secondary-hover: */
     --theme-button-border-primary: var(--cl-monitor-avocado);
-    /* --theme-button-border-secondary:
-    --theme-button-border-secondary-hover: */
     --theme-button-border-primary-hover: var(--cl-dark-mango);
-  }
-  &[data-theme="monitor"] {
-    --theme-font-primary: var(--ff-nippo);
-    --theme-background: var(--cl-lavender-lightest);
-    --theme-text-body-primary: var(--cl-charcoal-darkest);
-    --theme-text-body-secondary: var(--cl-monitor-dark-green);
-    --theme-logo-color: var(--cl-golden);
-    --theme-logo-color-hover: var(--cl-monitor-avocado);
-    --theme-heading-primary: var(--cl-monitor-black-green);
-    /* --theme-heading-primary-hover:
-    --theme-heading-secondary:
-    --theme-heading-secondary-hover: */
-    --theme-link-primary: var(--cl-monitor-avocado);
-    --theme-link-secondary: var(--cl-monitor-avocado);
-    --theme-link-primary-hover: var(--cl-golden);
-    --theme-link-secondary-hover: var(--cl-golden);
-    --theme-button-background-primary:
-    --theme-button-background-primary-hover:
-    --theme-button-color-primary:
-    --theme-button-color-primary-hover:
-    --theme-button-background-secondary:
-    --theme-button-background-secondary-hover:
-    --theme-button-color-secondary:
-    --theme-button-color-secondary-hover:
-    --theme-button-border-primary:
-    --theme-button-border-secondary:
-    --theme-button-border-secondary-hover:
-    --theme-button-border-primary-hover:
-  }
-  &[data-theme="floral"] {
-    --theme-font-primary: var(--ff-bespoke);
-    --theme-background: var(--cl-display-dull);
-    --theme-text-body-primary: var(--cl-charcoal-darkest);
-    --theme-text-body-secondary: 
-    --theme-heading-primary:
+
+        /* Secondary vars TBD */
+    /* --theme-text-body-secondary: 
     --theme-heading-primary-hover:
     --theme-heading-secondary:
     --theme-heading-secondary-hover:
-    --theme-link-primary: var(--cl-golden);
-    --theme-link-secondary:
-    --theme-link-primary-hover:
-    --theme-link-secondary-hover:
-    --theme-button-background-primary:
-    --theme-button-background-primary-hover:
-    --theme-button-color-primary:
-    --theme-button-color-primary-hover:
     --theme-button-background-secondary:
     --theme-button-background-secondary-hover:
     --theme-button-color-secondary:
     --theme-button-color-secondary-hover:
-    --theme-button-border-primary:
     --theme-button-border-secondary:
     --theme-button-border-secondary-hover:
+    --theme-link-secondary:
+    --theme-link-secondary-hover: */
+  }
+  &[data-theme="floral"] {
+    --theme-font-primary: var(--ff-bespoke);
+    --theme-background: var(--cl-powder-blue-light);
+    --theme-text-body-primary: var(--cl-charcoal-darkest);
+    --theme-heading-primary: var(--cl-orange-hot);
+    --theme-logo-color: var(--cl-orange-hot);
+    --theme-logo-color-hover: var(--cl-dark-mango);
+    --theme-link-primary: var(--cl-green-dark);
+    --theme-link-primary-hover: var(--cl-hot-pink);
+    --theme-button-background-primary: var(--cl-orange-hot);
+    --theme-button-color-primary: var(--cl-chartreuse-lightest);
+    --theme-button-background-primary-hover: var(--cl-blue-vibrant);
+    --theme-button-color-primary-hover: var(--cl-lavender-lightest);
+    --theme-button-border-primary: var(--cl-dark-mango);
+    --theme-button-border-primary-hover: var(--cl-hot-pink);
+    
+  /* Secondary vars TBD */
+    /* --theme-text-body-secondary: 
+    --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover:
+    --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover:
+    --theme-button-border-secondary:
+    --theme-button-border-secondary-hover:
+    --theme-link-secondary:
+    --theme-link-secondary-hover: */
+  }
+  &[data-theme="monitor"] {
+    --theme-font-primary: var(--ff-nippo);
+    --theme-background: var(--cl-display-dull);
+    --theme-text-body-primary: var(--cl-charcoal-darkest);
+    --theme-heading-primary: var(--cl-coffee);
+    --theme-logo-color: var(--cl-burgundy);
+    --theme-logo-color-hover: var(--cl-green-darker);
+    /* --theme-heading-primary-hover: */
+    --theme-link-primary: var(--cl-burgundy);
+    --theme-link-primary-hover: var(--cl-green-darker);
+    --theme-button-background-primary: var(--cl-display-dull);
+    --theme-button-background-primary-hover: var(--cl-orange-hot);
+    --theme-button-color-primary: var(--cl-burgundy);
+    --theme-button-color-primary-hover: var(--cl-off-white);
+    --theme-button-border-primary: var(--cl-burgundy);
     --theme-button-border-primary-hover:
+
+  /* Secondary vars TBD */
+    /* --theme-text-body-secondary: 
+    --theme-heading-primary-hover:
+    --theme-heading-secondary:
+    --theme-heading-secondary-hover:
+    --theme-button-background-secondary:
+    --theme-button-background-secondary-hover:
+    --theme-button-color-secondary:
+    --theme-button-color-secondary-hover:
+    --theme-button-border-secondary:
+    --theme-button-border-secondary-hover:
+    --theme-link-secondary:
+    --theme-link-secondary-hover: */
   }
 
   /* Dark Mode Theme Vars */
   @media (prefers-color-scheme: dark) {
-    &[data-theme="typewritter"] {
-    --theme-background-dark: var(--cl-monitor-black-green);
-    --theme-text-body-primary-dark: var(--cl-monitor-dark-green);
-    --theme-text-body-secondary-dark:
-    --theme-heading-primary-dark:
-    --theme-heading-primary-hover-dark:
-    --theme-heading-secondary-dark:
-    --theme-heading-secondary-hover-dark:
+    /* Shouldn't change between themes */
+    /* --default-text-indent-dark: 1.5rem; */
+    /* --default-ff-dark: var(--ff-manrope); */
+    /* --default-pseudo-content-dark: ""; */
+    /* --default-container-max-width-dark: 1440px; */
+    /* --default-container-padding-dark: clamp(1.25rem, 0.25rem + 2.5vw, 2.5rem); */
+
+    /* Default */
+  --default-background-dark: var(--cl-coffee);
+  --default-background-image-dark: none;
+  --default-logo-color-dark: var(--cl-golden-light);
+  --default-logo-color-hover-dark: var(--cl-orange-hot);
+  --default-text-body-primary-dark: var(--cl-off-white-red);
+  --default-heading-primary-dark: var(--cl-golden-light);
+  --default-heading-primary-hover-dark: var(--cl-orange-hot);
+  --default-link-primary-dark: var(--cl-dark-mango);
+  --default-link-primary-hover-dark: var(--cl-orange-hot);
+  --default-button-background-primary-dark: var(--cl-coffee);
+  --default-button-background-primary-hover-dark: var(--cl-orange-hot);
+  --default-button-color-primary-dark: var(--cl-lavender-lightest);
+  --default-button-color-primary-hover-dark: var(--cl-white);
+  --default-button-border-primary-dark: var(--cl-golden-light);
+  --default-button-border-primary-hover-dark: var(--cl-burgundy);
+  --default-button-background-image-primary-dark: none;
+  --default-button-background-image-primary-hover-dark: none;
+  --default-button-background-size-primary-dark: auto;
+
+    &[data-theme="typewriter"] {
+    --theme-background-dark: var(--cl-charcoal-medium);
+    --theme-text-body-primary-dark: var(--cl-aged-paper);
+    --theme-heading-primary-dark: var(--cl-lavender-lightest);
     --theme-link-primary-dark: var(--cl-golden);
-    --theme-link-secondary-dark:
-    --theme-link-primary-hover-dark: var(--cl-lemon-lightest);
-    --theme-link-secondary-hover-dark:
-    --theme-button-background-primary-dark:
-    --theme-button-background-primary-hover-dark:
-    --theme-button-color-primary-dark:
-    --theme-button-color-primary-hover-dark:
-    --theme-button-background-secondary-dark:
-    --theme-button-background-secondary-hover-dark:
-    --theme-button-color-secondary-dark:
-    --theme-button-color-secondary-hover-dark:
-    --theme-button-border-primary-dark:
-    --theme=button-border-secondary-dark:
-    --theme-button-border-secondary-hover-dark:
-    --theme-button-border-primary-hover-dark:
+    --theme-link-primary-hover-dark: var(--cl-lavender-lightest);
+    --theme-button-background-image-primary: var(--newspaper-button-background-gradient-dark);
+    --theme-button-background-image-primary-hover: var(--newspaper-button-background-gradient-hover-dark);
+    --theme-button-background-size-primary: 5px 5px;
+    --theme-logo-color-dark: var(--cl-charcoal-lightest);
+    --theme-logo-color-hover-dark: var(--cl-dark-mango);
+    --theme-button-color-primary-dark: var(--cl-aged-paper);
+    --theme-button-color-primary-hover-dark: var(--cl-charcoal-darkest);
+    --theme-button-border-primary-dark: var(--cl-charcoal-darkest);
+    --theme-button-border-primary-hover-dark: var(--cl-golden);
+    /* --theme-heading-primary-hover-dark: */
+    /* --theme-button-background-primary-dark: */
+    /* --theme-button-background-primary-hover-dark: */
+    
+    /* Secondary vars TBD */
+      /* --theme-text-body-secondary-dark: 
+      --theme-heading-secondary-dark:
+      --theme-heading-secondary-hover-dark:
+      --theme-button-background-secondary-dark:
+      --theme-button-background-secondary-hover-dark:
+      --theme-button-color-secondary-dark: 
+      --theme-button-color-secondary-hover-dark:
+      --theme=button-border-secondary-dark:
+      --theme-button-border-secondary-hover-dark:
+      --theme-link-secondary-dark:
+      --theme-link-secondary-hover-dark: */
     }
     
-    &[data-theme="sprawl"] {
+  &[data-theme="sprawl"] {
     --theme-font-primary: var(--ff-nippo);
     --theme-background-dark: var(--cl-monitor-black-green);
     --theme-logo-color-dark: var(--cl-golden);
+    --theme-logo-color-hover-dark: var(--cl-orange-hot);
     --theme-text-body-primary-dark: var(--cl-monitor-green);
-    --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
     --theme-heading-primary-dark: var(--cl-mint-pale);
     --theme-heading-primary-hover-dark: var(--cl-green-dark);
-    --theme-heading-secondary-dark: var(--cl-green-dark);
-    --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
     --theme-link-primary-dark: var(--cl-golden);
-    --theme-link-secondary-dark: var(--cl-lemon-lightest);
-    --theme-link-primary-hover-dark: var(--cl-chartreuse-lightest);
-    --theme-link-secondary-hover-dark: var(--cl-golden);
-    --theme-button-background-primary-dark: 
-    --theme-button-background-primary-hover-dark:
-    --theme-button-color-primary-dark:
-    --theme-button-color-primary-hover-dark:
-    --theme-button-background-secondary-dark:
-    --theme-button-background-secondary-hover-dark:
-    --theme-button-color-secondary-dark:
-    --theme-button-color-secondary-hover-dark:
-    --theme-button-border-primary-dark:
-    --theme=button-border-secondary-dark:
-    --theme-button-border-secondary-hover-dark:
-    --theme-button-border-primary-hover-dark:
-    }
+    --theme-link-primary-hover-dark: var(--cl-orange-hot);
+    --theme-button-color-primary-dark: var(--cl-golden);
+    --theme-button-color-primary-hover-dark: var(--cl-golden);
+    --theme-button-border-primary-hover-dark: var(--cl-monitor-dark-green);
+    --theme-button-border-primary-dark: var(--cl-golden);
+    --theme-button-background-primary-hover-dark: var(--cl-orange-hot);
+    --theme-button-background-primary-dark: var(--cl-monitor-avocado);
+    /* Secondary vars TBD */
+    /* --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
+        --theme-button-background-secondary-dark:
+        --theme-button-background-secondary-hover-dark:
+        --theme-button-color-secondary-dark:
+        --theme-button-color-secondary-hover-dark:
+        --theme=button-border-secondary-dark:
+        --theme-heading-secondary-dark: var(--cl-green-dark);
+        --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
+        --theme-link-secondary-hover-dark: var(--cl-golden);
+        --theme-link-secondary-dark: var(--cl-lemon-lightest);
+        --theme-button-border-secondary-hover-dark: */
+  }
+
     &[data-theme="monitor"] {
     --theme-font-primary: var(--ff-nippo);
     --theme-background-dark: var(--cl-monitor-black-green);
     --theme-logo-color-dark: var(--cl-golden);
+    --theme-logo-color-hover-dark: var(--cl-mint-pale);
     --theme-text-body-primary-dark: var(--cl-monitor-green);
-    --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
-    --theme-heading-primary-dark: var(--cl-mint-pale);
+    --theme-heading-primary-dark: var(--cl-dark-mango);
     --theme-heading-primary-hover-dark: var(--cl-green-dark);
-    --theme-heading-secondary-dark: var(--cl-green-dark);
-    --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
     --theme-link-primary-dark: var(--cl-golden);
-    --theme-link-secondary-dark: var(--cl-lemon-lightest);
     --theme-link-primary-hover-dark: var(--cl-chartreuse-lightest);
-    --theme-link-secondary-hover-dark: var(--cl-golden);
-    --theme-button-background-primary-dark: 
-    --theme-button-background-primary-hover-dark:
-    --theme-button-color-primary-dark:
-    --theme-button-color-primary-hover-dark:
-    --theme-button-background-secondary-dark:
-    --theme-button-background-secondary-hover-dark:
-    --theme-button-color-secondary-dark:
-    --theme-button-color-secondary-hover-dark:
-    --theme-button-border-primary-dark:
-    --theme=button-border-secondary-dark:
-    --theme-button-border-secondary-hover-dark:
-    --theme-button-border-primary-hover-dark:
+    --theme-button-color-primary-dark: var(--cl-chartreuse-lightest);
+    --theme-button-color-primary-hover-dark: var(--cl-golden);
+    --theme-button-background-primary-dark: var(--cl-monitor-avocado-dark);
+    --theme-button-border-primary-dark: var(--cl-monitor-dark-green);
+    --theme-button-background-primary-hover-dark: var(--cl-green-darker);
+    --theme-button-border-primary-hover-dark: var(--cl-golden);
+
+    /* Secondary vars TBD */
+      /* --theme-text-body-secondary-dark: var(--cl-monitor-dark-green);
+      --theme-heading-secondary-dark: var(--cl-green-dark);
+      --theme-heading-secondary-hover-dark: var(--cl-mint-pale);
+      --theme-link-secondary-dark: var(--cl-lemon-lightest);
+      --theme-link-secondary-hover-dark: var(--cl-golden);
+      --theme-button-background-secondary-dark:
+      --theme-button-background-secondary-hover-dark:
+      --theme-button-color-secondary-dark:
+      --theme-button-color-secondary-hover-dark:
+      --theme=button-border-secondary-dark:
+      --theme-button-border-secondary-hover-dark: */
     }
     
     &[data-theme="floral"] {
-    --theme-background-dark: var(--cl-monitor-black-green);
-    --theme-text-body-primary-dark: var(--cl-monitor-dark-green);
-    --theme-text-body-secondary-dark:
-    --theme-heading-primary-dark:
-    --theme-heading-primary-hover-dark:
+    --theme-background-dark: var(--cl-green-darker);
+    --theme-text-body-primary-dark: var(--cl-chartreuse-lightest);
+    --theme-heading-primary-dark: var(--cl-golden-light);
+    /* --theme-heading-primary-hover-dark: */
+    --theme-link-primary-dark: var(--cl-golden-light);
+    --theme-link-primary-hover-dark: var(--cl-aqua-blue);
+    --theme-logo-color-dark: var(--cl-golden-light);
+    --theme-button-color-primary-dark: var(--cl-mango);
+    --theme-button-background-primary-dark: var(--cl-powder-blue-dark);
+    --theme-button-border-primary-dark: var(--cl-aqua-blue);
+    --theme-button-color-primary-hover-dark: var(--cl-blue-vibrant);
+    --theme-button-background-primary-hover-dark: var(--cl-hot-pink-light);
+    --theme-button-border-primary-hover-dark: var(--cl-hot-pink);
+
+    /* Secondary vars TBD */
+    /* --theme-text-body-secondary-dark: var(--cl-blue-lavender);
     --theme-heading-secondary-dark:
     --theme-heading-secondary-hover-dark:
-    --theme-link-primary-dark: var(--cl-golden);
     --theme-link-secondary-dark:
-    --theme-link-primary-hover-dark: var(--cl-lemon-lightest);
     --theme-link-secondary-hover-dark:
-    --theme-button-background-primary-dark:
-    --theme-button-background-primary-hover-dark:
-    --theme-button-color-primary-dark:
-    --theme-button-color-primary-hover-dark:
     --theme-button-background-secondary-dark:
     --theme-button-background-secondary-hover-dark:
     --theme-button-color-secondary-dark:
     --theme-button-color-secondary-hover-dark:
-    --theme-button-border-primary-dark:
-    --theme=button-border-secondary-dark:
-    --theme-button-border-secondary-hover-dark:
-    --theme-button-border-primary-hover-dark:
+    --theme-button-border-secondary-dark:
+    --theme-button-border-secondary-hover-dark: */
     }
-    --ff-primary: var(--theme-font-primary-dark, var(--ff-manrope));
-    --default-dark-background: var(--cl-charcoal-darkest);
-    --logo-color: var(--theme-logo-color-dark, var(--cl-chartreuse-lightest));
+    
+    --logo-color: var(--theme-logo-color-dark, var(--default-logo-color-dark));
+    --logo-color-hover: var(--theme-logo-color-hover-dark, var(--default-logo-color-hover-dark));
     --background: var(--theme-background-dark, var(--default-background-dark));
     --text-body-primary: var(--theme-text-body-primary-dark,
-      var(--cl-lavender-lightest));
+      var(--default-text-body-primary-dark));
     --text-body-secondary: var(--theme-text-body-secondary-dark,
-      var(--cl-charcoal-lighter));
+      var(--default-text-body-secondary-dark));
     --heading-primary: var(--theme-heading-primary-dark,
-      var(--cl-lavender-lightest));
+      var(--default-heading-primary-dark));
     --heading-primary-hover: var(--theme-heading-primary-hover-dark,
       var(--cl-white));
     --heading-secondary: var(--theme-heading-secondary-dark,
       var(--cl-charcoal-lighter));
     --heading-secondary-hover: var(--theme-heading-secondary-dark-hover,
       var(--cl-white));
-    --link-primary: var(--theme-link-primary-dark, var(--cl-powder-blue-dark));
+    --link-primary: var(--theme-link-primary-dark, var(--default-link-primary-dark));
     --link-secondary: var(--theme-link-secondary-dark,
       var(--cl-monitor-black-green));
     --link-primary-hover: var(--theme-link-primary-hover-dark,
-      var(--cl-powder-blue));
+      var(--default-link-primary-hover-dark));
     --link-secondary-hover: var(--theme-link-secondary-dark-hover,
       var(--cl-monitor-dark-green));
-    --button-background-dark: var(--theme-button-background-primary-dark,
-      var(--cl-monitor-black-green));
+    --button-background-primary: var(--theme-button-background-primary-dark,
+      var(--default-button-background-primary-dark));
     --button-background-primary-hover: var(
-        --theme-button-background-primary-dark-hover
+        --theme-button-background-primary-hover-dark
       ,
-      var(--cl-monitor-dark-green));
-    --button-color-primary: var(--theme-button-foreground-primary-dark,
-      var(--cl-lavender-lightest));
+      var(--default-button-background-primary-hover-dark));
+    --button-color-primary: var(--theme-button-color-primary-dark,
+      var(--default-button-color-primary-dark));
     --button-color-primary-hover: var(
-        --theme-button-foreground-primary-dark-hover
+        --theme-button-color-primary-hover-dark
       ,
-      var(--cl-white));
+      var(--default-button-color-primary-hover-dark));
     --button-background-secondary: var(--theme-button-background-secondary-dark,
       var(--cl-charcoal-lighter));
     --button-background-secondary-hover: var(
@@ -383,14 +483,14 @@
       ,
       var(--cl-black));
     --button-border-primary: var(--theme-button-border-primary-dark,
-      var(--cl-monitor-dark-green));
+      var(--default-button-border-primary-dark));
     --button-border-secondary: var(--theme-button-border-secondary-dark,
       var(--cl-white));
     --button-border-secondary-hover: var(
         --theme-button-border-secondary-dark-hover
       ,
       var(--cl-monitor-dark-green));
-    --button-border-primary-hover: var(--theme-button-border-primary-dark-hover,
-      var(--cl-powder-blue));
+    --button-border-primary-hover: var(--theme-button-border-primary-hover-dark,
+      var(--default-button-border-primary-hover-dark));
   }
 }
