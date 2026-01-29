@@ -31,7 +31,6 @@ export default function LoginPage() {
 
       if (result.data && result.data.user) {
         const user = result.data.user;
-        console.log(result);
         router.push(`/${user.id}`);
       }
       
@@ -49,7 +48,7 @@ export default function LoginPage() {
   return (
     <div>
       <h1>Login Page</h1>
-      <div className="page form auth">
+      <div className="page form login">
         {error && errorTemplate()}
         <form className="form" onSubmit={handleSubmit}>
           <Input
@@ -66,7 +65,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" el="button" disabled={loading}>
+          <Button classes="login-submit"  type="submit" el="button" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}
           </Button>
         </form>

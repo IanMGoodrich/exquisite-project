@@ -21,7 +21,7 @@ export default async function Home() {
     <div className="page home">
       <h1>Welcome to Crazy Uncle Ian&apos;s shockingly ugly</h1>
       <h2>Exquisite Corpse game!!</h2>
-      <div className="page form auth">
+      <div className="login-signup-buttons">
         <Button el="link" href="/login">
           Login
         </Button>
