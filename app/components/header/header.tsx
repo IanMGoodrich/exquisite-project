@@ -5,60 +5,35 @@ import Button from "../button/button";
 import Container from "../container/container";
 import Dropdown from "../dropdown/dropdown";
 import { availableThemes } from "@/lib/constants";
-import { getSession, signOut } from "../../../lib/auth-client";
-import React, { useEffect, useState, startTransition } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useSession, signOut } from "../../../lib/auth-client";
+import React from "react";
+import { useRouter } from "next/navigation";
 import { isAvailableTheme } from "../../../lib/constants";
 import "./header.css";
-const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
-  const pathname = usePathname();
+
+interface HeaderProps {
+  initialSession: { user: { id: string } | null; session: unknown } | null;
+}
+
+const Header = ({ initialSession }: HeaderProps) => {
+  // Use useSession for real-time updates, but initialize with server session to avoid flash
+  const { data: session } = useSession();
+  const displaySession = session || initialSession;
+
   const router = useRouter();
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme } = useTheme();
 
-  useEffect(() => {
-    let mounted = true;
-
-    (async () => {
-      try {
-        const { data } = await getSession();
-        if (!mounted) return;
-
-        if (data?.session && data?.user) {
-          startTransition(() => {
-            setIsLoggedIn(Boolean(data.session && data.user));
-            setUserId(data.user.id);
-          });
-        } else {
-          startTransition(() => {
-            return setIsLoggedIn(false);
-          });
-        }
-      } catch (error) {
-        console.error("session check failed", error);
-        if (!mounted) return;
-        startTransition(() => {
-          setIsLoggedIn(false);
-        });
-      }
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, [pathname, isLoggedIn]);
+  const isLoggedIn = !!displaySession?.user;
+  const userId = displaySession?.user?.id ?? null;
 
   const handleOnClick = (e: React.MouseEvent) => {
     const selected = (e.target as HTMLLIElement)?.getAttribute("data-value");
-    console.log("header clickhandler", e.target, selected);
     if (selected && isAvailableTheme(selected)) {
       setTheme(selected);
     }
   };
 
   const handleOnKey = (e: React.KeyboardEvent) => {
-    console.log();
     if (e.key !== "Enter") return;
     const selected = (e.target as HTMLLIElement)?.getAttribute("data-value");
     if (selected && isAvailableTheme(selected)) {
@@ -70,10 +45,7 @@ const Header = () => {
     await signOut({
       fetchOptions: {
         onSuccess: () => {
-          startTransition(() => {
-            setIsLoggedIn(false);
-            router.push("/");
-          });
+          router.push("/");
         },
       },
     });
