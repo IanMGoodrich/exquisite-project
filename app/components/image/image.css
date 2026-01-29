@@ -1,0 +1,11 @@
+:root {
+  [variant="profile"] {
+    border: solid 2px var(--button-border-primary);
+    border-radius: 10px;
+  }
+
+  [variant="circle"] {
+    border: solid 2px var(--button-border-primary);
+    border-radius: 50%;
+  }
+}
