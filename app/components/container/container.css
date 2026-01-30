@@ -1,39 +1,81 @@
-.container {
-  height: 100%;
-  justify-self: center;
-  max-width: var(--default-container-max-width);
-  width: -webkit-fill-available;
-  margin: 1rem auto;
-}
-
-.container-content {
-  box-sizing: border-box;
-  margin: 1rem;
-  padding: var(--default-container-padding);
-}
-
-/** Sprawl Theme Styles */
 :root {
-  &[data-theme='sprawl'] {
-    .container-content{
+  .container {
+    height: 100%;
+    justify-self: center;
+    max-width: var(--default-container-max-width);
+    width: -webkit-fill-available;
+    margin: 1rem auto;
+  }
+
+  .container-content {
+    box-sizing: border-box;
+    margin: 1rem;
+    padding: var(--default-container-padding);
+  }
+
+  &[data-theme="sprawl"] {
+    .container-content {
       border: solid 2px var(--cl-dark-mango);
       border-top-left-radius: 50px;
       corner-top-left-shape: bevel;
       border-bottom-right-radius: 50px;
       corner-bottom-right-shape: bevel;
     }
-  } 
-}
+  }
 
-/** Typewriter Theme Styles */
-:root {
-  &[data-theme='typewriter'] {
+  &[data-theme="typewriter"] {
     .container-content {
-      border: solid .5px #979998;
+      border: solid 0.5px #979998;
       border-radius: 2px;
-      box-shadow: 10px 7px 9px -1px rgba(138,136,136,0.84);
-      -webkit-box-shadow: 10px 7px 9px -1px rgba(138,136,136,0.84);
-      -moz-box-shadow: 10px 7px 9px -1px rgba(138,136,136,0.84);
-          }
-  } 
+      box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+      -webkit-box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+      -moz-box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+    }
+  }
+
+  &[data-theme="floral"] {
+    .container-content {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        border: double 3.5px var(--theme-button-border-primary);
+        inset: 0;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+      &::before {
+        content: "";
+        border: double 3.5px var(--theme-button-border-primary-hover);
+        position: absolute;
+        inset: 7px;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+    }
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    &[data-theme="typewriter"] {
+      .container-content {
+        box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+        -webkit-box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+        -moz-box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+      }
+    }
+    
+    &[data-theme="floral"] {
+      .container-content {
+        position: relative;
+        
+        &::after {
+          border-color: var(--theme-button-border-primary-dark);
+        }
+        &::before {
+          border-color: var(--theme-button-border-primary-hover-dark);
+        }
+      }
+    }
+  }
 }
