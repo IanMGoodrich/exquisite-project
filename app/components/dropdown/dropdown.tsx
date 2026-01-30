@@ -18,16 +18,16 @@ const Dropdown = ({
   label,
   onClickHandler,
   onKeyHandler,
-  startOpen
+  startOpen,
 }: DropdownProps) => {
   const buttonId = useId();
   const firstItemRef = useRef(null);
   const menuRef = useRef(null);
   const [open, setOpen] = useState(startOpen);
 
-  const toggleOpenClass = (e:React.SyntheticEvent) => {
-    const clickedElem = e.target as HTMLElement; 
-    const clickedId = clickedElem.getAttribute("data-button-id"); 
+  const toggleOpenClass = (e: React.SyntheticEvent) => {
+    const clickedElem = e.target as HTMLElement;
+    const clickedId = clickedElem.getAttribute("data-button-id");
     // prevent nested buttons from closing parent dropdown
     if (clickedElem && clickedId && buttonId !== clickedId) {
       return;
@@ -43,7 +43,7 @@ const Dropdown = ({
     }
   };
 
-  const handleMenuClick = () => {    
+  const handleMenuClick = () => {
     if (!open) {
       setOpen(true);
       if (menuRef.current) {
@@ -80,7 +80,8 @@ const Dropdown = ({
         aria-hidden={!open}
         role="menu"
         onClick={toggleOpenClass}
-      >{ options && options.length > 0 && (
+      >
+        {options && options.length > 0 && (
           <li
             className="dropdown-item"
             ref={firstItemRef}
@@ -88,12 +89,14 @@ const Dropdown = ({
             data-value={options[0]}
             onClick={onClickHandler}
             onKeyDown={onKeyHandler}
-            tabIndex={0}
+            tabIndex={open ? 0 : -1}
           >
             {options[0]}
           </li>
         )}
-        {options && options.length > 1 && Array.isArray(options) && (
+        {options &&
+          options.length > 1 &&
+          Array.isArray(options) &&
           options.slice(1).map((option: string) => (
             <li
               className="dropdown-item"
@@ -101,12 +104,11 @@ const Dropdown = ({
               data-value={option}
               onClick={onClickHandler}
               onKeyDown={onKeyHandler}
-              tabIndex={0}
+              tabIndex={open ? 0 : -1}
             >
               {option}
             </li>
-          ))
-        )}
+          ))}
         {children}
       </ul>
     </div>
