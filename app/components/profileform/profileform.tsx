@@ -3,18 +3,18 @@
 import { type FC, useState } from "react";
 import Button from "../button/button";
 import Input from "../input/input";
-import { type User } from "../../../lib/types";
+import { type UserType } from "../../../lib/types";
 import { signUp } from "../../../lib/auth-client";
 import { useRouter } from "next/navigation";
-
+import "./profileform.css";
 type UserProfileProps = {
   variant: "update";
-  user: User;
+  user: UserType;
 };
 
 type UserSignUpProps = {
   variant: "signup";
-  user?: User;
+  user?: UserType;
 };
 
 const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
@@ -49,7 +49,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
             image,
           }),
         });
-        console.log(props.user.id, result);
+
         if (!result.ok) {
           setError("Failed to update profile");
           return;
@@ -108,9 +108,11 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
       setLoading(false);
     }
   };
-
+  
+  const buttonText = props.variant==="signup" ? "Sign Up" : "Update Profile"; 
+  
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="profile-form" onSubmit={handleSubmit}>
       <Input
         type="text"
         id="firstName"
@@ -185,8 +187,8 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         </>
       )}
       {error && <p className="error">{error}</p>}
-      <Button type="submit" el="button" disabled={loading}>
-        {loading ? "Updating..." : "Update Profile"}
+      <Button classes="profile-submit" type="submit" el="button" disabled={loading}>
+        {loading ? "Updating..." : `${buttonText}`}
       </Button>
     </form>
   );

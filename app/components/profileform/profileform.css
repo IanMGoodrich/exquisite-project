@@ -1,0 +1,52 @@
+:root {
+
+  form.profile-form {
+    width: 100%;
+    max-width: 60%;
+    margin: 5% auto;
+    justify-self: center;
+    border: solid 2px var(--link-primary);  
+    padding: 2rem;
+    border-radius: 20px;
+  }
+
+
+  button.profile-submit {
+    margin-top: 2rem;
+  }
+
+  
+  &[data-theme="sprawl"] {
+    form.profile-form {
+      border-top-left-radius: 50px;
+      border-top-right-radius: 0px;
+      corner-top-left-shape: bevel;
+      corner-bottom-right-shape: bevel;
+      border-bottom-right-radius: 50px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+
+    &[data-theme="floral"] {
+    form.profile-form  {
+      position: relative;
+      border: none;
+      &::after {
+        content: "";
+        position: absolute;
+        border: double 3.5px var(--theme-button-border-primary);
+        inset: 0;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+      &::before {
+        content: "";
+        border: double 3.5px var(--theme-button-border-primary-hover);
+        position: absolute;
+        inset: 7px;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+    }
+  }
+}
