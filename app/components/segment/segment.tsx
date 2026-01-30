@@ -28,9 +28,7 @@ const Segment: FC<SegmentProps> = ({
   const updateTimeoutRef = useRef<NodeJS.Timeout>(null);
 
   useEffect(() => {
-    const likesOnLoad = () => content.likedBy ? content.likedBy.length : 0
-    console.log(likesOnLoad);
-    
+    const likesOnLoad = () => content.likedBy ? content.likedBy.length : 0    
     setLikes(likesOnLoad)
     setUserLikes(currentUserLikes)    
   },[currentUserLikes, content.likedBy]);
