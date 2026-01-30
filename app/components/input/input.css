@@ -4,29 +4,30 @@
   margin-bottom: 1rem;
 
   label {
-    margin-bottom: 0.5rem;
     font-weight: 600;
   }
 
-  &.input--text, &.input--password, &.input--tel,
-  &.input--email  {
-    input {
-      padding: 8px 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
+  input {
+    border: 1px solid;
+    border-color: var(--link-primary);
+    background-color: var(--background);
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+    color: var(--text-body-primary);
+    font-family: var(--ff-primary);
 
-      &:focus {
-        border-color: #0070f3;
-        outline: none;
-      }
+    &:focus {
+      outline: 2px solid var(--link-primary);
+      outline-offset: 2px;
     }
   }
 
-  &.input--textarea  {
+  &.input--textarea {
     textarea {
       min-height: 100px;
-     }
+    }
   }
 }

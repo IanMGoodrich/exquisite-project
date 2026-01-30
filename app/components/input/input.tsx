@@ -2,18 +2,29 @@
 import { forwardRef, type ComponentPropsWithoutRef } from "react";
 import './input.css';
 
+type InputType = 'text' | 'textarea' | 'number' | 'tel' | 'email' | 'password';
+
 type InputProps = {
   label: string;
   id: string;
-} & ComponentPropsWithoutRef<"input">;
+  classes?: string;
+} & (
+  | (ComponentPropsWithoutRef<"input"> & { type: Exclude<InputType, 'textarea'> })
+  | (ComponentPropsWithoutRef<"textarea"> & { type: 'textarea' })
+);
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, id, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
+  ({ label, id, classes, type, ...props }, ref) => {
     return (
-      <p className={`input-wrapper input--${props.type || 'text'}`}>
+      <span className={`${classes ? classes : ''} input-wrapper input--${type || 'text'}`}>
         <label htmlFor={id}>{label}</label>
-        <input id={id} name={id} ref={ref} {...props} />
-      </p>
+        {type === 'textarea' && 
+          (<textarea id={id} name={id} ref={ref as React.Ref<HTMLTextAreaElement>} {...(props as ComponentPropsWithoutRef<'textarea'>)} />)
+        }
+        {type !== 'textarea' && 
+          (<input id={id} name={id} ref={ref as React.Ref<HTMLInputElement>} type={type as Exclude<InputType, 'textarea'>} {...(props as ComponentPropsWithoutRef<'input'>)} />)
+        }
+      </span>
     );
   }
 );
