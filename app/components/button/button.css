@@ -10,6 +10,8 @@ a:not(:disabled) {
     display: flex;
     justify-content: center;
     background-color: var(--button-background-primary);
+    background-image: var(--button-background-image-primary);
+    background-size: var(--button-background-size-primary);
     color: var(--button-color-primary);
     border: 2px solid var(--button-border-primary);
     padding: .5rem 1rem;
@@ -20,6 +22,7 @@ a:not(:disabled) {
     
     &:hover {
       background-color: var(--button-background-primary-hover);
+      background-image: var(--button-background-image-primary-hover);
       color: var(--button-color-primary-hover);
       border-color: var(--button-border-primary-hover);
     }
@@ -52,6 +55,7 @@ a:not(:disabled) {
     color: var(--link-primary);
     text-decoration: none;
     font-size: 16px;
+    width: fit-content;
     transition: all 0.3s ease;
     &::after {
       content: "";
@@ -106,4 +110,12 @@ a:not(:disabled) {
     cursor: not-allowed;
     text-decoration: none;
   }
+
+  .newspaper-background {
+    background-color: var(--button-background-primary);
+    opacity: 0.6;
+    background-size: 5px 5px;
+    background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 0.5px, #e5e5f7 0, #e5e5f7 50%);
+  }
+
 }

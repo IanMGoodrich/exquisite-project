@@ -2,20 +2,21 @@
 
 import { type ComponentPropsWithoutRef, type FC } from "react";
 import "./button.css";
-
-export type ButtonAsInterface = "button" | "link"
-
+import Icon from '../icon/icon';
+export type ButtonAsType = "button" | "link"
 type ButtonProps = {
   el: "button";
-  as?: ButtonAsInterface;
+  as?: ButtonAsType;
   secondary?: boolean;
+  svg?: string;
   classes?: string;
 } & ComponentPropsWithoutRef<"button">;
 
 
 type LinkProps = {
   el: "link";
-  as?: ButtonAsInterface;
+  as?: ButtonAsType;
+  svg?: string;
   secondary?: boolean;
   classes?: string;
 } & ComponentPropsWithoutRef<"a">;  
@@ -26,8 +27,22 @@ const Button: FC<ButtonProps | LinkProps> = ({...props}) => {
   const isSecondary = props.secondary ? "secondary" : "";
 
   if (props.el === "link") {
+    if (props.svg) {
+      return (
+        <a className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props} >
+          <Icon name={props.svg}/>
+        </a>
+      )
+    }
     return (
       <a className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props} />
+    );
+  }
+  if (props.svg) {
+    return (
+      <button className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props}>
+        <Icon name={props.svg} />
+      </button>
     );
   }
   return (
