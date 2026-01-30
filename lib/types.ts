@@ -1,23 +1,28 @@
-export type Story = {
+export type StoryType = {
   id: string;
   title: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: Date | undefined;
+  updatedAt?: Date | undefined;
   completed?: boolean;
-  contributors: string[];
-  content: string[];
+  contributors: UserType[];
+  content: SegmentType[];
+  rounds?: number;
+  completedRounds?: number;
+  completedAt?: Date | null;
+  nextContributorId?: string;
 }
 
-export type Segment = {
+export type SegmentType = {
   id: string;
   authorId: string;
-  createdAt: Date;
+  createdAt: Date | undefined;
   storyId: string;
   content: string;
-  likedBy?: string[];
+  likedBy?: {userId: string}[];
+  reveal?: string | null;
 }
 
-export type User = {
+export type UserType = {
   id: string;
   nameFirst?: string | null;
   nameLast?: string | null;
