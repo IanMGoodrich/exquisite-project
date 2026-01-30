@@ -1,11 +1,9 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-// If your Prisma file is located elsewhere, you can change the path
-import { PrismaClient } from "../app/generated/prisma/client";
 import { username } from "better-auth/plugins";
+import prisma from "./prisma";
 import { getResetPasswordEmailHtml } from "./email-template";
 import { resend, FROM_EMAIL } from "./resend";
-const prisma = new PrismaClient();
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -26,7 +24,7 @@ export const auth = betterAuth({
           console.error("Error sending reset password email:", error);
           throw new Error("Failed to send reset password email");
         }
-        console.log("Reset password email sent:", data);
+
       } catch (error) {
         console.error("Error sending reset password email:", error);
         throw new Error("Failed to send reset password email");
