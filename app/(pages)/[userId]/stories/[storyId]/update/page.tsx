@@ -1,6 +1,6 @@
 
-
-import { getUser, getStorySegments } from '@/lib/utilities';
+import { getAuthenticatedUser } from '@/lib/auth-utils';
+import { getStorySegments } from '@/lib/utilities';
 import SegmentForm from '@/app/components/segmentForm/segmentForm';
 
 type Props = {
@@ -10,15 +10,16 @@ type Props = {
 export default async function UpdateStoryPage({params} : Props) {
   const { userId, storyId } = await params;
 
-  const user = await getUser(userId); 
+  const user = await getAuthenticatedUser(userId); 
   const segments = await getStorySegments(storyId);
   const lastReveal = segments.length > 0 ? segments[segments.length - 1].reveal : null;
 
   return (
     <main style={{ maxWidth: 640, margin: '0 auto', padding: '1rem' }}>
-     <h1>Your turn ${user?.userName}</h1>
+     <h1>It&apos;s your turn {user?.userName}</h1>
       {lastReveal && lastReveal.length > 0 && (
         <div className="last-reveal--wrapper">
+          <span>Here&apos;s what you&apos;ve got to work with:</span>
           <p>{lastReveal}...</p>
         </div>
       )}
