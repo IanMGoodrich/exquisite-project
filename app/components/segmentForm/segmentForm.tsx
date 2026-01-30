@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, type FC } from "react";
 import { useRouter } from "next/navigation";
+import Input from "../input/input";
 import Button from "../button/button";
 type SegmentFormProps = {
   userId: string;
@@ -16,10 +17,11 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
   const [content, setContent] = useState("");
   const [reveal, setReveal] = useState("");
   const textareaRef = useRef(null);
-  
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const result = await fetch(
         `/api/${userId}/stories/${storyId}/update`,
@@ -44,6 +46,10 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
       setError("An error occurred");
       console.error(err);
     } finally {
+      setTimeout(() => 
+        setLoading(false),
+        2000
+      )
     }
   };
 
@@ -62,31 +68,33 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
   const createNewSegmentTemplate = () => {
     return (
       <section className="segment segment--create">
+        {reveal && reveal.length > 0 && (
+          <div className="reveal-wrapper">
+            <span>This is what the player will see:</span>
+            <p>{reveal}</p>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label htmlFor="content" style={{ display: 'block', marginBottom: '0.25rem' }}>
-            New Segment
-          </label>
-          <input
+          <Input
             id="content"
+            label="Write your next instalment"
             type="textarea"
+            rows={10}
             ref={textareaRef}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            style={{ width: '100%', padding: '0.5rem', border: '1px solid #ccc', borderRadius: 4 }}
           />
-        </div>
           <div className="form-buttons">
             {reveal && reveal.length > 0 && (
-            <Button type="submit" el="button">
-              Submit 
+            <Button type="submit" el="button" disabled={loading}>
+              { loading ?  '...submission in progress' : 'Submit'}
             </Button>
             )
             }
             {reveal.length === 0 && (
             <Button onClick={handleCreateReveal} el="button" disabled={content.length === 0}>
-              Select and Create Reveal
+               Select and Create Reveal
             </Button>
             )
             }
