@@ -13,7 +13,7 @@ export const getUser = async (userId: string) => {
       image: true,
       phone: true,
     },
-  });
+  });  
   return user;
 };
 
@@ -36,7 +36,7 @@ export const checkNextRound = (
   nextContributorId: string
 ) => {
   const nextUserIndex = contributors.indexOf(nextContributorId);  
-  if (nextUserIndex !== 0) {
+  if (nextUserIndex !== contributors.length - 1) {
     return completedRounds;
   } else {
     return completedRounds + 1;
@@ -53,6 +53,7 @@ export const getStorySegments = async (storyId: string) => {
       authorId: true,
       reveal: true,
       createdAt: true,
+      likedBy:true,
     },
   });
   return segments;
