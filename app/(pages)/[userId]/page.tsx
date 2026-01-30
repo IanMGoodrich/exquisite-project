@@ -1,81 +1,80 @@
-import prisma from "../../../lib/prisma";
-import { notFound } from "next/navigation";
-import Image from "next/image";
+import { getAuthenticatedUserWithStories } from "../../../lib/auth-utils";
+import ImageWrapper from "@/app/components/image/image";
 import Button from "@/app/components/button/button";
-import { auth } from "../../../lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+
 type Props = {
   params: Promise<{ userId: string }>;
 };
 
 export default async function UserHomePage({ params }: Props) {
   const { userId } = await params;
-
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      email: true,
-      nameFirst: true,
-      nameLast: true,
-      userName: true,
-      phone: true,
-      stories: true,
-      image: true,
-    },
-  });
-
-  if (!user) {
-    notFound();
-  } else {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    if (!session || !session.user || session.user.id !== user.id) {
-      redirect("/");
-    }
-  }
+  const user = await getAuthenticatedUserWithStories(userId);
 
   return (
-    <div className="profile-page">
+    <div className="profile-homepage">
       <h1>Hello {user.userName}!</h1>
       <div>
         {user.image && (
-          <Image
-            loading="eager"
+          <ImageWrapper
+            loading="lazy"
             width={250}
             height={250}
+            variant="circle"
             src={user.image}
             alt={`image for ${user.userName}`}
+            placeholder="blur"
+            blurDataURL="../../../public/images/placeholder.webp"
           />
         )}
       </div>
-      <div className="profile-page--main-content">
-        <div>
+      <div className="profile-homepage--main-content">
+        <div className="profile-homepage--stories-wrapper">
           {user.stories.length ? (
-            user.stories.map((story) => (
-              <div key={story.id}>
-                <Link
-                  className="button as-link"
-                  href={`${userId}/stories/${story.id}`}
-                >
-                  {story.title}
-                </Link>
-              </div>
-            ))
+            <>
+            <div>
+              <span className="label">Completed stories</span>
+              <ul className="profile-homepage--stories-list completed">
+                {user.stories.filter((story) => story.completed).map((story) => (
+                  <li key={story.id}>
+                    <Link
+                      className="button as-link"
+                      href={`${userId}/stories/${story.id}`}
+                      >
+                      {story.title}
+                    </Link>
+                  </li>
+                ))
+              }
+              </ul>
+            </div>
+            <div>
+            <span className="label">Stories in progress</span>
+              <ul className="profile-homepage--stories-list in-progress">
+              {user.stories.filter((story) => !story.completed).map((story) => (
+                <li key={story.id}>
+                  <Link
+                    className="button as-link"
+                    href={`${userId}/stories/${story.id}`}
+                  >
+                    {story.title}
+                  </Link>
+                </li>
+              ))
+            }
+            </ul>
+            </div>
+            </>
           ) : (
             <p>Time to begin a story</p>
           )}
-          <span style={{ margin: '0.75rem 0', display: 'inline-block' }}>
+        </div>
+        <div>
+          <span style={{ margin: "0.75rem 0", display: "inline-block" }}>
             <Button el="link" as="button" href={`${userId}/stories/create`}>
               Create New Story
             </Button>
           </span>
-        </div>
-        <div>
           <p>
             Curabitur at felis non libero suscipit fermentum. Duis volutpat,
             ante et scelerisque luctus, sem nulla placerat leo, at aliquet
