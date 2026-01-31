@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { getUser } from "@/lib/utilities";
+
 // CREATE NEW STORY
 export async function POST(
   request: NextRequest,
@@ -7,6 +9,7 @@ export async function POST(
 ) {
   const params = await context.params;
   const currentUserId: string = params?.userId;
+  const user = await getUser(currentUserId);
   
   if (!currentUserId) {
     return NextResponse.json(
@@ -25,9 +28,10 @@ export async function POST(
     );
   }
 
+  const titleFallback = user ? `${user.userName} Untitled #${user.stories.length + 1}` : 'untitled';
+  const title = (typeof body.title === "string" && body.title.length )? body.title.trim() : titleFallback;
   
-  const title = typeof body.title === "string" ? body.title.trim() : "";
-  if (!title) {
+  if (!title) {    
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
   }
 
@@ -43,6 +47,7 @@ export async function POST(
       data: {
         title,
         rounds,
+        createdById: currentUserId,
         contributors: {
           connect: uniqueIds.map((id) => ({ id })),
         },
