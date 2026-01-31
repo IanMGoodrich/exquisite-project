@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getNextContributor, checkNextRound } from "@/lib/utilities";
 import prisma from "@/lib/prisma";
 
+// Create Segment content
 export async function POST(
   request: NextRequest,
   context: { params: Promise<{ userId: string; storyId: string }> }
@@ -31,6 +32,8 @@ export async function POST(
       { status: 400 }
     );
   }
+
+  // if request successful verify Segment elements
   const content = typeof body.content === "string" ? body.content.trim() : "";
   const authorId =
     typeof body.authorId === "string" ? body.authorId.trim() : "";
@@ -43,6 +46,7 @@ export async function POST(
       { status: 400 }
     );
   }
+  
   if (!reveal || reveal.length === 0) {
     console.error("Missing reveal text");
     return NextResponse.json(
@@ -50,6 +54,7 @@ export async function POST(
       { status: 400 }
     );
   }
+  //if elements successfully verified create Segment 
   try {
     const segment = await prisma.segment.create({
       data: {
@@ -59,6 +64,8 @@ export async function POST(
         reveal,
       },
     });
+
+    // Fetch story
     try {
       const story = await prisma.story.findUnique({
         where: { id: storyId },
@@ -73,6 +80,9 @@ export async function POST(
       if (!story) {
         return;
       }
+
+      // if Story fetched determine next round, next Segment author, if isCompleted 
+      // and update Story
       if (story !== null) {
         const totalRounds = story!.rounds;
         const completedRounds = story!.completedRounds;
