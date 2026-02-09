@@ -7,6 +7,7 @@ type InputType = 'text' | 'textarea' | 'number' | 'tel' | 'email' | 'password';
 type InputProps = {
   label: string;
   id: string;
+  labelHidden?: boolean;
   classes?: string;
 } & (
   | (ComponentPropsWithoutRef<"input"> & { type: Exclude<InputType, 'textarea'> })
@@ -14,15 +15,15 @@ type InputProps = {
 );
 
 const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
-  ({ label, id, classes, type, ...props }, ref) => {
+  ({ label, labelHidden, id, classes, type, ...props }, ref) => {
     return (
       <span className={`${classes ? classes : ''} input-wrapper input--${type || 'text'}`}>
-        <label htmlFor={id}>{label}</label>
+        {!labelHidden && <label htmlFor={id}>{label}</label> }
         {type === 'textarea' && 
-          (<textarea id={id} name={id} ref={ref as React.Ref<HTMLTextAreaElement>} {...(props as ComponentPropsWithoutRef<'textarea'>)} />)
+          (<textarea id={id} name={id} aria-label={labelHidden ? label : ''} ref={ref as React.Ref<HTMLTextAreaElement>} {...(props as ComponentPropsWithoutRef<'textarea'>)} />)
         }
         {type !== 'textarea' && 
-          (<input id={id} name={id} ref={ref as React.Ref<HTMLInputElement>} type={type as Exclude<InputType, 'textarea'>} {...(props as ComponentPropsWithoutRef<'input'>)} />)
+          (<input id={id} name={id} aria-label={labelHidden ? label : ''} ref={ref as React.Ref<HTMLInputElement>} type={type as Exclude<InputType, 'textarea'>} {...(props as ComponentPropsWithoutRef<'input'>)} />)
         }
       </span>
     );
