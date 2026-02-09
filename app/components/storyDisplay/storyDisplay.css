@@ -1,0 +1,42 @@
+.story-display {
+  min-width: 60%;
+  .story-display--title-wrapper {
+    margin: 1rem 0;
+
+   .story-display--title-editable {
+      display: flex;
+      align-items: baseline;
+
+      button.edit-button {
+        background: transparent;  
+        border: none;
+        width: fit-content;
+       svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .story-display--title-edit-form {
+      .form-buttons {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .story-display--story-content {
+    .extra-content-button {
+      margin-left: auto;
+    }
+  }
+
+  &[data-expanded="true"] {
+    .story-display--story-content {
+      display: flex;
+      flex-direction: column;
+      row-gap: 2rem;
+    }
+  }
+}
