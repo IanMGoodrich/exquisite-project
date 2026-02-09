@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div>
+    <div className="forgot-password-page">
       <h1>Forgot Password</h1>
       <div className="page form auth">
         {error && errorTemplate()}

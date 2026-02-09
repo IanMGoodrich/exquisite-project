@@ -15,7 +15,7 @@ export default async function UpdateStoryPage({params} : Props) {
   const lastReveal = segments.length > 0 ? segments[segments.length - 1].reveal : null;
 
   return (
-    <main style={{ maxWidth: 640, margin: '0 auto', padding: '1rem' }}>
+    <main className="story-update-page">
      <h1>It&apos;s your turn {user?.userName}</h1>
       {lastReveal && lastReveal.length > 0 && (
         <div className="last-reveal--wrapper">

@@ -14,7 +14,7 @@ export default async function UserProfileUpdatePage({ params }: Props) {
     <div className="profile-update-page">
       <h1>{user.userName ?? `${user.nameFirst} ${user.nameLast}`}</h1>
       <div className="profile-update-page--main-content">
-        <div className="profile-image--wrapper">
+        <div className="profile-update-page--image-wrapper">
           {user.image && (
             <ImageWrapper
               variant="circle"
@@ -25,7 +25,7 @@ export default async function UserProfileUpdatePage({ params }: Props) {
             />
           )}
         </div>
-        <div className="profile-form--wrapper">
+        <div className="profile-update-page--form-wrapper">
           <ProfileForm variant="update" user={user} />
         </div>
       </div>

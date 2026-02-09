@@ -70,11 +70,9 @@ export default async function UserHomePage({ params }: Props) {
           )}
         </div>
         <div>
-          <span style={{ margin: "0.75rem 0", display: "inline-block" }}>
             <Button el="link" as="button" href={`${userId}/stories/create`}>
               Create New Story
             </Button>
-          </span>
           <p>
             Curabitur at felis non libero suscipit fermentum. Duis volutpat,
             ante et scelerisque luctus, sem nulla placerat leo, at aliquet

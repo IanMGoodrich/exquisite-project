@@ -46,7 +46,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="login-page">
       <h1>Login Page</h1>
       <div className="page form login">
         {error && errorTemplate()}

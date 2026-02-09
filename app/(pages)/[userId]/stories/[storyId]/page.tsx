@@ -76,7 +76,7 @@ export default async function StoryPage({ params }: Props) {
   };
 
   return (
-    <main className="page main story">
+    <main className="story-main-page page main story">
       {story && story?.completed ? (
         <StoryDisplay userId={userId} storyData={story} isCreator={isCreator} />
       ) : (

@@ -87,7 +87,7 @@ export default function CreateStoryPage() {
   };
 
   return (
-    <main className="page form story">
+    <main className="story-create-page page form story">
       <h1>Create a New Story</h1>
       <form onSubmit={handleSubmit}>
         <Input
