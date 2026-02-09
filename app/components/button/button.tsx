@@ -25,28 +25,28 @@ type LinkProps = {
 const Button: FC<ButtonProps | LinkProps> = ({...props}) => {
   const styleAs = props.as? ` as-${props.as}` : `as-${props.el}`;
   const isSecondary = props.secondary ? "secondary" : "";
-
+  const supplementalClasses = props.classes ? props.classes : ''
   if (props.el === "link") {
     if (props.svg) {
       return (
-        <a className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props} >
+        <a className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} >
           <Icon name={props.svg}/>
         </a>
       )
     }
     return (
-      <a className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props} />
+      <a className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} />
     );
   }
   if (props.svg) {
     return (
-      <button className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props}>
+      <button className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props}>
         <Icon name={props.svg} />
       </button>
     );
   }
   return (
-    <button className={`button ${styleAs} ${isSecondary} ${props.classes}`} {...props} />
+    <button className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} />
   );
 }
 
