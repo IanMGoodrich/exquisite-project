@@ -126,6 +126,14 @@
     }
   }
 
+  .page.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .page.form.story,
   .page.form.auth {
     form {
