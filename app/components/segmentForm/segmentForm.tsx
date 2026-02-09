@@ -6,11 +6,11 @@ import Button from "../button/button";
 type SegmentFormProps = {
   userId: string;
   storyId: string;
+  promptText?: string;
 };
 
-
 /** Segment component */
-const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
+const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId, promptText }) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -23,19 +23,17 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
     event.preventDefault();
     setLoading(true);
     try {
-      const result = await fetch(
-        `/api/${userId}/stories/${storyId}/update`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            content,
-            authorId: userId,
-            storyId,
-            reveal,
-          }),
-        }
-      );
+      const result = await fetch(`/api/${userId}/stories/${storyId}/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content,
+          authorId: userId,
+          storyId,
+          reveal,
+          promptText,
+        }),
+      });
       if (result.ok) {
         setMessage("Segment added successfully");
         setTimeout(() => {
@@ -46,24 +44,22 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
       setError("An error occurred");
       console.error(err);
     } finally {
-      setTimeout(() => 
-        setLoading(false),
-        2000
-      )
+      setTimeout(() => setLoading(false), 2000);
     }
   };
 
-  const handleCreateReveal: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleCreateReveal: React.MouseEventHandler<HTMLButtonElement> = (
+    e,
+  ) => {
     e.preventDefault();
-    if(textareaRef.current) {
+    if (textareaRef.current) {
       const { selectionStart, selectionEnd } = textareaRef.current;
       const highlightedText = content.substring(selectionStart, selectionEnd);
       if (highlightedText && highlightedText.length > 0) {
         setReveal(highlightedText);
       }
     }
-  }
-
+  };
 
   const createNewSegmentTemplate = () => {
     return (
@@ -87,17 +83,19 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
           />
           <div className="form-buttons">
             {reveal && reveal.length > 0 && (
-            <Button type="submit" el="button" disabled={loading}>
-              { loading ?  '...submission in progress' : 'Submit'}
-            </Button>
-            )
-            }
+              <Button type="submit" el="button" disabled={loading}>
+                {loading ? "...submission in progress" : "Submit"}
+              </Button>
+            )}
             {reveal.length === 0 && (
-            <Button onClick={handleCreateReveal} el="button" disabled={content.length === 0}>
-               Select and Create Reveal
-            </Button>
-            )
-            }
+              <Button
+                onClick={handleCreateReveal}
+                el="button"
+                disabled={content.length === 0}
+              >
+                Select and Create Reveal
+              </Button>
+            )}
           </div>
         </form>
       </section>
@@ -106,9 +104,7 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId }) => {
 
   return (
     <section className="segment">
-      <div className="segment--content">
-       {createNewSegmentTemplate()}
-      </div>
+      <div className="segment--content">{createNewSegmentTemplate()}</div>
     </section>
   );
 };

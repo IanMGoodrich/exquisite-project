@@ -18,6 +18,7 @@ export type SegmentType = {
   createdAt: Date | undefined;
   storyId: string;
   content: string;
+  promptText?: string | null;
   likedBy?: {userId: string}[];
   reveal?: string | null;
 }

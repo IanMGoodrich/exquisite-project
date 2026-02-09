@@ -1,6 +1,6 @@
 .segment {
   display: flex;
-  
+
   & *.likes-button {
     display: block;
     width: 45px;
@@ -8,19 +8,50 @@
     border: 2px solid var(--button-border-primary);
   }
 
+  .segment--content {
+    display: flex;
+    flex-direction: column;
+    .segment--expand-toggle {
+      margin-left: auto;
+    }
+
+    .segment--content-expanded {
+      margin-top: 0.5rem;
+      text-align: right;
+
+      .author {
+        margin-top: 0.5rem;
+      }
+
+      .segment--attribution {
+        display: flex;
+        justify-content: right;
+        column-gap: 1.5rem;
+      }
+    }
+
+    .segment--likes-wrapper {
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      margin-bottom: 1rem;
+      .segment--likes-count {
+        margin-right: 1rem;
+      }
+    }
+  }
 
   & * Button.likes-button {
     background: transparent;
     border: none;
-    
+    padding: 0;
     &:hover {
       background: transparent;
-      --svg-border: var(--button-border-primary-hover)
+      --svg-border: var(--button-border-primary-hover);
     }
-    
+
     &.liked {
       --svg-fill: var(--button-background-primary-hover);
     }
   }
-
 }

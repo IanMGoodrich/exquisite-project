@@ -22,6 +22,7 @@ export async function POST(
     authorId?: string;
     reveal?: string;
     storyId?: string;
+    promptText?: string;
   };
   try {
     body = await request.json();
@@ -38,7 +39,7 @@ export async function POST(
   const authorId =
     typeof body.authorId === "string" ? body.authorId.trim() : "";
   const reveal = typeof body.reveal === "string" ? body.reveal.trim() : "";
-    
+  const promptText = typeof body.promptText === "string" ? body.promptText.trim() : "";
   if (!content || !authorId) {
     console.error("Missing content or authorId:", { content, authorId });
     return NextResponse.json(
@@ -62,6 +63,7 @@ export async function POST(
         authorId,
         storyId,
         reveal,
+        promptText,
       },
     });
 

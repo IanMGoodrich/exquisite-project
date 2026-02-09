@@ -23,7 +23,7 @@ export default async function UpdateStoryPage({params} : Props) {
           <p>{lastReveal}...</p>
         </div>
       )}
-      <SegmentForm userId={userId} storyId={storyId} />
+      <SegmentForm promptText={lastReveal ? lastReveal : undefined} userId={userId} storyId={storyId} />
     </main>
   );
 }

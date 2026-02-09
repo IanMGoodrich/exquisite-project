@@ -9,6 +9,7 @@ interface SegmentProps {
   author: UserType;
   isExpandable?: boolean;
   likes?: string[];
+  promptText?: string;
   currentUserId: string;
   currentUserLikes: boolean;
 }
@@ -20,6 +21,7 @@ const Segment: FC<SegmentProps> = ({
   isExpandable,
   currentUserId,
   currentUserLikes,
+  promptText,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [likes, setLikes] = useState(0);
@@ -28,74 +30,69 @@ const Segment: FC<SegmentProps> = ({
   const updateTimeoutRef = useRef<NodeJS.Timeout>(null);
 
   useEffect(() => {
-    const likesOnLoad = () => content.likedBy ? content.likedBy.length : 0    
-    setLikes(likesOnLoad)
-    setUserLikes(currentUserLikes)    
-  },[currentUserLikes, content.likedBy]);
-  
+    const likesOnLoad = () => (content.likedBy ? content.likedBy.length : 0);
+    setLikes(likesOnLoad);
+    setUserLikes(currentUserLikes);
+  }, [currentUserLikes, content.likedBy]);
+
   const handleLikeClick = () => {
-  setUserLikes(!userLikes); // Optimistic UI update
+    setUserLikes(!userLikes); // Optimistic UI update
+    console.log(content);
 
-  
-  // Clear previous pending request
-  if (updateTimeoutRef.current) {
-    clearTimeout(updateTimeoutRef.current);
-  }
-  
-  // Debounce: only send request 500ms after last click
-  updateTimeoutRef.current = setTimeout(async () => {
-    setIsUpdating(true);
-    try {
-      await fetch(`/api/${currentUserId}/segments/${content.id}/like`, {
-        method: 'POST',
-        body: JSON.stringify({ liked: userLikes })
-      });
-      
-    } catch (error) {
-      console.error('Failed to update like');
-      setUserLikes(!userLikes); // Revert on error
-    } finally {
-      setIsUpdating(false);
+    // Clear previous pending request
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
     }
-  }, 500);
-};
 
-return (
+    // Debounce: only send request 500ms after last click
+    updateTimeoutRef.current = setTimeout(async () => {
+      setIsUpdating(true);
+      try {
+        await fetch(`/api/${currentUserId}/segments/${content.id}/like`, {
+          method: "POST",
+          body: JSON.stringify({ liked: userLikes }),
+        });
+      } catch (error) {
+        console.error("Failed to update like");
+        setUserLikes(!userLikes); // Revert on error
+      } finally {
+        setIsUpdating(false);
+      }
+    }, 500);
+  };
+
+  return (
     <section className="segment">
       <div className="segment--content">
-        {isExpandable && expanded && (
-          <div className="segment--content-expanded--upper">
-            <div className="segment--attribution">
-              <div className="segment--author">author -- {author.userName}</div>
-              <div className="segment--stub">
-                based on {content.reveal} wrote
-              </div>
-            </div>
-          </div>
-        )}
         <span className="segment--content-main">{content.content}</span>
         {isExpandable && expanded && (
           <div className="segment--content-expanded">
-            
-              <div className="segment--likes">
-                <div className="segment--likes-wrapper">
-                  <span className="segment--likes-label">Like:</span>
-                  <span className="segment--likes-count">{likes}</span>
-                </div>
+            <div className="segment--attribution">
+              author -- <p className="author">{author.userName}</p>
+            </div>
+            {content.promptText && (
+              <div className="segment--prompt">
+                  <strong>Prompt: </strong>
+                  <span>{` ${content.promptText}`}</span>
+              </div>
+            )}
+            <div className="segment--likes">
+              <div className="segment--likes-wrapper">
+                <span className="segment--likes-label">Like:</span>
+                <span className="segment--likes-count">{likes}</span>
                 <div className="segment--likes-button">
                   <Button
                     as="button"
                     el="button"
                     disabled={isUpdating}
                     svg="heart"
-                    classes={`likes-button ${
-                      userLikes ? "liked" : ""
-                    }`}
+                    classes={`likes-button ${userLikes ? "liked" : ""}`}
                     onClick={() => handleLikeClick()}
                   />
                 </div>
-                {/* TODO: Add like user names on hover. */}
               </div>
+              {/* TODO: Add like user names on hover. */}
+            </div>
           </div>
         )}
         {isExpandable && (

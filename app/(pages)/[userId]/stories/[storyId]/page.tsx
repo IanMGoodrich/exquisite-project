@@ -22,6 +22,7 @@ export default async function StoryPage({ params }: Props) {
           storyId: true,
           createdAt: true,
           reveal: true,
+          promptText: true,
           likedBy: { select: { userId: true } },
         },
       },
@@ -74,10 +75,8 @@ export default async function StoryPage({ params }: Props) {
     );
   };
 
-  console.log("Story page story data", story);
-
   return (
-    <main style={{ maxWidth: 640, margin: "0 auto", padding: "1rem" }}>
+    <main className="page main story">
       {story && story?.completed ? (
         <StoryDisplay userId={userId} storyData={story} isCreator={isCreator} />
       ) : (
