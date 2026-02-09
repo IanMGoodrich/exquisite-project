@@ -20,6 +20,8 @@ a:not(:disabled) {
     font-size: 16px;
     transition: background-color 0.3s ease;
     height: fit-content;
+    width: fit-content;
+    
     &:hover {
       background-color: var(--button-background-primary-hover);
       background-image: var(--button-background-image-primary-hover);
