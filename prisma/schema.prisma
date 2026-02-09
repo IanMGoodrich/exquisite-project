@@ -42,6 +42,7 @@ model Segment {
   story     Story         @relation(fields: [storyId], references: [id], onDelete: Cascade)
   storyId   String
   content   String
+  promptText String?
   likedBy   SegmentLike[]
   reveal    String?
 
