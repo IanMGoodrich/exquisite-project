@@ -37,7 +37,6 @@ const Segment: FC<SegmentProps> = ({
 
   const handleLikeClick = () => {
     setUserLikes(!userLikes); // Optimistic UI update
-    console.log(content);
 
     // Clear previous pending request
     if (updateTimeoutRef.current) {
