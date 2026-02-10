@@ -45,6 +45,7 @@
     background: transparent;
     border: none;
     padding: 0;
+    --svg-height: 30px;
     &:hover {
       background: transparent;
       --svg-border: var(--button-border-primary-hover);

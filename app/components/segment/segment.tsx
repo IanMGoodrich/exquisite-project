@@ -9,7 +9,6 @@ interface SegmentProps {
   author: UserType;
   isExpandable?: boolean;
   likes?: string[];
-  promptText?: string;
   currentUserId: string;
   currentUserLikes: boolean;
 }
@@ -21,7 +20,6 @@ const Segment: FC<SegmentProps> = ({
   isExpandable,
   currentUserId,
   currentUserLikes,
-  promptText,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [likes, setLikes] = useState(0);
@@ -72,7 +70,7 @@ const Segment: FC<SegmentProps> = ({
             {content.promptText && (
               <div className="segment--prompt">
                   <strong>Prompt: </strong>
-                  <span>{` ${content.promptText}`}</span>
+                  <span>{content.promptText}</span>
               </div>
             )}
             <div className="segment--likes">
