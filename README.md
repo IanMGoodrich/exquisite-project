@@ -13,7 +13,7 @@
 ## Current development stage:
 - **Basic DB and models created**
 - **Initial auth architecture: sign-up, login/out, forgot password emails completed**
-- **Desgin token system implemented. Multiple themnes with light and dark veriants**
+- **Desgin token system implemented. Multiple themes with light and dark veriants**
 - **Functional MVP gameplay experience**
 
 
