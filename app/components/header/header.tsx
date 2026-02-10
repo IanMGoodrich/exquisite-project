@@ -117,68 +117,70 @@ const Header = ({ initialSession }: HeaderProps) => {
               />
             </li>
           </ul>
-          <ul className="main-nav--list mobile">
+          <div className="mobile-nav-wrapper">
             <Dropdown label="Menu">
-              <li className="main-nav--item">
-                <Button el="link" href="/">
-                  Home
-                </Button>
-              </li>
-              {!isLoggedIn && (
-                <>
-                  <li className="main-nav--item">
-                    <Button el="link" href="/login">
-                      Login
-                    </Button>
-                  </li>
-                  <li className="main-nav--item">
-                    <Button el="link" href="/signup">
-                      Signup
-                    </Button>
-                  </li>
-                </>
-              )}
-              {isLoggedIn && (
-                <>
-                  <li className="main-nav--item">
-                    <Button el="link" href={`/${userId}/profile`}>
-                      Profile
-                    </Button>
-                  </li>
-                  <li className="main-nav--item">
-                    <Button
-                      el="button"
-                      as="link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleSignOut();
-                      }}
-                    >
-                      Log Out
-                    </Button>
-                  </li>
-                </>
-              )}
-              <li className="main-nav--item">
-                <Button el="link" href={`/about`}>
-                  About
-                </Button>
-              </li>
-              <li className="main-nav--dropdown">
-                <Dropdown
-                  label="Theme"
-                  options={[...availableThemes]}
-                  startOpen={true}
-                  onClickHandler={(e: React.MouseEvent) => {
-                    handleOnClick(e);
-                  }}
-                  onKeyHandler={(e: React.KeyboardEvent) => {
-                    handleOnKey(e);
-                  }}
-                />
-              </li>
+              <ul className="main-nav--list mobile">
+                <li className="main-nav--item">
+                  <Button el="link" href="/">
+                    Home
+                  </Button>
+                </li>
+                {!isLoggedIn && (
+                  <>
+                    <li className="main-nav--item">
+                      <Button el="link" href="/login">
+                        Login
+                      </Button>
+                    </li>
+                    <li className="main-nav--item">
+                      <Button el="link" href="/signup">
+                        Signup
+                      </Button>
+                    </li>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <li className="main-nav--item">
+                      <Button el="link" href={`/${userId}/profile`}>
+                        Profile
+                      </Button>
+                    </li>
+                    <li className="main-nav--item">
+                      <Button
+                        el="button"
+                        as="link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSignOut();
+                        }}
+                      >
+                        Log Out
+                      </Button>
+                    </li>
+                  </>
+                )}
+                <li className="main-nav--item">
+                  <Button el="link" href={`/about`}>
+                    About
+                  </Button>
+                </li>
+                <li className="main-nav--dropdown">
+                  <Dropdown
+                    label="Theme"
+                    options={[...availableThemes]}
+                    startOpen={true}
+                    onClickHandler={(e: React.MouseEvent) => {
+                      handleOnClick(e);
+                    }}
+                    onKeyHandler={(e: React.KeyboardEvent) => {
+                      handleOnKey(e);
+                    }}
+                  />
+                </li>
+              </ul>
             </Dropdown>
-          </ul>
+          </div>
         </nav>
       </header>
     </Container>
