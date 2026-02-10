@@ -1,3 +1,8 @@
 .icon-wrapper {
   display: flex;
+  justify-content: center;
+  svg {
+    height: var(--svg-height, 16px);
+    width: var(--svg-width, auto);
+  }
 }

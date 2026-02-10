@@ -12,8 +12,7 @@
         border: none;
         width: fit-content;
        svg {
-          width: 20px;
-          height: 20px;
+          --svg-height: 20px;
         }
       }
     }
