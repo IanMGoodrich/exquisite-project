@@ -13,12 +13,17 @@
 ## Current development stage:
 - **Basic DB and models created**
 - **Initial auth architecture: sign-up, login/out, forgot password emails completed**
+- **Desgin token system implemented. Multiple themnes with light and dark veriants**
+- **Functional MVP gameplay experience**
 
 
 ## TODO:
  - ~~**Fine tune existing architecture**~~
  - ~~**Develop/Implement actual game mechanics**~~
  - ~~**Incorporate design tokens/fully style app**~~
+ - **Further develop player profiles and social interactions**
+ - **Refinement of UI/UX**
+ - **Implement optional text notifications**
  - **Deploy and enjoy with friends**
 
 
