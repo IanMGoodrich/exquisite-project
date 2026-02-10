@@ -114,7 +114,7 @@
       width: 100%;
       max-width: 60%;
       margin: 3% auto;
-      
+
       ul {
         list-style: none;
         margin-bottom: 1rem;
@@ -209,7 +209,8 @@
     .page.home,
     .page.form.story,
     .page.form.auth {
-      form, .login-signup-buttons {
+      form,
+      .login-signup-buttons {
         display: flex;
         flex-direction: column;
         padding: 3rem;
@@ -231,7 +232,8 @@
     .page.home,
     .page.form.story,
     .page.form.auth {
-      form, .login-signup-buttons {
+      form,
+      .login-signup-buttons {
         position: relative;
         padding: 2rem;
         background-color: var(--background);
@@ -266,7 +268,7 @@
     display: flex;
     justify-content: space-between;
     padding: 2% 0;
-    
+
     .label {
       display: block;
       font-size: var(--fs-heading-5);
@@ -276,6 +278,23 @@
 
     & div .profile-homepage--stories-list {
       list-style: none;
+    }
+  }
+  
+  /* Storybook only */
+  &[data-theme="floral"],
+  &[data-theme="sprawl"],
+  &[data-theme="monitor"],
+  &[data-theme="typewriter"],
+  &[data-theme="default"] {
+    .sbdocs-title {
+      color: black;
+    }
+  }
+
+  &[data-theme="monitor"] {
+    .sb-show-main {
+      padding: 1rem;
     }
   }
 }
