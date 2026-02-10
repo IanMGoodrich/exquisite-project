@@ -11,9 +11,7 @@ const meta: Meta<typeof Segment> = {
   component: Segment,
   tags: ["autodocs"],
   parameters: {
-    controls: {
-      include: ["content", "author", "isExpandable", "likes"],
-    },
+    controls: {},
     docs: {
       page: () => (
         <>
@@ -25,13 +23,6 @@ const meta: Meta<typeof Segment> = {
       ),
     },
   },
-  args: {
-    content:
-      "This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.",
-    author: "John Doe",
-    isExpandable: true,
-    likes: ["Alice", "Bob", "Charlie"],
-  },
 };
 
 export default meta;
@@ -40,32 +31,60 @@ type Story = StoryObj<typeof Segment>;
 
 export const Expandable: Story = {
   args: {
-    content:
-      "This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.",
-    author: "John Doe",
+    content: {
+      content:
+        "This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.",
+      authorId: "John Doe",
+      createdAt: new Date(),
+      storyId: "story1",
+      id: "segment1",
+      promptText: "It provides insights and additional information when expanded.",
+    },
+    author: {
+      userName: "John Doe",
+      id: "John Doe",
+      email: "",
+    },
     isExpandable: true,
-    likes: ["Alice", "Bob", "Charlie"],
+    likes: ["userID1", "userID2", "userID3"],
+    currentUserLikes: false,
+    currentUserId: "userID1",
   },
   decorators: [
     (Story) => (
-      <Story />
+      <div style={{ margin: "2rem" }}>
+        <Story />
+      </div>
     ),
   ],
 };
 
 export const NotExpandable: Story = {
   args: {
-    content:
-      "This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.",
-    author: "John Doe",
+    content: {
+      content:
+        "This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.This is a sample segment content that can be expanded to show more details about the segment. It provides insights and additional information when expanded.",
+      authorId: "John Doe",
+      createdAt: new Date(),
+      storyId: "story1",
+      id: "segment1",
+      promptText: "It provides insights and additional information when expanded.",
+    },
+    author: {
+      userName: "John Doe",
+      id: "John Doe",
+      email: "",
+    },
     isExpandable: false,
-    likes: ["Alice", "Bob", "Charlie"],
+    likes: ["userID1", "userID2", "userID3"],
+    currentUserLikes: false,
+    currentUserId: "userID1",
   },
   decorators: [
     (Story) => (
-      // <div style={{width: '300px', height: 'auto'}}>
-      <Story />
-      // </div>
+      <div style={{ margin: "2rem" }}>
+        <Story />
+      </div>
     ),
   ],
 };

@@ -21,6 +21,7 @@
 
       .author {
         margin-top: 0.5rem;
+        margin-bottom: 0px;
       }
 
       .segment--attribution {
@@ -34,7 +35,6 @@
       display: flex;
       justify-content: right;
       align-items: center;
-      margin-bottom: 1rem;
       .segment--likes-count {
         margin-right: 1rem;
       }
