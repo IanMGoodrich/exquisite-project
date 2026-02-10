@@ -16,9 +16,9 @@
 
 
 ## TODO:
- - **Fine tune existing architecture**
- - **Develop/Implement actual game mechanics**
- - **Incorporate design tokes/fully style app**
+ - ~~**Fine tune existing architecture**~~
+ - ~~**Develop/Implement actual game mechanics**~~
+ - ~~**Incorporate design tokens/fully style app**~~
  - **Deploy and enjoy with friends**
 
 
