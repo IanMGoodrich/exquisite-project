@@ -8,7 +8,6 @@ type DropdownProps = {
   label?: string;
   onClickHandler?: (e: React.MouseEvent) => void;
   onKeyHandler?: (e: React.KeyboardEvent) => void;
-  value?: string;
   startOpen?: boolean;
 };
 
