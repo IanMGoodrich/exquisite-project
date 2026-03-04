@@ -19,7 +19,7 @@ export type SegmentType = {
   storyId: string;
   content: string;
   promptText?: string | null;
-  likedBy?: {userId: string}[];
+  likedBy?: {userId: string, userName: string, email: string}[];
   reveal?: string | null;
 }
 
