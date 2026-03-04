@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useId } from "react";
 import Button from "../button/button";
 import "./dropdown.css";
@@ -9,6 +11,7 @@ type DropdownProps = {
   onClickHandler?: (e: React.MouseEvent) => void;
   onKeyHandler?: (e: React.KeyboardEvent) => void;
   startOpen?: boolean;
+  externallySetActiveValue?: string;
 };
 
 const Dropdown = ({
@@ -18,6 +21,7 @@ const Dropdown = ({
   onClickHandler,
   onKeyHandler,
   startOpen,
+  externallySetActiveValue,
 }: DropdownProps) => {
   const buttonId = useId();
   const firstItemRef = useRef(null);
@@ -27,6 +31,7 @@ const Dropdown = ({
   const toggleOpenClass = (e: React.SyntheticEvent) => {
     const clickedElem = e.target as HTMLElement;
     const clickedId = clickedElem.getAttribute("data-button-id");
+    
     // prevent nested buttons from closing parent dropdown
     if (clickedElem && clickedId && buttonId !== clickedId) {
       return;
@@ -49,16 +54,24 @@ const Dropdown = ({
         const menu = menuRef?.current as HTMLElement;
         menu.classList.add("open");
       }
+      // set focus on open
       setTimeout(() => {
         if (firstItemRef.current && menuRef.current) {
-          const el = firstItemRef.current as HTMLElement;
-          el.focus();
+          let elToFocus: HTMLLIElement;
+          const existingActive = (menuRef?.current as HTMLElement).querySelector('.active') as HTMLLIElement;
+          if (existingActive) {
+            elToFocus = existingActive;
+          } else {
+            elToFocus = firstItemRef.current 
+          }
+          elToFocus.focus();
         }
       }, 0);
     } else {
       setTimeout(() => setOpen(false), 300);
     }
   };
+
   return (
     <div className="dropdown-wrapper">
       <Button
@@ -82,7 +95,7 @@ const Dropdown = ({
       >
         {options && options.length > 0 && (
           <li
-            className="dropdown-item"
+            className={`dropdown-item  ${externallySetActiveValue === options[0] ? "active" : ""}`}
             ref={firstItemRef}
             key={options[0]}
             data-value={options[0]}
@@ -98,7 +111,7 @@ const Dropdown = ({
           Array.isArray(options) &&
           options.slice(1).map((option: string) => (
             <li
-              className="dropdown-item"
+              className={`dropdown-item  ${externallySetActiveValue === option ? "active" : ""}`}
               key={option}
               data-value={option}
               onClick={onClickHandler}
