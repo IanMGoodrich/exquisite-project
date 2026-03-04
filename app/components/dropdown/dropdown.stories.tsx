@@ -81,8 +81,9 @@ export const DropdownComponent: Story = {
       <div
         style={{
           display: "flex",
-          margin: "2rem auto",
           justifyContent: "center",
+          alignItems: "center",
+          height: "calc(50vh - 2rem)",
         }}
       >
         <Story>
@@ -110,8 +111,9 @@ export const DropdownComponentWithChildren: Story = {
       <div
         style={{
           display: "flex",
-          margin: "2rem auto",
+          alignItems: "center",
           justifyContent: "center",
+          height: "calc(50vh - 2rem)",
         }}
       >
         <Story>

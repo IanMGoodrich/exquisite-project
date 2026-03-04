@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Icon from "./icon";
-import svgs from '../../../public/vectors';
+import svgs from "../../../public/vectors";
 import {
   Description,
   Title,
@@ -12,15 +12,15 @@ const meta: Meta<typeof Icon> = {
   component: Icon,
   tags: ["autodocs"],
   argTypes: {
-    name:{
+    name: {
       control: { type: "select" },
       options: Object.keys(svgs),
       description: "Name of the SVG icon to render.",
-      table: {  
+      table: {
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
-    }
+    },
   },
   parameters: {
     docs: {
@@ -46,7 +46,16 @@ export const IconComponent: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "calc(100vh - 2rem)" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(40vh - 2rem)",
+          //@ts-expect-error because css variables are not typed in React.CSSProperties
+          "--svg-height": "48px",
+        }}
+      >
         <Story />
       </div>
     ),

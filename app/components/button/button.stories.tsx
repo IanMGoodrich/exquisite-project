@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./button";
-import svgs from '../../../public/vectors';
+import svgs from "../../../public/vectors";
 import {
   Description,
   Title,
@@ -19,26 +19,27 @@ const meta: Meta<typeof Button> = {
       table: {
         type: { summary: "'button' | 'link'" },
         defaultValue: { summary: "'button'" },
-      }
+      },
     },
     as: {
       control: { type: "select" },
       options: ["button", "link"],
-      description: "The appearance style to render the element as: 'button' or 'link'.",
+      description:
+        "The appearance style to render the element as: 'button' or 'link'.",
       table: {
         type: { summary: "'button' | 'link'" },
         defaultValue: { summary: "'button'" },
       },
     },
-    svg:{
+    svg: {
       control: { type: "select" },
       options: Object.keys(svgs),
       description: "Name of the SVG icon to render inside the button, if any.",
-      table: {  
+      table: {
         type: { summary: "string" },
         defaultValue: { summary: "undefined" },
       },
-    }
+    },
   },
   parameters: {
     docs: {
@@ -46,7 +47,7 @@ const meta: Meta<typeof Button> = {
         <>
           <Title />
           <Description />
-          <Canvas />
+            <Canvas />
           <Controls />
         </>
       ),
@@ -67,7 +68,16 @@ export const ButtonElement: Story = {
   },
   decorators: [
     (Story) => (
-      <Story />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(50vh - 2rem)",
+        }}
+      >
+        <Story />
+      </div>
     ),
   ],
 };
@@ -78,5 +88,18 @@ export const LinkElement: Story = {
     as: "link",
     children: "Click Me",
   },
-  decorators: [(Story) => <Story />],
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(50vh - 2rem)",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };

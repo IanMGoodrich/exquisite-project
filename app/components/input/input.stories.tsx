@@ -45,5 +45,18 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
-  decorators: [(Story) => <Story />],
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          display: "block",
+          justifyContent: "center",
+          maxWidth: "400px",
+          margin: "2rem auto",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };
