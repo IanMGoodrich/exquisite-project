@@ -7,6 +7,7 @@ import Dropdown from "../dropdown/dropdown";
 import { availableThemes } from "@/lib/constants";
 import { useSession, signOut } from "../../../lib/auth-client";
 import React from "react";
+import { useState, useEffect, type FC } from "react";
 import { useRouter } from "next/navigation";
 import { isAvailableTheme } from "../../../lib/constants";
 import "./header.css";
@@ -15,13 +16,25 @@ interface HeaderProps {
   initialSession: { user: { id: string } | null; session: unknown } | null;
 }
 
-const Header = ({ initialSession }: HeaderProps) => {
+
+const Header: FC<HeaderProps> = ({initialSession}) => {
   // Use useSession for real-time updates, but initialize with server session to avoid flash
   const { data: session } = useSession();
   const displaySession = session || initialSession;
-
   const router = useRouter();
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Use async hydration check pattern to avoid linter and React 'cascading renders' errors
+    // and prevent server/client data misalignment.
+
+    const hydrate = async () => {
+      await new Promise(resolve => resolve(null));
+      setMounted(true);
+    };
+    hydrate();
+  }, []);
 
   const isLoggedIn = !!displaySession?.user;
   const userId = displaySession?.user?.id ?? null;
@@ -108,6 +121,7 @@ const Header = ({ initialSession }: HeaderProps) => {
               <Dropdown
                 label="Theme"
                 options={[...availableThemes]}
+                externallySetActiveValue={mounted ? theme : 'default'}
                 onClickHandler={(e: React.MouseEvent) => {
                   handleOnClick(e);
                 }}
@@ -170,6 +184,7 @@ const Header = ({ initialSession }: HeaderProps) => {
                     label="Theme"
                     options={[...availableThemes]}
                     startOpen={true}
+                    externallySetActiveValue={mounted ? theme : 'default'}
                     onClickHandler={(e: React.MouseEvent) => {
                       handleOnClick(e);
                     }}
