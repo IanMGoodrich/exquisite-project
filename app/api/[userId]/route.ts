@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ userId: string }> }
+  { params }: { params: Promise<{ userId: string }> },
 ) {
   try {
     const { userId } = await params;
@@ -27,35 +27,66 @@ export async function PUT(
     console.error("Update error:", error);
     return NextResponse.json(
       { error: "Failed to update user" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 // GET USER BY USERNAME AUTOCOMPLETE
 export async function GET(
-  request: NextRequest
+  request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> },
 ) {
-  // get the request url and get the
-  const { searchParams } = new URL(request.url);
-  const query = (searchParams.get("q") ?? "").trim();
+  // check for query param `q` for autocomplete, if not present return user by id
+  const hasQuery = request.nextUrl.searchParams.has("q");
+  const { userId } = await params;
 
-  if (!query) return NextResponse.json([]);
+  // if query param `q` is present, do autocomplete search for story creation
+  if (hasQuery) {
+    // get the request url and get the
+    const { searchParams } = new URL(request.url);
+    const query = (searchParams.get("q") ?? "").trim();
 
-  const users = await prisma.user.findMany({
-    where: {
-      userName: {
-        contains: query,
-        mode: "insensitive",
+    if (!query) return NextResponse.json([]);
+
+    const users = await prisma.user.findMany({
+      where: {
+        userName: {
+          contains: query,
+          mode: "insensitive",
+        },
       },
-    },
-    select: {
-      id: true,
-      userName: true,
-      name: true,
-    },
-    take: 10,
-  });
-  return NextResponse.json(users);
-}
+      select: {
+        id: true,
+        userName: true,
+        name: true,
+      },
+      take: 10,
+    });
+    return NextResponse.json(users);
+  }
 
+  // if no query param `q`, return user by id for segmentLike functionality
+  if (!hasQuery) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          userName: true,
+          email: true,
+        },
+      });
+      if (!user) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+      }
+      return NextResponse.json(user, { status: 200 });
+    } catch (error) {
+      console.error("Get user error:", error);
+      return NextResponse.json(
+        { error: "Failed to get user" },
+        { status: 500 },
+      );
+    }
+  }
+}

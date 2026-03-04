@@ -8,7 +8,6 @@ interface SegmentProps {
   content: SegmentType;
   author: UserType;
   isExpandable?: boolean;
-  likes?: string[];
   currentUserId: string;
   currentUserLikes: boolean;
 }
@@ -22,20 +21,35 @@ const Segment: FC<SegmentProps> = ({
   currentUserLikes,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const [likes, setLikes] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
   const [userLikes, setUserLikes] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const updateTimeoutRef = useRef<NodeJS.Timeout>(null);
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     const likesOnLoad = () => (content.likedBy ? content.likedBy.length : 0);
-    setLikes(likesOnLoad);
+    setLikesCount(likesOnLoad);
     setUserLikes(currentUserLikes);
-  }, [currentUserLikes, content.likedBy]);
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await fetch(`/api/${currentUserId}`,{
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        const userData = await response.json();
+        
+        setCurrentUser(userData);
+      } catch (error) {
+        console.error("Failed to fetch current user");
+      }
+    };
+    
+    fetchCurrentUser();
+  }, [currentUserLikes, content.likedBy, currentUserId]);
 
   const handleLikeClick = () => {
     setUserLikes(!userLikes); // Optimistic UI update
-
     // Clear previous pending request
     if (updateTimeoutRef.current) {
       clearTimeout(updateTimeoutRef.current);
@@ -47,7 +61,7 @@ const Segment: FC<SegmentProps> = ({
       try {
         await fetch(`/api/${currentUserId}/segments/${content.id}/like`, {
           method: "POST",
-          body: JSON.stringify({ liked: userLikes }),
+          body: JSON.stringify({ liked: userLikes, userId: currentUser?.id, userName: currentUser?.userName, email: currentUser?.email }),
         });
       } catch (error) {
         console.error("Failed to update like");
@@ -76,7 +90,7 @@ const Segment: FC<SegmentProps> = ({
             <div className="segment--likes">
               <div className="segment--likes-wrapper">
                 <span className="segment--likes-label">Like:</span>
-                <span className="segment--likes-count">{likes}</span>
+                <span className="segment--likes-count">{likesCount}</span>
                 <div className="segment--likes-button">
                   <Button
                     as="button"
@@ -88,7 +102,24 @@ const Segment: FC<SegmentProps> = ({
                   />
                 </div>
               </div>
-              {/* TODO: Add like user names on hover. */}
+              <div>
+                {content.likedBy && content.likedBy.length > 0 && (
+                  <div className="segment--liked-by">
+                    Liked by:{" "}
+
+                    {content.likedBy.map((user) => (
+                      user.userId === currentUserId ? 
+                      (<span key={user.userId} className="segment--liked-by-user">
+                        {`You ${user.userName}`}{" "}
+                      </span>) 
+                      : 
+                      (<a key={user.userId} href={`mailto:${user.email}`} className="segment--liked-by-user">
+                        {user.userName}{" "}
+                      </a>)
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

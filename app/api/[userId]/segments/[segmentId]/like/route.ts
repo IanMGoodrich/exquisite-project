@@ -9,6 +9,7 @@ export async function POST(
   try {
     const params = await context.params;
     const { userId, segmentId } = params;
+    const { userName, email } = await request.json();
     
     // Rate limiting
     const recentLike = await prisma.segmentLike.findFirst({
@@ -44,7 +45,9 @@ export async function POST(
       await prisma.segmentLike.create({
         data: {
           segmentId,
-          userId
+          userId,
+          userName,
+          email
         }
       });
       liked = true;

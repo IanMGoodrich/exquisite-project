@@ -23,7 +23,7 @@ export default async function StoryPage({ params }: Props) {
           createdAt: true,
           reveal: true,
           promptText: true,
-          likedBy: { select: { userId: true } },
+          likedBy: { select: { userId: true, userName: true, email: true } },
         },
       },
       contributors: true,
