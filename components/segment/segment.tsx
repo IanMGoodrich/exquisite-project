@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, type FC } from "react";
-import { type UserType, type SegmentType } from "../../../lib/types";
+import { type UserType, type SegmentType } from "@/lib/types";
 import "./segment.css";
 import Button from "../button/button";
 
@@ -98,40 +98,22 @@ const Segment: FC<SegmentProps> = ({
                     disabled={isUpdating}
                     svg="heart"
                     classes={`likes-button ${userLikes ? "liked" : ""}`}
-                    onClick={() => handleLikeClick()}
+                    onClick={handleLikeClick}
                   />
                 </div>
-              </div>
-              <div>
-                {content.likedBy && content.likedBy.length > 0 && (
-                  <div className="segment--liked-by">
-                    Liked by:{" "}
-
-                    {content.likedBy.map((user) => (
-                      user.userId === currentUserId ? 
-                      (<span key={user.userId} className="segment--liked-by-user">
-                        {`You ${user.userName}`}{" "}
-                      </span>) 
-                      : 
-                      (<a key={user.userId} href={`mailto:${user.email}`} className="segment--liked-by-user">
-                        {user.userName}{" "}
-                      </a>)
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           </div>
         )}
         {isExpandable && (
-          <div className="segment--expand-toggle">
-            <button
-              onClick={() => setExpanded(!expanded)}
-              aria-expanded={expanded}
-            >
-              {expanded ? "Show Less" : "Show More"}
-            </button>
-          </div>
+          <Button
+            as="button"
+            el="button"
+            classes="segment--expand-toggle"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? "Hide" : "Expand"}
+          </Button>
         )}
       </div>
     </section>

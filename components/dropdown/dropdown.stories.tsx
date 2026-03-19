@@ -98,28 +98,10 @@ export const DropdownComponentWithChildren: Story = {
   args: {
     label: "Select Theme",
     children: (
-      <>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-        <li>Item 4</li>
-      </>
+      <Dropdown
+        options={["nestedOption1", "nestedOption2"]}
+        label="Nested Dropdown"
+      />
     ),
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "calc(50vh - 2rem)",
-        }}
-      >
-        <Story>
-          <Dropdown />
-        </Story>
-      </div>
-    ),
-  ],
 };

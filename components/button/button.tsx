@@ -48,6 +48,6 @@ const Button: FC<ButtonProps | LinkProps> = ({...props}) => {
   return (
     <button className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} />
   );
-}
+};
 
 export default Button;

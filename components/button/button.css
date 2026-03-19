@@ -53,71 +53,19 @@ a:not(:disabled) {
   }
 
   &.as-link {
-    position: relative;
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
     color: var(--link-primary);
-    text-decoration: none;
-    font-size: 16px;
-    width: fit-content;
-    transition: all 0.3s ease;
-    &::after {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 0;
-      height: 2px;
-      background: var(--link-primary-hover);
-      transition: width 0.3s;
-      bottom: 0;
-    }
+
     &:hover {
       color: var(--link-primary-hover);
-      font-weight: 600;
-      &::after {
-        position: absolute;
-        width: 100%;
-      }
     }
+
     &:focus {
       outline: 2px solid var(--link-primary-hover);
       outline-offset: 2px;
     }
-    &.secondary {
-      color: var(--link-secondary);
-      &::after {
-        content: "";
-        display: block;
-        width: 0;
-        height: 2px;
-        background: var(--link-secondary-hover);
-        transition: width 0.3s;
-      }
-      &:hover {
-        color: var(--link-secondary-hover);
-        font-weight: 600;
-        &::after {
-          width: 100%;
-        }
-      }
-      &:focus {
-        outline: 2px solid var(--link-secondary-hover);
-        outline-offset: 2px;
-      }
-    }
   }
-
-  &.as-button:disabled,
-  &.as-link:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    text-decoration: none;
-  }
-
-  .newspaper-background {
-    background-color: var(--button-background-primary);
-    opacity: 0.6;
-    background-size: 5px 5px;
-    background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 0.5px, #e5e5f7 0, #e5e5f7 50%);
-  }
-
 }

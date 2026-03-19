@@ -3,8 +3,8 @@
 import { type FC, useState } from "react";
 import Button from "../button/button";
 import Input from "../input/input";
-import { type UserType } from "../../../lib/types";
-import { signUp } from "../../../lib/auth-client";
+import { type UserType } from "@/lib/types";
+import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import "./profileform.css";
 type UserProfileProps = {
@@ -99,96 +99,91 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           setLoading(false);
           return;
         }
-        router.push("/");
+
+        router.push("/login");
       }
     } catch (err) {
-      setError("An error occurred");
       console.error(err);
+      setError("Failed to submit form");
     } finally {
       setLoading(false);
     }
   };
-  
-  const buttonText = props.variant==="signup" ? "Sign Up" : "Update Profile"; 
-  
+
   return (
     <form className="profile-form" onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        id="firstName"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="Enter First Name"
-        label="First Name"
-        required
-      />
-      <Input
-        type="text"
-        id="lastName"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Enter Last Name"
-        label="Last Name"
-        required
-      />
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <Input
         type="email"
+        label="Email"
         id="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter Email"
-        label="Email"
         required
       />
       <Input
         type="text"
+        label="Username"
         id="userName"
-        label="User Name (optional)"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
-        placeholder="Will default to first name and last initial"
-      />
-      <Input
-        type="tel"
-        id="phoneNumber"
-        label="Phone Number (optional)"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-        placeholder="If you wish to receive SMS notifications"
+        required
       />
       <Input
         type="text"
+        label="First Name"
+        id="firstName"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+      />
+      <Input
+        type="text"
+        label="Last Name"
+        id="lastName"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+      />
+      <Input
+        type="tel"
+        label="Phone Number"
+        id="phone"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+      <Input
+        type="text"
+        label="Image URL"
         id="image"
-        label="Profile Image (optional)"
         value={image}
         onChange={(e) => setImage(e.target.value)}
-        placeholder="Add image URL"
       />
       {props.variant === "signup" && (
         <>
           <Input
             type="password"
+            label="Password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter Password"
-            label="Password"
             required
           />
           <Input
             type="password"
+            label="Confirm Password"
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Retype Password"
-            label="Confirm Password"
             required
           />
         </>
       )}
-      {error && <p className="error">{error}</p>}
-      <Button classes="profile-submit" type="submit" el="button" disabled={loading}>
-        {loading ? "Updating..." : `${buttonText}`}
+      <Button
+        el="button"
+        type="submit"
+        classes="profile-submit"
+        disabled={loading}
+      >
+        {loading ? "Submitting..." : "Submit"}
       </Button>
     </form>
   );

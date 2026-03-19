@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Icon from "./icon";
-import svgs from "../../../public/vectors";
+import svgs from "@/public/vectors";
 import {
   Description,
   Title,

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useState } from "react";
-import { type Theme, defaultTheme } from "../../../lib/constants";
+import { type Theme, defaultTheme } from "@/lib/constants";
 
 export const ThemeContext = createContext<{
   theme: Theme;

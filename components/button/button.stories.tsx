@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./button";
-import svgs from "../../../public/vectors";
+import svgs from "@/public/vectors";
 import {
   Description,
   Title,
@@ -47,7 +47,7 @@ const meta: Meta<typeof Button> = {
         <>
           <Title />
           <Description />
-            <Canvas />
+          <Canvas />
           <Controls />
         </>
       ),
@@ -59,47 +59,22 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const ButtonElement: Story = {
+export const Primary: Story = {
   args: {
     el: "button",
-    as: "button",
-    onClick: () => alert("Button clicked!"),
-    children: "Click Me",
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(50vh - 2rem)",
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
 };
-export const LinkElement: Story = {
+
+export const Link: Story = {
   args: {
     el: "link",
-    href: "#",
     as: "link",
-    children: "Click Me",
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(50vh - 2rem)",
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+};
+
+export const WithIcon: Story = {
+  args: {
+    el: "button",
+    svg: "heart",
+  },
 };
