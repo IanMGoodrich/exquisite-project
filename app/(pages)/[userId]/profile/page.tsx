@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "../../../../lib/auth-utils";
-import ProfileForm from "../../../components/profileform/profileform";
-import ImageWrapper from "@/app/components/image/image";
+import ProfileForm from "@/components/profileform/profileform";
+import ImageWrapper from "@/components/image/image";
 
 type Props = {
   params: Promise<{ userId: string }>;

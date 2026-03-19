@@ -1,7 +1,7 @@
 
 import { getAuthenticatedUser } from '@/lib/auth-utils';
 import { getStorySegments } from '@/lib/utilities';
-import SegmentForm from '@/app/components/segmentForm/segmentForm';
+import SegmentForm from '@/components/segmentForm/segmentForm';
 
 type Props = {
   params: Promise<{ userId: string; storyId: string }>;

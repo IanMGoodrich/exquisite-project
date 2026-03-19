@@ -1,6 +1,6 @@
 import { getAuthenticatedUserWithStories } from "../../../lib/auth-utils";
-import ImageWrapper from "@/app/components/image/image";
-import Button from "@/app/components/button/button";
+import ImageWrapper from "@/components/image/image";
+import Button from "@/components/button/button";
 import Link from "next/link";
 
 type Props = {

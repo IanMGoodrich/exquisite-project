@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Input from "../../components/input/input";
-import Button from "../../components/button/button";
+import Input from "@/components/input/input";
+import Button from "@/components/button/button";
 import { requestPasswordReset } from "../../../lib/auth-client";
 
 export default function ForgotPasswordPage() {

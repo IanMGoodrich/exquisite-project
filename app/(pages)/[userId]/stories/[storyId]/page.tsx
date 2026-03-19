@@ -1,6 +1,6 @@
 import prisma from "../../../../../lib/prisma";
 import Link from "next/link";
-import StoryDisplay from "@/app/components/storyDisplay/storyDisplay";
+import StoryDisplay from "@/components/storyDisplay/storyDisplay";
 type Props = {
   params: Promise<{ userId: string; storyId: string }>;
 };

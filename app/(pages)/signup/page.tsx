@@ -1,6 +1,6 @@
 "use client";
 
-import ProfileForm from "../../components/profileform/profileform";
+import ProfileForm from "@/components/profileform/profileform";
 export default function SignupPage() {
 
   return (

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { type UserType } from "@/lib/types";
 
-import Input from "@/app/components/input/input";
-import Button from "@/app/components/button/button";
+import Input from "@/components/input/input";
+import Button from "@/components/button/button";
 
 export default function CreateStoryPage() {
   const router = useRouter();
