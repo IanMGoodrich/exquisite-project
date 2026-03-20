@@ -99,91 +99,96 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           setLoading(false);
           return;
         }
-
-        router.push("/login");
+        router.push("/");
       }
     } catch (err) {
+      setError("An error occurred");
       console.error(err);
-      setError("Failed to submit form");
     } finally {
       setLoading(false);
     }
   };
-
+  
+  const buttonText = props.variant==="signup" ? "Sign Up" : "Update Profile"; 
+  
   return (
     <form className="profile-form" onSubmit={handleSubmit}>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <Input
-        type="email"
-        label="Email"
-        id="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
       <Input
         type="text"
-        label="Username"
-        id="userName"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-        required
-      />
-      <Input
-        type="text"
-        label="First Name"
         id="firstName"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
+        placeholder="Enter First Name"
+        label="First Name"
+        required
       />
       <Input
         type="text"
-        label="Last Name"
         id="lastName"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
+        placeholder="Enter Last Name"
+        label="Last Name"
+        required
       />
       <Input
-        type="tel"
-        label="Phone Number"
-        id="phone"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
+        type="email"
+        id="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Enter Email"
+        label="Email"
+        required
       />
       <Input
         type="text"
-        label="Image URL"
+        id="userName"
+        label="User Name (optional)"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="Will default to first name and last initial"
+      />
+      <Input
+        type="tel"
+        id="phoneNumber"
+        label="Phone Number (optional)"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+        placeholder="If you wish to receive SMS notifications"
+      />
+      <Input
+        type="text"
         id="image"
+        label="Profile Image (optional)"
         value={image}
         onChange={(e) => setImage(e.target.value)}
+        placeholder="Add image URL"
       />
       {props.variant === "signup" && (
         <>
           <Input
             type="password"
-            label="Password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Password"
+            label="Password"
             required
           />
           <Input
             type="password"
-            label="Confirm Password"
             id="confirmPassword"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Retype Password"
+            label="Confirm Password"
             required
           />
         </>
       )}
-      <Button
-        el="button"
-        type="submit"
-        classes="profile-submit"
-        disabled={loading}
-      >
-        {loading ? "Submitting..." : "Submit"}
+      {error && <p className="error">{error}</p>}
+      <Button classes="profile-submit" type="submit" el="button" disabled={loading}>
+        {loading ? "Updating..." : `${buttonText}`}
       </Button>
     </form>
   );

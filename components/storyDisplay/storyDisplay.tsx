@@ -100,17 +100,15 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
                 ref={titleRef}
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
-                required
               />
               <div className="form-buttons">
-                <Button el="button" type="submit" disabled={loading}>
-                  {loading ? "Updating" : "Change Title"}
+                <Button el="button" as="button" type="submit">
+                  { loading ? "Updating" : "Change Title"}
                 </Button>
-                <Button el="button" onClick={() => setTitleInputExpanded(false)}>
+                <Button el="button" as="button" onClick={() =>setTitleInputExpanded(false)}>
                   Cancel
                 </Button>
               </div>
-              {error && <p style={{ color: "red" }}>{error}</p>}
             </form>
           </div>
         )}
@@ -130,19 +128,12 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
           ))}
         <Button
           el="button"
+          as="button"
           classes="extra-content-button"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           {isExpanded ? "View story" : "View extra content"}
         </Button>
-        {isCreator && (
-          <Button
-            el="link"
-            href={`/${userId}/stories/${storyData.id}/update`}
-          >
-            Add to Story
-          </Button>
-        )}
       </div>
     </section>
   );

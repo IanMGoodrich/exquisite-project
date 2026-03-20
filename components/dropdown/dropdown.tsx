@@ -99,29 +99,29 @@ const Dropdown = ({
             ref={firstItemRef}
             key={options[0]}
             data-value={options[0]}
-            tabIndex={0}
-            role="menuitem"
             onClick={onClickHandler}
             onKeyDown={onKeyHandler}
+            tabIndex={open ? 0 : -1}
           >
             {options[0]}
           </li>
         )}
         {options &&
-          options.slice(1).map((item) => (
+          options.length > 1 &&
+          Array.isArray(options) &&
+          options.slice(1).map((option: string) => (
             <li
-              className={`dropdown-item ${externallySetActiveValue === item ? "active" : ""}`}
-              key={item}
-              data-value={item}
-              tabIndex={0}
-              role="menuitem"
+              className={`dropdown-item  ${externallySetActiveValue === option ? "active" : ""}`}
+              key={option}
+              data-value={option}
               onClick={onClickHandler}
               onKeyDown={onKeyHandler}
+              tabIndex={open ? 0 : -1}
             >
-              {item}
+              {option}
             </li>
           ))}
-        {children && children}
+        {children}
       </ul>
     </div>
   );

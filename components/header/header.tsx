@@ -99,67 +99,104 @@ const Header: FC<HeaderProps> = ({initialSession}) => {
                   </Button>
                 </li>
                 <li className="main-nav--item">
-                  <Button el="link" href={`/${userId}`}>
-                    Dashboard
-                  </Button>
-                </li>
-                <li className="main-nav--item">
-                  <Button el="button" onClick={handleSignOut}>
-                    Sign Out
+                  <Button
+                    el="button"
+                    as="link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSignOut();
+                    }}
+                  >
+                    Log Out
                   </Button>
                 </li>
               </>
             )}
+            <li className="main-nav--item">
+              <Button el="link" href={`/about`}>
+                About
+              </Button>
+            </li>
+            <li className="main-nav--dropdown">
+              <Dropdown
+                label="Theme"
+                options={availableThemes as unknown as string[]}
+                externallySetActiveValue={mounted ? theme : 'default'}
+                onClickHandler={(e: React.MouseEvent) => {
+                  handleOnClick(e);
+                }}
+                onKeyHandler={(e: React.KeyboardEvent) => {
+                  handleOnKey(e);
+                }}
+              />
+            </li>
           </ul>
           <div className="mobile-nav-wrapper">
-            {isLoggedIn && (
-              <>
-                <ul className="main-nav--list mobile">
-                  <li className="main-nav--item">
-                    <Button el="link" href={`/${userId}/profile`}>
-                      Profile
-                    </Button>
-                  </li>
-                  <li className="main-nav--item">
-                    <Button el="link" href={`/${userId}`}>
-                      Dashboard
-                    </Button>
-                  </li>
-                  <li className="main-nav--item">
-                    <Button el="button" onClick={handleSignOut}>
-                      Sign Out
-                    </Button>
-                  </li>
-                </ul>
-              </>
-            )}
-            {!isLoggedIn && (
-              <>
-                <ul className="main-nav--list mobile">
-                  <li className="main-nav--item">
-                    <Button el="link" href="/login">
-                      Login
-                    </Button>
-                  </li>
-                  <li className="main-nav--item">
-                    <Button el="link" href="/signup">
-                      Signup
-                    </Button>
-                  </li>
-                </ul>
-              </>
-            )}
+            <Dropdown label="Menu">
+              <ul className="main-nav--list mobile">
+                <li className="main-nav--item">
+                  <Button el="link" href="/">
+                    Home
+                  </Button>
+                </li>
+                {!isLoggedIn && (
+                  <>
+                    <li className="main-nav--item">
+                      <Button el="link" href="/login">
+                        Login
+                      </Button>
+                    </li>
+                    <li className="main-nav--item">
+                      <Button el="link" href="/signup">
+                        Signup
+                      </Button>
+                    </li>
+                  </>
+                )}
+                {isLoggedIn && (
+                  <>
+                    <li className="main-nav--item">
+                      <Button el="link" href={`/${userId}/profile`}>
+                        Profile
+                      </Button>
+                    </li>
+                    <li className="main-nav--item">
+                      <Button
+                        el="button"
+                        as="link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSignOut();
+                        }}
+                      >
+                        Log Out
+                      </Button>
+                    </li>
+                  </>
+                )}
+                <li className="main-nav--item">
+                  <Button el="link" href={`/about`}>
+                    About
+                  </Button>
+                </li>
+                <li className="main-nav--dropdown">
+                  <Dropdown
+                    label="Theme"
+                    options={availableThemes as unknown as string[]}
+                    startOpen={true}
+                    externallySetActiveValue={mounted ? theme : 'default'}
+                    onClickHandler={(e: React.MouseEvent) => {
+                      handleOnClick(e);
+                    }}
+                    onKeyHandler={(e: React.KeyboardEvent) => {
+                      handleOnKey(e);
+                    }}
+                  />
+                </li>
+              </ul>
+            </Dropdown>
           </div>
         </nav>
-        {mounted && (
-          <Dropdown
-            label={theme || "Theme"}
-            options={availableThemes as unknown as string[]}
-            onClickHandler={handleOnClick}
-            onKeyHandler={handleOnKey}
-            externallySetActiveValue={theme}
-          />
-        )}
       </header>
     </Container>
   );
