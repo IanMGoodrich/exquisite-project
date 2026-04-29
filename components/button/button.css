@@ -68,4 +68,15 @@ a:not(:disabled) {
       outline-offset: 2px;
     }
   }
+
+  &.icon-only {
+    background: transparent;
+    border: none;
+    padding: 0;
+
+    
+    & svg {
+      --svg-fill: var(--button-color-primary);
+    }
+  } 
 }

@@ -3,11 +3,12 @@
 import { type ComponentPropsWithoutRef, type FC } from "react";
 import "./button.css";
 import Icon from '../icon/icon';
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "icon-only";
 export type ButtonAsType = "button" | "link"
 type ButtonProps = {
   el: "button";
   as?: ButtonAsType;
-  secondary?: boolean;
+  variant?: ButtonVariant;
   svg?: string;
   classes?: string;
 } & ComponentPropsWithoutRef<"button">;
@@ -17,36 +18,60 @@ type LinkProps = {
   el: "link";
   as?: ButtonAsType;
   svg?: string;
-  secondary?: boolean;
+  variant?: ButtonVariant;
   classes?: string;
 } & ComponentPropsWithoutRef<"a">;  
 
 
-const Button: FC<ButtonProps | LinkProps> = ({...props}) => {
-  const styleAs = props.as? ` as-${props.as}` : `as-${props.el}`;
-  const isSecondary = props.secondary ? "secondary" : "";
-  const supplementalClasses = props.classes ? props.classes : ''
-  if (props.el === "link") {
-    if (props.svg) {
+const Button: FC<ButtonProps | LinkProps> = ({
+  variant,
+  as,
+  el,
+  svg,
+  classes,
+  ...restProps
+}) => {
+  const styleAs = as ? ` as-${as}` : `as-${el}`;
+  const variantStyle = variant ? variant : "primary";
+  const supplementalClasses = classes ? classes : "";
+
+  if (el === "link") {
+    const linkProps = restProps as ComponentPropsWithoutRef<"a">;
+    if (svg) {
       return (
-        <a className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} >
-          <Icon name={props.svg}/>
+        <a
+          className={`button ${styleAs} ${variantStyle} ${supplementalClasses}`}
+          {...linkProps}
+        >
+          <Icon name={svg} />
         </a>
-      )
+      );
     }
     return (
-      <a className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} />
+      <a
+        className={`button ${styleAs} ${variantStyle} ${supplementalClasses}`}
+        {...linkProps}
+      />
     );
   }
-  if (props.svg) {
+
+  const buttonProps = restProps as ComponentPropsWithoutRef<"button">;
+  if (svg) {
     return (
-      <button className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props}>
-        <Icon name={props.svg} />
+      <button
+        className={`button ${styleAs} ${variantStyle} ${supplementalClasses}`}
+        {...buttonProps}
+      >
+        <Icon name={svg} />
       </button>
     );
   }
+
   return (
-    <button className={`button ${styleAs} ${isSecondary} ${supplementalClasses}`} {...props} />
+    <button
+      className={`button ${styleAs} ${variantStyle} ${supplementalClasses}`}
+      {...buttonProps}
+    />
   );
 };
 
