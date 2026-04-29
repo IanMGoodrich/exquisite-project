@@ -13,8 +13,9 @@
 ## Current development stage:
 - **Basic DB and models created**
 - **Initial auth architecture: sign-up, login/out, forgot password emails completed**
-- **Desgin token system implemented. Multiple themes with light and dark veriants**
+- **Design token system implemented. Multiple themes with light and dark variants**
 - **Functional MVP gameplay experience**
+- **Likes and player message system**
 
 
 ## TODO:
