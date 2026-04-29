@@ -264,6 +264,27 @@
 
   /* Profile Page */
 
+  .profile-homepage--messages {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+  }
+  .profile-homepage--new-message-wrapper {
+    padding-bottom: 1.5rem;
+  } 
+
+  .profile-homepage--new-message-detail {
+    summary {
+      display: block;
+    }
+
+    &[open] {
+      summary {
+        display: none;
+      }
+    }
+  }
+
   .profile-homepage--stories-wrapper {
     display: flex;
     justify-content: space-between;
@@ -278,6 +299,9 @@
 
     & div .profile-homepage--stories-list {
       list-style: none;
+       li {
+        padding-left: .75rem;
+       }
     }
   }
   
