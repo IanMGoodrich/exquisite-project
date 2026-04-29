@@ -1,0 +1,60 @@
+.message {
+  .message--header {
+    display: flex;
+    /* flex-direction: column; */
+    font-size: var(--fs-legal);
+    align-items: center;
+    position: relative;
+    
+    
+    &:hover,
+    &:focus {
+      .message--sender-name {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity .5s ease-in-out;
+        transition-delay: 1s ;
+      }
+    }
+  }
+
+  .message--sender {
+    padding: .25rem;
+    img {
+      width: 16px;
+      height: 16px;
+      border-width: 1px;
+    }
+  }
+
+  .message--sender-name {
+    opacity: 0;
+    position: absolute;
+    font-size: var(--fs-legal);
+    top: calc(var(--fs-legal) * -1);
+    left: 0;
+    line-height: var(--lh-normal); 
+    transition: opacity .3s ease-in-out;
+    z-index: 2;
+    width: max-content;
+  }
+
+  .message--actions {
+    display: flex;
+    column-gap: 10%;
+
+  }
+
+  .message {
+    padding-left: 1rem;
+  }
+
+  button.icon-only {
+    --svg-height: 16px;
+  }
+
+  /* hide reply button at max depth */
+  .message--replies > .message > .message--replies > .message > .message--replies .message--reply-button {
+    display: none;
+  }
+}
