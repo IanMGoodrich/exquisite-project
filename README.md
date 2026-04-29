@@ -22,6 +22,7 @@
  - ~~**Develop/Implement actual game mechanics**~~
  - ~~**Incorporate design tokens/fully style app**~~
  - **Further develop player profiles and social interactions**
+   - ~~**Incorporate messaging system**~~
  - **Refinement of UI/UX**
  - **Implement optional text notifications**
  - **Deploy and enjoy with friends**
