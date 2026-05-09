@@ -44,7 +44,7 @@ export default function SignupPage() {
       }
 
       //Update user profile with additional fields
-      const updateResponse = await fetch("/api/signup", {
+      const updateResponse = await fetch("/api/auth/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

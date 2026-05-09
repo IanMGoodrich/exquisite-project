@@ -78,7 +78,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         }
 
         // Step 2: Update non-auth user info
-        const updateResponse = await fetch("/api/signup", {
+        const updateResponse = await fetch("/api/auth/sign-up", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
