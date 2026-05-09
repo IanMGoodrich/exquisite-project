@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const { email, name, userName, firstName, lastName, phoneNumber, image } = await request.json();
-
+    console.log('signup/route hit');
+    
     if (!email) {
       return NextResponse.json(
         { error: "Email is required" },
