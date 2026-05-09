@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_OPTIONS='--max-old-space-size=1536' next build",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && NODE_OPTIONS='--max-old-space-size=1536' next build",
     "start": "next start",
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
