@@ -6,6 +6,8 @@ import { getResetPasswordEmailHtml } from "./email-template";
 import { resend, FROM_EMAIL } from "./resend";
 
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL || process.env.DEV_AUTH_URL || "http://localhost:3000",
+  trustedOrigins: ["http://localhost:3000", "http://localhost:3001", "https://exquisite-corpse.art"],
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
