@@ -1,6 +1,6 @@
 
 import { getAuthenticatedUser } from '@/lib/auth-utils';
-import { getStorySegments } from '@/lib/utilities';
+import { getStorySegments,  checkForLastSegment} from '@/lib/utilities';
 import SegmentForm from '@/components/segmentForm/segmentForm';
 
 type Props = {
@@ -13,6 +13,7 @@ export default async function UpdateStoryPage({params} : Props) {
   const user = await getAuthenticatedUser(userId); 
   const segments = await getStorySegments(storyId);
   const lastReveal = segments.length > 0 ? segments[segments.length - 1].reveal : null;
+  const isLast = await checkForLastSegment(storyId);
 
   return (
     <main className="story-update-page">
@@ -23,7 +24,7 @@ export default async function UpdateStoryPage({params} : Props) {
           <p>{lastReveal}...</p>
         </div>
       )}
-      <SegmentForm promptText={lastReveal ? lastReveal : undefined} userId={userId} storyId={storyId} />
+      <SegmentForm promptText={lastReveal ? lastReveal : undefined} userId={userId} storyId={storyId} isLast={isLast}/>
     </main>
   );
 }
