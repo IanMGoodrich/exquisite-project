@@ -29,18 +29,19 @@ export const getNextContributor = (
   return contributors[nextIndex];
 };
 
-export const checkNextRound = (
-  completedRounds: number,
-  totalRounds: number,
+export const setRoundNumber = (
+  segmentCount: number,
   contributors: string[],
-  nextContributorId: string
 ) => {
-  const nextUserIndex = contributors.indexOf(nextContributorId);  
-  if (nextUserIndex !== contributors.length - 1) {
-    return completedRounds;
-  } else {
-    return completedRounds + 1;
+  const contributorCount =  contributors.length;
+
+  if (segmentCount < contributors.length) {
+    return 1;
   }
+  if(segmentCount % contributorCount === 0 ) {
+    return ((segmentCount / contributorCount) + 1); 
+  }  
+  return Math.ceil(segmentCount/contributorCount)
 };
 
 export const getStorySegments = async (storyId: string) => {
@@ -58,3 +59,17 @@ export const getStorySegments = async (storyId: string) => {
   });
   return segments;
 };
+
+export const checkForLastSegment = async (storyId: string) => {
+  const story = await prisma.story.findUnique({
+    where: { id: storyId },
+    select: {
+      content: true,
+      rounds: true,
+      contributors:true,
+    }
+  })
+  if (story) {
+    return story.content.length === (story.contributors.length * story.rounds -1);
+  }
+}
