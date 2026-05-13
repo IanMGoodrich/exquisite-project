@@ -7,10 +7,11 @@ type SegmentFormProps = {
   userId: string;
   storyId: string;
   promptText?: string;
+  isLast?:boolean;
 };
 
 /** Segment component */
-const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId, promptText }) => {
+const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId, promptText, isLast }) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -30,7 +31,7 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId, promptText }) => {
           content,
           authorId: userId,
           storyId,
-          reveal,
+          reveal: !isLast ? reveal : 'SKIP_REVEAL_REQUIREMENT_FINAL_SEGMENT',
           promptText,
         }),
       });
@@ -82,12 +83,12 @@ const SegmentForm: FC<SegmentFormProps> = ({ userId, storyId, promptText }) => {
             required
           />
           <div className="form-buttons">
-            {reveal && reveal.length > 0 && (
+            {(reveal.length > 0 || isLast) && (
               <Button type="submit" el="button" disabled={loading}>
                 {loading ? "...submission in progress" : "Submit"}
               </Button>
             )}
-            {reveal.length === 0 && (
+            {reveal.length === 0 && !isLast && (
               <Button
                 onClick={handleCreateReveal}
                 el="button"
