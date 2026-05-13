@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getNextContributor, checkNextRound } from "@/lib/utilities";
+import { getNextContributor, setRoundNumber } from "@/lib/utilities";
 import prisma from "@/lib/prisma";
 
 // Create Segment content
 export async function POST(
   request: NextRequest,
-  context: { params: Promise<{ userId: string; storyId: string }> }
+  context: { params: Promise<{ userId: string; storyId: string }> },
 ) {
   const params = await context.params;
   const currentUserId: string = params?.userId;
@@ -14,7 +14,7 @@ export async function POST(
   if (!currentUserId || !storyId) {
     return NextResponse.json(
       { error: "Missing userId or storyId parameter" },
-      { status: 400 }
+      { status: 400 },
     );
   }
   let body: {
@@ -30,7 +30,7 @@ export async function POST(
     console.error("Failed to parse JSON");
     return NextResponse.json(
       { error: "Invalid JSON payload" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -39,23 +39,27 @@ export async function POST(
   const authorId =
     typeof body.authorId === "string" ? body.authorId.trim() : "";
   const reveal = typeof body.reveal === "string" ? body.reveal.trim() : "";
-  const promptText = typeof body.promptText === "string" ? body.promptText.trim() : "";
+  const promptText =
+    typeof body.promptText === "string" ? body.promptText.trim() : "";
   if (!content || !authorId) {
     console.error("Missing content or authorId:", { content, authorId });
     return NextResponse.json(
       { error: "Content and authorId are required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
-  
-  if (!reveal || reveal.length === 0) {
+
+  if (
+    (!reveal && reveal !== "SKIP_REVEAL_REQUIREMENT_FINAL_SEGMENT") ||
+    (reveal.length === 0 && reveal !== "SKIP_REVEAL_REQUIREMENT_FINAL_SEGMENT")
+  ) {
     console.error("Missing reveal text");
     return NextResponse.json(
       { error: "Reveal text is required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
-  //if elements successfully verified create Segment 
+  //if elements successfully verified create Segment
   try {
     const segment = await prisma.segment.create({
       data: {
@@ -83,29 +87,28 @@ export async function POST(
         return;
       }
 
-      // if Story fetched determine next round, next Segment author, if isCompleted 
+      // if Story fetched determine next round, next Segment author, if isCompleted
       // and update Story
       if (story !== null) {
-        const totalRounds = story!.rounds;
-        const completedRounds = story!.completedRounds;
+        const rounds = story!.rounds;
+        const segmentsCompleted = story!.content.length;
         const contributors = story!.contributors.map((c) => c.id);
-  
         const updatedNextContributor = getNextContributor(
           contributors,
-          currentUserId
+          currentUserId,
         );
-        const updatedRoundsData = checkNextRound(
-          completedRounds,
-          totalRounds,
+
+        const updatedRoundsData = setRoundNumber(
+          segmentsCompleted,
           contributors,
-          updatedNextContributor!
         );
-        const storyIsCompleted = updatedRoundsData >= totalRounds;
+        const storyIsCompleted =
+          segmentsCompleted / contributors.length >= rounds;
         await prisma.story.update({
           where: { id: storyId },
           data: {
             nextContributorId: updatedNextContributor,
-            completedRounds: storyIsCompleted ? totalRounds : updatedRoundsData,
+            completedRounds: storyIsCompleted ? rounds : updatedRoundsData,
             completed: storyIsCompleted,
             completedAt: storyIsCompleted ? new Date() : null,
           },
@@ -115,7 +118,7 @@ export async function POST(
       console.error("Error fetching story or updating:", error);
       return NextResponse.json(
         { error: "Failed to update story" },
-        { status: 500 }
+        { status: 500 },
       );
     }
     return NextResponse.json({ segment }, { status: 201 });
@@ -123,8 +126,7 @@ export async function POST(
     console.error("Error creating segment:", error);
     return NextResponse.json(
       { error: "An error occurred while creating the segment" },
-      { status: 500 }
+      { status: 500 },
     );
   }
-  
 }
