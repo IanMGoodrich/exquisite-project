@@ -51,7 +51,20 @@ export default async function StoryPage({ params }: Props) {
     nextUserName = typeof nextUser === "string" ? nextUser : "the next person";
   }
   const isCreator = userId === story?.createdById;
-
+  const maxRounds = story ? (story?.rounds * story?.contributors.length) : 0;
+  const isFinalSegment = story && (story.content.length === (maxRounds - 1 ));
+  const isFinalRound = story && (maxRounds - story.content.length <= story.contributors.length);
+  const getRoundText = () => {
+    console.log(isFinalRound, isFinalSegment);
+    
+    if (isFinalSegment) {
+      return "You get to write the ending!"
+    }
+    if (isFinalRound) {
+      return "This is the final round!"
+    }
+    return "Your turn!"
+  }
   const inProgressTemplate = () => {
     return (
       <div className="in-progress--wrapper">
@@ -62,12 +75,12 @@ export default async function StoryPage({ params }: Props) {
         <p>
           Round:
           <span>
-            {story?.completedRounds ? story.completedRounds : 0}/
+            {story?.completedRounds ? story.completedRounds : 1}/
             {story?.rounds.toString()}
           </span>
         </p>
         {story?.nextContributorId === userId ? (
-          <Link href={`${storyId}/update`}> Your turn!</Link>
+          <Link href={`${storyId}/update`}> {getRoundText()}</Link>
         ) : (
           <p>Waiting on {nextUserName}</p>
         )}
