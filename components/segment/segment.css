@@ -1,5 +1,5 @@
 .segment {
-  display: flex;
+  display: block;
 
   & *.likes-button {
     display: block;
