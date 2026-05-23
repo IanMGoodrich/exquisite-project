@@ -71,6 +71,8 @@ model User {
   nameLast         String?
   email            String        @unique
   phone            String?
+  profileColumnOne String?
+  profileColumnTwo String?
   authoredSegments Segment[]     @relation("SegmentAuthor")
   likedSegments    SegmentLike[] @relation("SegmentLikes")
   stories          Story[]       @relation("StoryContributors")

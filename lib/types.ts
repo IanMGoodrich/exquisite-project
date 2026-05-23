@@ -30,6 +30,8 @@ export type UserType = {
   email: string | null;
   phone?: string | null;
   userName?: string | null;
+  profileColumnOne?: string | null;
+  profileColumnTwo?: string | null;
   image?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
