@@ -1,0 +1,73 @@
+/* .pell-editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+.pell-editor {
+  border-radius: 4px;
+  min-height: 200px;
+  background: white;
+  font-family: inherit;
+  border: var(--button-border-secondary) 2px solid;
+  
+  &.pell-content {
+    padding: 1.25rem;
+  }
+}
+}
+
+
+
+.pell-editor-wrapper label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: inherit;
+}
+
+.pell-editor-wrapper label .required {
+  color: #e74c3c;
+  margin-left: 0.25rem;
+}
+
+.pell-editor {
+  border-radius: 4px;
+  min-height: 200px;
+  background: white;
+  font-family: inherit;
+  border: var(--button-border-secondary) 2px solid;
+  
+  &.pell-content {
+    padding: 1.25rem;
+  }
+}
+
+
+.pell-menubar {
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  border-radius: 4px 4px 0 0;
+}
+
+.pell-button {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 0.4rem 0.6rem;
+  margin-right: 0.25rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.pell-button:hover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.pell-button.pell-button-selected {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+} */
