@@ -8,6 +8,10 @@
     border: solid 2px var(--link-primary);  
     padding: 2rem;
     border-radius: 20px;
+
+    .pell-editor-wrapper:not(:last-of-type) {
+      margin-bottom: 1.5rem;
+    }
   }
 
 

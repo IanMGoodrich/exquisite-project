@@ -7,7 +7,7 @@ export async function PUT(
 ) {
   try {
     const { userId } = await params;
-    const { email, userName, firstName, lastName, phoneNumber, image } =
+    const { email, userName, firstName, lastName, phoneNumber, image, profileColumnOne, profileColumnTwo } =
       await request.json();
 
     const updatedUser = await prisma.user.update({
@@ -18,8 +18,10 @@ export async function PUT(
         nameFirst: firstName,
         nameLast: lastName,
         phone: phoneNumber,
-        image: image,
-      },
+        image,
+        profileColumnOne,
+        profileColumnTwo,
+      },  
     });
 
     return NextResponse.json(updatedUser, { status: 200 });

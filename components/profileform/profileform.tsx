@@ -3,9 +3,12 @@
 import { type FC, useState } from "react";
 import Button from "../button/button";
 import Input from "../input/input";
+import PellEditor from "../pell-editor/pell-editor";
+import 'pell/dist/pell.min.css';
 import { type UserType } from "@/lib/types";
 import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import DOMPurify from "dompurify";
 import "./profileform.css";
 type UserProfileProps = {
   variant: "update";
@@ -17,18 +20,21 @@ type UserSignUpProps = {
   user?: UserType;
 };
 
-const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
+const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {  
   const router = useRouter();
   const [email, setEmail] = useState(props.user?.email ?? "");
   const [userName, setUserName] = useState(props.user?.userName ?? "");
   const [firstName, setFirstName] = useState(props.user?.nameFirst ?? "");
   const [lastName, setLastName] = useState(props.user?.nameLast ?? "");
   const [phoneNumber, setPhoneNumber] = useState(props.user?.phone ?? "");
+  const [profileColumnOne, setProfileColumnOne] = useState(props.user?.profileColumnOne ?? "");
+  const [profileColumnTwo, setProfileColumnTwo] = useState(props.user?.profileColumnTwo ?? "");
   const [image, setImage] = useState(props.user?.image ?? "");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -36,7 +42,6 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
       setError("");
 
       if (props.variant === "update") {
-        
         const result = await fetch(`/api/${props.user.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -47,6 +52,8 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
             lastName,
             phoneNumber,
             image,
+            profileColumnOne: DOMPurify.sanitize(profileColumnOne),
+            profileColumnTwo: DOMPurify.sanitize(profileColumnTwo),
           }),
         });
 
@@ -54,7 +61,8 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           setError("Failed to update profile");
           return;
         }
-        alert("Profile updated successfully");
+        // redirect to profile page after updating
+        router.push(`/${props.user.id}`);
       }
 
       if (props.variant === "signup") {
@@ -90,6 +98,8 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
             lastName,
             phoneNumber,
             image,
+            profileColumnOne,
+            profileColumnTwo,
           }),
         });
 
@@ -163,6 +173,18 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         value={image}
         onChange={(e) => setImage(e.target.value)}
         placeholder="Add image URL"
+      />
+      <PellEditor
+        id="profileColumnOne"
+        label="Upper profile text"
+        value={profileColumnOne}
+        onChange={(content) => setProfileColumnOne(content)}
+      />
+      <PellEditor
+        id="profileColumnTwo"
+        label="Lower profile text"
+        value={profileColumnTwo}
+        onChange={(content) => setProfileColumnTwo(content)}
       />
       {props.variant === "signup" && (
         <>

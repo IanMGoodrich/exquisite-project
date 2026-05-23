@@ -3,6 +3,7 @@ import ImageWrapper from "@/components/image/image";
 import Button from "@/components/button/button";
 import MessageThread from "@/components/messageThread/messageThread";
 import MessageForm from "@/components/messageForm/messageForm";
+
 type Props = {
   params: Promise<{ userId: string }>;
 };
@@ -26,28 +27,29 @@ export default async function UserHomePage({ params }: Props) {
             blurDataURL="../../../public/images/placeholder.webp"
           />
         )}
+      {user.profileColumnOne && (<div className="profile-homepage--profile-text upper" dangerouslySetInnerHTML={{ __html: user.profileColumnOne}} />)}
 
 
         <div className="profile-homepage--messages">
           <h2>Conversations</h2>
     
-          <MessageForm userId={userId} />
           {user.messageThreads.length > 0 ? (
             user.messageThreads.map((thread) => (
               <MessageThread
-                key={thread.threadId}
-                threadId={thread.threadId}
-                participants={thread.participants}
-                subject={thread.subject}
-                pinned={thread.pinned}
-                messages={thread.messages}
-                createdAt={thread.createdAt}
-                userId={userId}
+              key={thread.threadId}
+              threadId={thread.threadId}
+              participants={thread.participants}
+              subject={thread.subject}
+              pinned={thread.pinned}
+              messages={thread.messages}
+              createdAt={thread.createdAt}
+              userId={userId}
               />
             ))
           ) : (
             <p>No messages yet. Start a conversation!</p>
           )}
+          <MessageForm userId={userId} />
         </div>
       </div>
       <div className="profile-homepage--main-content">
@@ -101,34 +103,7 @@ export default async function UserHomePage({ params }: Props) {
           <Button el="link" as="button" href={`${userId}/stories/create`}>
             Create New Story
           </Button>
-          <p>
-            Curabitur at felis non libero suscipit fermentum. Duis volutpat,
-            ante et scelerisque luctus, sem nulla placerat leo, at aliquet
-            libero justo id nulla. Integer at dui nec magna posuere fringilla.
-            Nunc euismod bibendum augue. Cras nec ligula velit. Donec in laoreet
-            leo. Sed at risus vel nulla consequat fermentum. Donec et orci
-            mauris. Nullam tempor velit id mi luctus, a scelerisque libero
-            accumsan. In hac habitasse platea dictumst. Cras ac nunc nec massa
-            tristique fringilla. Nam tempor finibus lorem, nec varius arcu
-            convallis sed. Nunc id orci a neque vehicula malesuada. Donec
-            vehicula libero vel leo convallis, nec tincidunt felis tincidunt.
-            Maecenas euismod tristique leo, vel malesuada ligula malesuada sed.
-            Donec eget libero id leo congue venenatis.
-          </p>
-          <p>
-            Curabitur at felis non libero suscipit fermentum. Duis volutpat,
-            ante et scelerisque luctus, sem nulla placerat leo, at aliquet
-            libero justo id nulla. Integer at dui nec magna posuere fringilla.
-            Nunc euismod bibendum augue. Cras nec ligula velit. Donec in laoreet
-            leo. Sed at risus vel nulla consequat fermentum. Donec et orci
-            mauris. Nullam tempor velit id mi luctus, a scelerisque libero
-            accumsan. In hac habitasse platea dictumst. Cras ac nunc nec massa
-            tristique fringilla. Nam tempor finibus lorem, nec varius arcu
-            convallis sed. Nunc id orci a neque vehicula malesuada. Donec
-            vehicula libero vel leo convallis, nec tincidunt felis tincidunt.
-            Maecenas euismod tristique leo, vel malesuada ligula malesuada sed.
-            Donec eget libero id leo congue venenatis.
-          </p>
+          {user.profileColumnTwo && (<div dangerouslySetInnerHTML={{ __html: user.profileColumnTwo}} />)}
         </div>
       </div>
     </div>

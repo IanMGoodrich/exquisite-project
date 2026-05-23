@@ -33,6 +33,8 @@ export async function getAuthenticatedUser(
       userName: true,
       phone: true,
       image: true,
+      profileColumnOne: true,
+      profileColumnTwo: true,
       stories: {
         select: {
           id: true,
@@ -80,6 +82,8 @@ export async function getAuthenticatedUserWithStories(
       phone: true,
       image: true,
       stories: true,
+      profileColumnOne: true,
+      profileColumnTwo: true,
       messageThreads: {
         include: {
           messages: {
