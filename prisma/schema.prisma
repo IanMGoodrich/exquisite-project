@@ -31,6 +31,9 @@ model Story {
   nextContributorId String
   rounds            Int       @default(3)
   completedRounds   Int       @default(0)
+  promptImageUrl    String?
+  promptText        String?
+  sharePrompt       String?   
 }
 
 model Segment {
