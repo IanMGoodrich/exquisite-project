@@ -1,0 +1,147 @@
+.input--dnd {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.dnd-zone {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 8.5rem;
+  padding: 1.25rem 1rem;
+  border: 1.5px dashed var(--color-border, #d1d5db);
+  border-radius: var(--radius-md, 0.5rem);
+  background-color: var(--color-surface, #fafafa);
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease;
+}
+
+.dnd-zone:hover:not(.dnd-zone--disabled) {
+  border-color: var(--color-border-focus, #3b82f6);
+  background-color: var(--color-surface-hover, #f0f7ff);
+}
+
+.dnd-zone:focus-visible {
+  outline: 2px solid var(--color-border-focus, #3b82f6);
+  outline-offset: 2px;
+}
+
+.dnd-zone--active {
+  border-style: solid;
+  border-color: var(--color-border-focus, #3b82f6);
+  background-color: var(--color-surface-hover, #f0f7ff);
+}
+
+.dnd-zone--active .dnd-zone__overlay {
+  opacity: 1;
+}
+
+.dnd-zone--reject {
+  border-style: solid;
+  border-color: var(--color-border-error, #ef4444);
+  background-color: var(--color-error-tint, #fef2f2);
+}
+
+.dnd-zone--reject .dnd-zone__overlay {
+  opacity: 1;
+  background-color: color-mix(
+    in srgb,
+    var(--color-border-error, #ef4444) 10%,
+    transparent
+  );
+}
+
+.dnd-zone--reject .dnd-zone__overlay-text {
+  color: var(--color-border-error, #ef4444);
+}
+
+.dnd-zone--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dnd-zone__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(
+    in srgb,
+    var(--color-border-focus, #3b82f6) 10%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 140ms ease;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.dnd-zone__overlay-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-border-focus, #3b82f6);
+  letter-spacing: 0.01em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dnd-zone__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.dnd-zone__icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: var(--color-text-muted, #9ca3af);
+  transition: color 140ms ease, transform 140ms ease;
+  flex-shrink: 0;
+}
+
+.dnd-zone:hover:not(.dnd-zone--disabled) .dnd-zone__icon,
+.dnd-zone--active .dnd-zone__icon {
+  color: var(--color-border-focus, #3b82f6);
+  transform: translateY(-2px);
+}
+
+.dnd-zone__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text, #374151);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.dnd-zone__hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #9ca3af);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dnd-zone,
+  .dnd-zone__overlay,
+  .dnd-zone__icon {
+    transition: none;
+    animation: none;
+  }
+
+  .dnd-zone:hover .dnd-zone__icon,
+  .dnd-zone--active .dnd-zone__icon {
+    transform: none;
+  }
+}
