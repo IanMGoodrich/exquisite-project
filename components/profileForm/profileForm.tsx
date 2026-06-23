@@ -67,7 +67,11 @@ try {
     throw new Error(`S3 responded with ${s3Res.status}: ${text}`);
   }
 } catch (err) {
-  throw new Error("File could not be uploaded to storage. Check your S3 CORS configuration.");
+  const errorMsg = err instanceof Error ? err.message : "Unknown error";
+  if (errorMsg.includes("CORS")) {
+    throw new Error("File could not be uploaded to storage. Check your S3 CORS configuration.");
+  }
+  throw new Error(`File upload failed: ${errorMsg}`);
 }
 
   return publicUrl;
