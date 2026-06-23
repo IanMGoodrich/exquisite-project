@@ -3,13 +3,15 @@
 import { type FC, useState } from "react";
 import Button from "../button/button";
 import Input from "../input/input";
-import PellEditor from "../pell-editor/pell-editor";
+import DragAndDrop from "../dragAndDrop/dragAndDrop";
+import PellEditor from "../pellEditor/pellEditor";
 import 'pell/dist/pell.min.css';
 import { type UserType } from "@/lib/types";
 import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import DOMPurify from "dompurify";
-import "./profileform.css";
+import "./profileForm.css";
+
 type UserProfileProps = {
   variant: "update";
   user: UserType;
@@ -20,7 +22,58 @@ type UserSignUpProps = {
   user?: UserType;
 };
 
-const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {  
+async function uploadImageToS3(file: File): Promise<string> {
+  let presignRes: Response;
+
+  try {
+    presignRes = await fetch("/api/images/presigned-url/upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contentType: file.type,
+        contentLength: file.size,
+      }),
+    });
+  } catch (err) {
+    throw new Error("Could not reach the upload API. Is your dev server running?");
+  }
+
+  const contentType = presignRes.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) {
+    const text = await presignRes.text();
+    throw new Error(`Upload setup failed (${presignRes.status})`);
+  }
+
+  if (!presignRes.ok) {
+    const { error } = await presignRes.json();
+    throw new Error(error ?? "Could not get upload URL");
+  }
+
+  const { presignedUrl, publicUrl } = await presignRes.json() as {
+    presignedUrl: string;
+    publicUrl: string;
+  };
+
+
+try {
+  const s3Res = await fetch(presignedUrl, {
+    method: "PUT",
+    body: file,
+    headers: { "Content-Type": file.type },
+  });
+
+  if (!s3Res.ok) {
+    const text = await s3Res.text();
+    throw new Error(`S3 responded with ${s3Res.status}: ${text}`);
+  }
+} catch (err) {
+  throw new Error("File could not be uploaded to storage. Check your S3 CORS configuration.");
+}
+
+  return publicUrl;
+}
+
+const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
   const router = useRouter();
   const [email, setEmail] = useState(props.user?.email ?? "");
   const [userName, setUserName] = useState(props.user?.userName ?? "");
@@ -30,13 +83,38 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
   const [profileColumnOne, setProfileColumnOne] = useState(props.user?.profileColumnOne ?? "");
   const [profileColumnTwo, setProfileColumnTwo] = useState(props.user?.profileColumnTwo ?? "");
   const [image, setImage] = useState(props.user?.image ?? "");
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imageError, setImageError] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const handleFileAccepted = async (file: File) => {
+    setImageUploading(true);
+    setImageError("");
+    setImage("");
+
+    try {
+      const publicUrl = await uploadImageToS3(file);
+      setImage(publicUrl);
+    } catch (err) {
+      setImageError(
+        err instanceof Error ? err.message : "Image upload failed. Please try again."
+      );
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
+  const handleFileRejected = (errors: string[]) => {
+    setImageError(errors[0] ?? "File not accepted");
+    setImage("");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (imageUploading) return;
     try {
       setLoading(true);
       setError("");
@@ -61,7 +139,6 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           setError("Failed to update profile");
           return;
         }
-        // redirect to profile page after updating
         router.push(`/${props.user.id}`);
       }
 
@@ -72,7 +149,6 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           return;
         }
 
-        // Step 1: Create user with better-auth
         const result = await signUp.email({
           email,
           password,
@@ -85,12 +161,9 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           return;
         }
 
-        // Step 2: Update non-auth user info
         const updateResponse = await fetch("/api/auth/sign-up", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
             userName,
@@ -118,9 +191,10 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
       setLoading(false);
     }
   };
-  
-  const buttonText = props.variant==="signup" ? "Sign Up" : "Update Profile"; 
-  
+
+  const buttonText = props.variant === "signup" ? "Sign Up" : "Update Profile";
+  const isDisabled = loading || imageUploading;
+
   return (
     <form className="profile-form" onSubmit={handleSubmit}>
       <Input
@@ -166,14 +240,34 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         onChange={(e) => setPhoneNumber(e.target.value)}
         placeholder="If you wish to receive SMS notifications"
       />
-      <Input
-        type="text"
+
+      <DragAndDrop
         id="image"
         label="Profile Image (optional)"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
-        placeholder="Add image URL"
+        onFileAccepted={handleFileAccepted}
+        onFileRejected={handleFileRejected}
+        accept={{ "image/*": [".jpg", ".jpeg", ".png", ".webp", ".gif"] }}
+        maxSize={5 * 1024 * 1024}
+        placeholder="Drop your photo here, or click to browse"
+        disabled={imageUploading}
       />
+
+      {imageUploading && (
+        <p className="image-status image-status--uploading" role="status" aria-live="polite">
+          Uploading image…
+        </p>
+      )}
+      {imageError && (
+        <p className="image-status image-status--error" role="alert">
+          {imageError}
+        </p>
+      )}
+      {!imageUploading && !imageError && image && (
+        <p className="image-status image-status--success" role="status">
+          Image uploaded successfully.
+        </p>
+      )}
+
       <PellEditor
         id="profileColumnOne"
         label="Upper profile text"
@@ -186,6 +280,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         value={profileColumnTwo}
         onChange={(content) => setProfileColumnTwo(content)}
       />
+
       {props.variant === "signup" && (
         <>
           <Input
@@ -208,9 +303,16 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           />
         </>
       )}
+
       {error && <p className="error">{error}</p>}
-      <Button classes="profile-submit" type="submit" el="button" disabled={loading}>
-        {loading ? "Updating..." : `${buttonText}`}
+
+      <Button
+        classes="profile-submit"
+        type="submit"
+        el="button"
+        disabled={isDisabled}
+      >
+        {imageUploading ? "Uploading image…" : loading ? "Updating..." : buttonText}
       </Button>
     </form>
   );
