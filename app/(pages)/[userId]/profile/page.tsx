@@ -1,5 +1,5 @@
 import { getAuthenticatedUser } from "../../../../lib/auth-utils";
-import ProfileForm from "@/components/profileform/profileform";
+import ProfileForm from "@/components/profileForm/profileForm";
 import ImageWrapper from "@/components/image/image";
 
 type Props = {
