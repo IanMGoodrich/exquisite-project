@@ -3,13 +3,27 @@ import ImageWrapper from "@/components/image/image";
 import Button from "@/components/button/button";
 import MessageThread from "@/components/messageThread/messageThread";
 import MessageForm from "@/components/messageForm/messageForm";
-
 type Props = {
   params: Promise<{ userId: string }>;
 };
 
 export default async function UserHomePage({ params }: Props) {
   const { userId } = await params;
+let imageData = null;
+try {
+  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+  const response = await fetch(new URL("/api/images/presigned-url/get", baseUrl), {
+    cache: 'no-store'
+  });
+  if (response.ok) {
+    imageData = await response.json();
+    console.log('imageData',imageData);
+    
+  }
+} catch (error) {  
+  console.error('Error fetching images:', error);
+}
+  
   const user = await getAuthenticatedUserWithStories(userId);
   return (
     <div className="profile-homepage">
