@@ -5,7 +5,7 @@ a:not(:disabled) {
 
 .button {
   cursor: pointer;
-
+  font-family: var(--ff-primary);
   &.as-button {
     display: flex;
     justify-content: center;
@@ -17,7 +17,7 @@ a:not(:disabled) {
     padding: .5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--fs-body);
     transition: background-color 0.3s ease;
     height: fit-content;
     width: fit-content;
@@ -58,6 +58,7 @@ a:not(:disabled) {
     padding: 0;
     text-decoration: underline;
     color: var(--link-primary);
+    font-family: var(--ff-primary);
 
     &:hover {
       color: var(--link-primary-hover);
