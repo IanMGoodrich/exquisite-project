@@ -1,0 +1,62 @@
+:root [data-variant='inspiration'] {
+  &.modal {
+    /* width: fit-content; */
+    max-width: 80vw;
+    border: solid 2px var(--button-border-primary);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--background);
+    
+    @media (max-width: 785px) {
+      /* override inline position */
+      transform: none !important;
+      margin: 0 auto;
+    }
+    
+    @media (min-width: 786px) {
+      position: absolute;
+    }
+  }
+  
+  .modal--main {
+    padding: 0 1.75rem;
+  }
+  
+  .modal--control {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 1.75rem;
+    cursor: move;
+  }
+  
+  h3.modal--title{
+    margin: 0 auto;
+  }
+  
+  .modal--button-close {
+    position: absolute;
+    right: -24px;
+    top: 4px;
+    border-radius: 50%;
+    & svg {
+      --svg-height: 28px;
+    }
+  }
+  
+  .modal--content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: .5rem;
+    row-gap: .5rem;
+    img {
+      width: 100%;
+      max-width: 50vh;
+      height: auto;
+      border: solid 1px var(--button-border-primary);
+      border-radius: 16px;
+    }
+  }
+
+}
