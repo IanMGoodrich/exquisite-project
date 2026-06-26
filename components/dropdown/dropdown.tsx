@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useId } from "react";
+import { useState, useRef, useId, useEffect } from "react";
 import Button from "../button/button";
 import "./dropdown.css";
 
@@ -31,7 +31,7 @@ const Dropdown = ({
   const toggleOpenClass = (e: React.SyntheticEvent) => {
     const clickedElem = e.target as HTMLElement;
     const clickedId = clickedElem.getAttribute("data-button-id");
-    
+
     // prevent nested buttons from closing parent dropdown
     if (clickedElem && clickedId && buttonId !== clickedId) {
       return;
@@ -48,21 +48,25 @@ const Dropdown = ({
   };
 
   const handleMenuClick = () => {
+    const menu =
+      menuRef && menuRef.current ? (menuRef.current as HTMLElement) : null;
+
     if (!open) {
       setOpen(true);
-      if (menuRef.current) {
-        const menu = menuRef?.current as HTMLElement;
+      if (menu) {
         menu.classList.add("open");
       }
       // set focus on open
       setTimeout(() => {
         if (firstItemRef.current && menuRef.current) {
           let elToFocus: HTMLLIElement;
-          const existingActive = (menuRef?.current as HTMLElement).querySelector('.active') as HTMLLIElement;
+          const existingActive = (
+            menuRef?.current as HTMLElement
+          ).querySelector(".active") as HTMLLIElement;
           if (existingActive) {
             elToFocus = existingActive;
           } else {
-            elToFocus = firstItemRef.current 
+            elToFocus = firstItemRef.current;
           }
           elToFocus.focus();
         }
@@ -71,6 +75,33 @@ const Dropdown = ({
       setTimeout(() => setOpen(false), 300);
     }
   };
+
+  useEffect(() => {
+    const toggleChildVisibility = (menu: HTMLElement) => {
+      if (menu) {
+        menu.querySelectorAll("li").forEach((el) => {
+          const hasNested = el.children.length;
+          if (hasNested) {
+            if (el.children[0].matches('button, a')) {
+              return (el.children[0] as HTMLElement)?.setAttribute(
+                "tabindex",
+                open ? "0" : "-1",
+              );
+            }             
+          } else {
+            console.log('Not nested', el);
+            return el.setAttribute(
+              "tabindex",
+              open ? "0" : "-1",
+            );
+          }
+        });
+      }
+    };
+    if (menuRef.current) {
+      toggleChildVisibility(menuRef.current);
+    }
+  }, [open]);
 
   return (
     <div className="dropdown-wrapper">
@@ -89,8 +120,7 @@ const Dropdown = ({
         ref={menuRef}
         aria-atomic="true"
         className={`dropdown-list ${open ? "open" : "closed"}`}
-        aria-hidden={!open}
-        role="menu"
+        role="list"
         onClick={toggleOpenClass}
       >
         {options && options.length > 0 && (
@@ -101,7 +131,6 @@ const Dropdown = ({
             data-value={options[0]}
             onClick={onClickHandler}
             onKeyDown={onKeyHandler}
-            tabIndex={open ? 0 : -1}
           >
             {options[0]}
           </li>
@@ -116,7 +145,6 @@ const Dropdown = ({
               data-value={option}
               onClick={onClickHandler}
               onKeyDown={onKeyHandler}
-              tabIndex={open ? 0 : -1}
             >
               {option}
             </li>
