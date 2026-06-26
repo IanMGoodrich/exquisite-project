@@ -88,6 +88,10 @@
     margin-bottom: 1rem;
     line-height: 1.6;
     text-indent: var(--text-indent);
+
+    a {
+      text-decoration: underline;
+    }
   }
 
   p:first-of-type {
