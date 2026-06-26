@@ -71,7 +71,7 @@ const DragAndDrop = ({
     <span
       className={`${classes ?? ""} input-wrapper input--dnd`}
     >
-      {!labelHidden && <label htmlFor={id}>{label}</label>}
+      {!labelHidden && <label htmlFor={`${id}--input`}>{label}</label>}
 
       <div
         {...getRootProps()}
@@ -80,25 +80,25 @@ const DragAndDrop = ({
         aria-label={labelHidden ? label : undefined}
         tabIndex={0}
         className={[
-          "dnd-zone",
-          isDragActive && !isDragReject ? "dnd-zone--active" : "",
-          isDragReject ? "dnd-zone--reject" : "",
-          disabled ? "dnd-zone--disabled" : "",
+          "drag-and-drop",
+          isDragActive && !isDragReject ? "drag-and-drop--active" : "",
+          isDragReject ? "drag-and-drop--reject" : "",
+          disabled ? "drag-and-drop--disabled" : "",
         ]
           .filter(Boolean)
           .join(" ")}
       >
-        <input {...getInputProps()} />
+        <input id={`${id}--input`} aria-label={labelHidden ? label : ''} {...getInputProps()} />
 
-        <div className="dnd-zone__overlay" aria-hidden="true">
-          <span className="dnd-zone__overlay-text">
+        <div className="drag-and-drop--overlay" aria-hidden="true">
+          <span className="drag-and-drop--overlay-text">
             {isDragReject ? "File not accepted" : "Drop to upload"}
           </span>
         </div>
 
-        <div className="dnd-zone__content">
+        <div className="drag-and-drop--content">
           <svg
-            className="dnd-zone__icon"
+            className="drag-and-drop--icon"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -112,8 +112,8 @@ const DragAndDrop = ({
             <polyline points="17 8 12 3 7 8" />
             <line x1="12" y1="3" x2="12" y2="15" />
           </svg>
-          <span className="dnd-zone__label">{placeholder}</span>
-          <span className="dnd-zone__hint">
+          <span className="drag-and-drop--label">{placeholder}</span>
+          <span className="drag-and-drop--hint">
             {acceptedExts} · max {Math.round(maxSize / 1024 / 1024)} MB
           </span>
         </div>

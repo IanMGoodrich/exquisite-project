@@ -1,10 +1,10 @@
-.input--dnd {
+.input--drag-and-drop {
   display: flex;
   flex-direction: column;
   gap: 0.375rem;
 }
 
-.dnd-zone {
+.drag-and-drop {
   position: relative;
   display: flex;
   align-items: center;
@@ -12,9 +12,9 @@
   width: 100%;
   min-height: 8.5rem;
   padding: 1.25rem 1rem;
-  border: 1.5px dashed var(--color-border, #d1d5db);
+  border: 1.5px dashed var(--link-primary);
   border-radius: var(--radius-md, 0.5rem);
-  background-color: var(--color-surface, #fafafa);
+  background-color: var(--background);
   cursor: pointer;
   outline: none;
   overflow: hidden;
@@ -23,33 +23,33 @@
     background-color 140ms ease;
 }
 
-.dnd-zone:hover:not(.dnd-zone--disabled) {
-  border-color: var(--color-border-focus, #3b82f6);
-  background-color: var(--color-surface-hover, #f0f7ff);
+.drag-and-drop:hover:not(.drag-and-drop--disabled) {
+  border-color: var(--link-primary-hover);
+  /* background-color: var(--color-surface-hover, #f0f7ff); */
 }
 
-.dnd-zone:focus-visible {
-  outline: 2px solid var(--color-border-focus, #3b82f6);
+.drag-and-drop:focus-visible {
+  outline: 2px solid var(--button-border-primary-hover);
   outline-offset: 2px;
 }
 
-.dnd-zone--active {
+.drag-and-drop--active {
   border-style: solid;
   border-color: var(--color-border-focus, #3b82f6);
   background-color: var(--color-surface-hover, #f0f7ff);
 }
 
-.dnd-zone--active .dnd-zone__overlay {
+.drag-and-drop--active .drag-and-drop--overlay {
   opacity: 1;
 }
 
-.dnd-zone--reject {
+.drag-and-drop--reject {
   border-style: solid;
   border-color: var(--color-border-error, #ef4444);
   background-color: var(--color-error-tint, #fef2f2);
 }
 
-.dnd-zone--reject .dnd-zone__overlay {
+.drag-and-drop--reject .drag-and-drop--overlay {
   opacity: 1;
   background-color: color-mix(
     in srgb,
@@ -58,17 +58,17 @@
   );
 }
 
-.dnd-zone--reject .dnd-zone__overlay-text {
+.drag-and-drop--reject .drag-and-drop--overlay-text {
   color: var(--color-border-error, #ef4444);
 }
 
-.dnd-zone--disabled {
+.drag-and-drop--disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.dnd-zone__overlay {
+.drag-and-drop--overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -85,16 +85,16 @@
   border-radius: inherit;
 }
 
-.dnd-zone__overlay-text {
+.drag-and-drop--overlay-text {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-border-focus, #3b82f6);
+  color: var(--text-body-primary);
   letter-spacing: 0.01em;
   pointer-events: none;
   user-select: none;
 }
 
-.dnd-zone__content {
+.drag-and-drop--content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,45 +103,45 @@
   user-select: none;
 }
 
-.dnd-zone__icon {
+.drag-and-drop--icon {
   width: 1.75rem;
   height: 1.75rem;
-  color: var(--color-text-muted, #9ca3af);
+  color: var(--button-color-primary);
   transition: color 140ms ease, transform 140ms ease;
   flex-shrink: 0;
 }
 
-.dnd-zone:hover:not(.dnd-zone--disabled) .dnd-zone__icon,
-.dnd-zone--active .dnd-zone__icon {
-  color: var(--color-border-focus, #3b82f6);
+.drag-and-drop:hover:not(.drag-and-drop--disabled) .drag-and-drop--icon,
+.drag-and-drop--active .drag-and-drop--icon {
+  color: var(--button-color-primary-hover);
   transform: translateY(-2px);
 }
 
-.dnd-zone__label {
+.drag-and-drop--label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-text, #374151);
+  color: var(--text-body-primary);
   text-align: center;
   line-height: 1.4;
 }
 
-.dnd-zone__hint {
+.drag-and-drop--hint {
   font-size: 0.75rem;
-  color: var(--color-text-muted, #9ca3af);
+  color: var(--text-body-primary);
   text-align: center;
   letter-spacing: 0.03em;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dnd-zone,
-  .dnd-zone__overlay,
-  .dnd-zone__icon {
+  .drag-and-drop,
+  .drag-and-drop--overlay,
+  .drag-and-drop--icon {
     transition: none;
     animation: none;
   }
 
-  .dnd-zone:hover .dnd-zone__icon,
-  .dnd-zone--active .dnd-zone__icon {
+  .drag-and-drop:hover .drag-and-drop--icon,
+  .drag-and-drop--active .drag-and-drop--icon {
     transform: none;
   }
 }
