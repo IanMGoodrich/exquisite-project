@@ -15,15 +15,15 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      
+
       .mobile {
         display: none;
       }
-      
+
       .desktop {
         display: flex;
       }
-      
+
       li.main-nav--item {
         padding: 1rem;
       }
@@ -31,10 +31,18 @@
       @media (max-width: 640px) {
         li.main-nav--item {
           padding: 0;
+
+          button {
+            width: auto;
+          }
         }
         &.mobile {
           display: block;
           width: -webkit-fill-available;
+          row-gap: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
           button,
           .dropdown-wrapper {
             width: -webkit-fill-available;

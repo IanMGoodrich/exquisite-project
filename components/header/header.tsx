@@ -223,7 +223,7 @@ const Header: FC<HeaderProps> = ({ initialSession }) => {
                   <Dropdown
                     label="Theme"
                     options={availableThemes as unknown as string[]}
-                    startOpen={true}
+                    startOpen={false}
                     externallySetActiveValue={mounted ? theme : "default"}
                     onClickHandler={(e: React.MouseEvent) => {
                       handleOnClick(e);
