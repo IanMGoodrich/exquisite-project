@@ -31,8 +31,9 @@
       @media (max-width: 640px) {
         li.main-nav--item {
           padding: 0;
-
+          font-size: var(--fs-body);
           button {
+            font-size: var(--fs-body);
             width: auto;
           }
         }
