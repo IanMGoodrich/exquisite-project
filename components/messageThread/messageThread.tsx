@@ -50,7 +50,7 @@ const MessageThread: React.FC<MessageThreadProps> = ({
                     width={25}
                     height={25}
                     variant="circle"
-                    src={p.image || "../../../public/images/placeholder.webp"}
+                    src={p.image || `${process.env.NEXT_PUBLIC_S3_BASE_URL}/users/placeholder-user-id_1781127059625.jpeg`}
                     alt={`image for ${p.userName}`}
                   />
                   <span className="message-thread--participant-name">
