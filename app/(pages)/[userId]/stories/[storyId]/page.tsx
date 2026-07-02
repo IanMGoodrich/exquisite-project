@@ -54,9 +54,7 @@ export default async function StoryPage({ params }: Props) {
   const maxRounds = story ? (story?.rounds * story?.contributors.length) : 0;
   const isFinalSegment = story && (story.content.length === (maxRounds - 1 ));
   const isFinalRound = story && (maxRounds - story.content.length <= story.contributors.length);
-  const getRoundText = () => {
-    console.log(isFinalRound, isFinalSegment);
-    
+  const getRoundText = () => {    
     if (isFinalSegment) {
       return "You get to write the ending!"
     }

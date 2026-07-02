@@ -13,9 +13,9 @@ export default async function Home() {
     const userId = session.user.id;
     redirect(`/${userId}`)
     
-  } else {
-    console.log('no session');
-  }
+  } //else {
+   // console.log('no session');
+  //}
   
   return (
     <div className="page home">
@@ -28,7 +28,6 @@ export default async function Home() {
         <Button el="link" href="/signup">
           Sign Up
         </Button>
-
       </div>
     </div>
   );
