@@ -37,7 +37,7 @@
     padding: 0;
     margin: 0;
   }
-  
+
   /* button,
   button:not(.pell-button),
   a {
@@ -267,16 +267,66 @@
     }
   }
 
-  /* Profile Page */
+  /* Profile Homepage */
+
+  .profile-homepage {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+  }
+
+  .profile-homepage--heading {
+    margin-bottom: 0rem;
+  }
+
+  .profile-homepage--image-wrapper {
+    float: inline-start;
+    padding: 1rem;
+    clip-path: circle();
+    shape-outside: circle();
+  }
+
+  .profile-homepage--upper-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+  }
 
   .profile-homepage--messages {
     display: flex;
     flex-direction: column;
-    padding: 1rem 0;
+    row-gap: 1rem;
+
+    h2 {
+      margin-bottom: 0px;
+    }
+    .message-thread {
+      padding-bottom: 0px;
+    }
+
+    .message-form--wrapper {
+      margin-bottom: 0px;
+    }
   }
-  .profile-homepage--new-message-wrapper {
+  .profile-homepage--messages-wrapper {
     padding-bottom: 1.5rem;
-  } 
+
+    &.mobile {
+      display: none;
+    }
+
+    &.desktop {
+      display: grid;
+      list-style: none;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 25%));
+      justify-content: space-between;
+      max-height: 300px;
+      border: solid 2px var(--button-border-primary);
+      border-radius: 5px;
+      padding: 0.75rem 0 0;
+      margin-bottom: 0.75rem;
+    }
+  }
 
   .profile-homepage--new-message-detail {
     summary {
@@ -293,7 +343,7 @@
   .profile-homepage--stories-wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 2% 0;
+    flex-direction: row;
 
     .label {
       display: block;
@@ -304,23 +354,112 @@
 
     & div .profile-homepage--stories-list {
       list-style: none;
-       li {
-        padding-left: .75rem;
-       }
+      li {
+        padding-left: 0.75rem;
+      }
+
+      &.mobile {
+        display: none;
+      }
+
+      &.desktop {
+        flex-direction: column;
+        max-height: 450px;
+        display: flex;
+        overflow: auto;
+        border: solid 2px var(--button-border-primary);
+        padding: 1rem 1rem 1rem 0;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .profile-homepage--main-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+  }
+
+  /* Profile Homepage Sub-tablet */
+
+  @media (max-width: 639px) {
+    .profile-homepage--image-wrapper {
+      float: none;
+      padding: 1rem;
+      clip-path: none;
+      shape-outside: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    .profile-homepage--stories-wrapper {
+      flex-direction: column;
+      row-gap: 2rem;
+
+      div .profile-homepage--stories-list {
+        li {
+          padding-left: 0.75rem;
+        }
+
+        &.mobile {
+          display: flex;
+          flex-direction: column;
+
+          .dropdown-wrapper,
+          button {
+            width: 100%;
+          }
+          ul {
+            max-height: 200px;
+            overflow: auto;
+            border: solid 2px var(--button-border-primary);
+            padding: 1rem 1rem 1rem 0;
+            border-radius: 5px;
+          }
+        }
+
+        &.desktop {
+          display: none;
+        }
+      }
+    }
+    .profile-homepage--stories-list-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-homepage--messages-wrapper {
+      &.mobile {
+        display: block;
+        padding-bottom: 0.75rem;
+
+        .dropdown-wrapper, 
+        button.dropdown-trigger {
+          width: 100%;
+        }
+
+        .dropdown-wrapper .dropdown-list {
+          padding: 0.75rem 0 0;
+        }
+      }
+
+      &.desktop {
+        display: none;
+      }
     }
   }
 
   /* Profile Edit page */
-    /* Pell Editor */
-    .pell-content {
-      border: solid 2px var(--button-border-secondary);
+  /* Pell Editor */
+  .pell-content {
+    border: solid 2px var(--button-border-secondary);
+  }
+  .pell-button {
+    &:focus {
+      outline: solid 1px var(--link-primary);
     }
-    .pell-button {
-      &:focus {
-        outline: solid 1px var(--link-primary);
-      }
-    }
-    
+  }
+
   /* Storybook only */
   &[data-theme="floral"],
   &[data-theme="sprawl"],
