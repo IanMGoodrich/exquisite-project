@@ -109,10 +109,7 @@ export async function POST(
           select: { id: true, userName: true, image: true },
         },
       },
-    });
-
-    console.log('HERE',reply);
-    
+    });    
     return NextResponse.json(reply, { status: 201 });
   } catch (error) {
     console.error("Error creating message reply:", error);
