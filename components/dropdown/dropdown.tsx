@@ -11,6 +11,7 @@ type DropdownProps = {
   onClickHandler?: (e: React.MouseEvent) => void;
   onKeyHandler?: (e: React.KeyboardEvent) => void;
   startOpen?: boolean;
+  forceClose?: boolean;
   externallySetActiveValue?: string;
 };
 
@@ -21,6 +22,7 @@ const Dropdown = ({
   onClickHandler,
   onKeyHandler,
   startOpen,
+  forceClose,
   externallySetActiveValue,
 }: DropdownProps) => {
   const buttonId = useId();
@@ -39,8 +41,10 @@ const Dropdown = ({
     if (menuRef.current) {
       const menu = menuRef?.current as HTMLElement;
       if (menu.classList.contains("open")) {
-        menu.classList.remove("open");
-        setTimeout(() => setOpen(false), 300);
+        if (!forceClose) {
+          menu.classList.remove("open");
+          setTimeout(() => setOpen(false), 300);
+        }
       } else {
         menu.classList.add("open");
       }
@@ -89,7 +93,6 @@ const Dropdown = ({
               );
             }             
           } else {
-            console.log('Not nested', el);
             return el.setAttribute(
               "tabindex",
               open ? "0" : "-1",
