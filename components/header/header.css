@@ -26,6 +26,10 @@
 
       li.main-nav--item {
         padding: 1rem;
+
+        button, a {
+          font-size: var(--fs-body);
+        }
       }
 
       @media (max-width: 640px) {
