@@ -11,7 +11,7 @@ const Container = ({ children, classes, tag = "div" }: ContainerProps) => {
   const Tag = tag;
   return (
     <Tag className={`container ${classes}`}>
-      <div className="container-content">{children}</div>
+      <div className="container-content border">{children}</div>
     </Tag>
   );
 };
