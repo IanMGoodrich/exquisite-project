@@ -1,5 +1,5 @@
 import prisma from "../../../../../lib/prisma";
-import Link from "next/link";
+import Button from "@/components/button/button";
 import StoryDisplay from "@/components/storyDisplay/storyDisplay";
 type Props = {
   params: Promise<{ userId: string; storyId: string }>;
@@ -71,14 +71,14 @@ export default async function StoryPage({ params }: Props) {
         </div>
         <h2>This story in still a work in progress</h2>
         <p>
-          Round:
+          Round:&nbsp;
           <span>
-            {story?.completedRounds ? story.completedRounds : 1}/
+            {story?.completedRounds ? `${story.completedRounds}` : 1}&nbsp;of&nbsp;
             {story?.rounds.toString()}
           </span>
         </p>
         {story?.nextContributorId === userId ? (
-          <Link href={`${storyId}/update`}> {getRoundText()}</Link>
+          <Button classes="your-turn" el="link" as="button" href={`${storyId}/update`}> {getRoundText()}</Button>
         ) : (
           <p>Waiting on {nextUserName}</p>
         )}
