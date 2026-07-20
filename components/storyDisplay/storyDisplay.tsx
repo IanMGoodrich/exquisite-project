@@ -55,9 +55,7 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
              title: newTitle 
           }),
         });
-        if (result.ok) {
-          console.log("title updated successfully");
-        }
+
       } catch (err) {
         setError(`The following error is reported: ${err}`);
         console.error(err);
