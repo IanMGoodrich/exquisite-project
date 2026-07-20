@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-
+import { resend, YOUR_TURN_EMAIL } from "./resend";
 export const getUser = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -13,17 +13,18 @@ export const getUser = async (userId: string) => {
       image: true,
       phone: true,
     },
-  });  
+  });
   return user;
 };
 
 export const getNextContributor = (
   contributors: string[],
-  currentUserId: string
+  currentUserId: string,
 ) => {
   const currentIndex = contributors.indexOf(currentUserId);
-  if (currentIndex === -1) {// Current user not found in contributors list
-    return contributors[0];  // Default to first contributor
+  if (currentIndex === -1) {
+    // Current user not found in contributors list
+    return contributors[0]; // Default to first contributor
   }
   const nextIndex = (currentIndex + 1) % contributors.length;
   return contributors[nextIndex];
@@ -33,15 +34,15 @@ export const setRoundNumber = (
   segmentCount: number,
   contributors: string[],
 ) => {
-  const contributorCount =  contributors.length;
+  const contributorCount = contributors.length;
 
   if (segmentCount < contributors.length) {
     return 1;
   }
-  if(segmentCount % contributorCount === 0 ) {
-    return ((segmentCount / contributorCount) + 1); 
-  }  
-  return Math.ceil(segmentCount/contributorCount)
+  if (segmentCount % contributorCount === 0) {
+    return segmentCount / contributorCount + 1;
+  }
+  return Math.ceil(segmentCount / contributorCount);
 };
 
 export const getStoryPromptInfo = async (storyId: string) => {
@@ -51,10 +52,10 @@ export const getStoryPromptInfo = async (storyId: string) => {
       sharePrompt: true,
       promptImageUrl: true,
       promptText: true,
-    }
-  })
-  return storyPromptInfo
-}
+    },
+  });
+  return storyPromptInfo;
+};
 
 export const getStorySegments = async (storyId: string) => {
   const segments = await prisma.segment.findMany({
@@ -66,7 +67,7 @@ export const getStorySegments = async (storyId: string) => {
       authorId: true,
       reveal: true,
       createdAt: true,
-      likedBy:true,
+      likedBy: true,
     },
   });
   return segments;
@@ -78,10 +79,33 @@ export const checkForLastSegment = async (storyId: string) => {
     select: {
       content: true,
       rounds: true,
-      contributors:true,
-    }
-  })
+      contributors: true,
+    },
+  });
   if (story) {
-    return story.content.length === (story.contributors.length * story.rounds -1);
+    return (
+      story.content.length === story.contributors.length * story.rounds - 1
+    );
   }
-}
+};
+
+export const sendYourTurnNotification = async (userID: string) => {
+  const userEmail = await prisma.user.findUnique({
+    where: { id: userID },
+    select: {
+      email: true,
+    },
+  });
+  if (userEmail && userEmail.email !== undefined) {
+    const { data, error } = await resend.emails.send({
+      from: YOUR_TURN_EMAIL!,
+      to: [userEmail.email],
+      subject: "It's your turn",
+      html: "<p>it works!</p>",
+    });
+    if (error) {
+      console.error("Error sending reset password email:", error);
+      throw new Error("Failed to send reset password email");
+    }
+  }
+};
