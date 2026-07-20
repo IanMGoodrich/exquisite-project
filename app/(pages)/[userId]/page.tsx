@@ -4,6 +4,8 @@ import Button from "@/components/button/button";
 import MessageThread from "@/components/messageThread/messageThread";
 import MessageForm from "@/components/messageForm/messageForm";
 import Dropdown from "@/components/dropdown/dropdown";
+import StoryList from "@/components/storyList/storyList";
+
 type Props = {
   params: Promise<{ userId: string }>;
 };
@@ -11,23 +13,6 @@ type Props = {
 export default async function UserHomePage({ params }: Props) {
   const { userId } = await params;
   const user = await getAuthenticatedUserWithStories(userId);
-
-  const storiesListTemplate = (isCompleted: boolean) => {
-    return user.stories
-      .filter((story) => (isCompleted ? story.completed : !story.completed))
-      .map((story) => (
-        <li key={story.id}>
-          <Button
-            as="link"
-            el="link"
-            className="button as-link"
-            href={`${userId}/stories/${story.id}`}
-          >
-            {story.title}
-          </Button>
-        </li>
-      ));
-  };
 
   const messageListTemplate = () => {
     return user.messageThreads.map((thread) => (
@@ -78,14 +63,14 @@ export default async function UserHomePage({ params }: Props) {
           <h2>Conversations</h2>
           {user.messageThreads.length > 0 ? (
             <>
-            <div className="profile-homepage--messages-wrapper mobile">
-              <Dropdown label="open messages" forceClose>
+              <div className="profile-homepage--messages-wrapper mobile">
+                <Dropdown label="open messages" forceClose>
                   {messageListTemplate()}
-              </Dropdown>
-            </div>
-            <ul className="profile-homepage--messages-wrapper desktop">
-              {messageListTemplate()}
-            </ul>
+                </Dropdown>
+              </div>
+              <ul className="profile-homepage--messages-wrapper desktop">
+                {messageListTemplate()}
+              </ul>
             </>
           ) : (
             <p>No messages yet. Start a conversation!</p>
@@ -95,42 +80,22 @@ export default async function UserHomePage({ params }: Props) {
         <div className="profile-homepage--stories-wrapper">
           <div className="profile-homepage--stories-list-wrapper">
             <span className="label">Completed stories</span>
-            {user.stories &&
-            user.stories.filter((story) => story.completed).length > 0 ? (
-              <>
-                <div className="profile-homepage--stories-list completed mobile">
-                  <Dropdown label="view stories">
-                    {storiesListTemplate(true)}
-                  </Dropdown>
-                </div>
-                <ul className="profile-homepage--stories-list completed desktop">
-                  {storiesListTemplate(true)}
-                </ul>
-              </>
-            ) : (
-              <span className="label">Begin a new story</span>
-            )}
+            <StoryList
+              userID={userId}
+              variant="completed"
+              initialUserStoryData={user.stories}
+            ></StoryList>
           </div>
           <div className="profile-homepage--stories-list-wrapper">
             <span className="label">Stories in progress</span>
-            {user.stories &&
-            user.stories.filter((story) => !story.completed).length > 0 ? (
-              <>
-                <div className="profile-homepage--stories-list in-progress mobile">
-                  <Dropdown label="view stories">
-                    {storiesListTemplate(false)}
-                  </Dropdown>
-                </div>
-                <ul className="profile-homepage--stories-list in-progress desktop">
-                  {storiesListTemplate(false)}
-                </ul>
-              </>
-            ) : (
-              <span className="label">Time to start a new story</span>
-            )}
+            <StoryList
+              userID={userId}
+              variant="in-progress"
+              initialUserStoryData={user.stories}
+            ></StoryList>
           </div>
         </div>
-        <div>
+        <div className="profile-homepage--create-story-button-wrapper">
           <Button el="link" as="button" href={`${userId}/stories/create`}>
             Create New Story
           </Button>

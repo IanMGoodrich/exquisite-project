@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LocalFont from "next/font/local";
 import { Special_Elite } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Providers } from "./providers";
 import Header from "@/components/header/header";
 import Container from "@/components/container/container";
 import { auth } from "@/lib/auth";
@@ -98,16 +99,18 @@ export default async function RootLayout({
         <ThemeScript />
       </head>
       <body>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="default"
-          themes={["default", "typewriter", "floral", "sprawl", "monitor"]}
-        >
-          <Header initialSession={session} />
-          <Container classes="main-content" tag="main">
-            {children}
-          </Container>
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="data-theme"
+            defaultTheme="default"
+            themes={["default", "typewriter", "floral", "sprawl", "monitor"]}
+          >
+            <Header initialSession={session} />
+            <Container classes="main-content" tag="main">
+              {children}
+            </Container>
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
