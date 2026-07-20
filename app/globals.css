@@ -184,6 +184,8 @@
     }
   }
 
+  /* Theme Specifics */
+
   &[data-theme="monitor"] {
     body::before {
       border: solid green calc(var(--default-container-padding) / 2);
@@ -211,6 +213,13 @@
   }
 
   &[data-theme="sprawl"] {
+    .border {
+      border: solid 2px var(--cl-dark-mango);
+      border-top-left-radius: 50px;
+      corner-top-left-shape: bevel;
+      border-bottom-right-radius: 50px;
+      corner-bottom-right-shape: bevel;
+    }
     .page.home,
     .page.form.story,
     .page.form.auth {
@@ -234,6 +243,26 @@
   }
 
   &[data-theme="floral"] {
+    .border {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        border: double 3.5px var(--theme-button-border-primary);
+        inset: 0;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+      &::before {
+        content: "";
+        border: double 3.5px var(--theme-button-border-primary-hover);
+        position: absolute;
+        inset: 7px;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+    }
     .page.home,
     .page.form.story,
     .page.form.auth {
@@ -264,6 +293,41 @@
 
     .login-signup-buttons {
       width: fit-content;
+    }
+  }
+
+  &[data-theme="typewriter"] {
+    .border {
+      border: solid 0.5px #979998;
+      border-radius: 2px;
+      box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+      -webkit-box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+      -moz-box-shadow: 10px 7px 9px -1px rgba(138, 136, 136, 0.84);
+    }
+  }
+
+  /* Dark Theme Specific */
+
+  @media (prefers-color-scheme: dark) {
+    &[data-theme="typewriter"] {
+      .border {
+        box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+        -webkit-box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+        -moz-box-shadow: 10px 7px 9px -1px rgba(41, 40, 40, 0.84);
+      }
+    }
+
+    &[data-theme="floral"] {
+      .border {
+        position: relative;
+
+        &::after {
+          border-color: var(--theme-button-border-primary-dark);
+        }
+        &::before {
+          border-color: var(--theme-button-border-primary-hover-dark);
+        }
+      }
     }
   }
 
@@ -355,7 +419,7 @@
     & div .profile-homepage--stories-list {
       list-style: none;
       li {
-        padding-left: 0.75rem;
+        padding-left: 1.25rem;
       }
 
       &.mobile {
@@ -370,6 +434,22 @@
         border: solid 2px var(--button-border-primary);
         padding: 1rem 1rem 1rem 0;
         border-radius: 5px;
+      }
+
+      &.in-progress {
+        a.story-ready {
+          position: relative;
+          &::before {
+            content: "";
+            height: 8px;
+            width: 8px;
+            background: var(--link-primary-hover);
+            border-radius: 50%;
+            position: absolute;
+            left: -12px;
+            top: 8px;
+          }
+        }
       }
     }
   }
@@ -421,6 +501,15 @@
         &.desktop {
           display: none;
         }
+
+        &.in-progress {
+          a.story-ready {
+            position: relative;
+            &::before {
+              left: -9;
+            }
+          }
+        }
       }
     }
     .profile-homepage--stories-list-wrapper {
@@ -428,12 +517,22 @@
       flex-direction: column;
     }
 
+    .profile-homepage--create-story-button-wrapper {
+      margin: 0 auto;
+    }
+
+    .profile-homepage--messages {
+      .message-form--wrapper {
+        margin: 0 auto;
+      }
+    }
+
     .profile-homepage--messages-wrapper {
       &.mobile {
         display: block;
         padding-bottom: 0.75rem;
 
-        .dropdown-wrapper, 
+        .dropdown-wrapper,
         button.dropdown-trigger {
           width: 100%;
         }
@@ -445,6 +544,20 @@
 
       &.desktop {
         display: none;
+      }
+    }
+  }
+
+  /* Story Main Page */
+  .story-main-page {
+    .in-progress--wrapper{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        text-indent: 0px;
+        font-size: var(--fs-body);
       }
     }
   }
