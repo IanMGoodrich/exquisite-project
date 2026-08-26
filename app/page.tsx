@@ -19,8 +19,9 @@ export default async function Home() {
   
   return (
     <div className="page home">
-      <h1>Welcome to Crazy Uncle Ian&apos;s shockingly ugly</h1>
-      <h2>Exquisite Corpse game!!</h2>
+      <h1>Welcome Splendiferous Eructations!</h1>
+      <h2>An Exquisite Corpse game to play with friends and other weirdos,</h2>
+      <h3>and for remembering just how weird all your fiends can get.</h3>
       <div className="login-signup-buttons">
         <Button el="link" href="/login">
           Login
