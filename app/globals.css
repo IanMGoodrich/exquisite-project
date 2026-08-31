@@ -436,13 +436,26 @@
       }
 
       &.in-progress {
-        a.story-ready {
+        button.story-ready {
           position: relative;
           &::before {
             content: "";
             height: 8px;
             width: 8px;
             background: var(--link-primary-hover);
+            border-radius: 50%;
+            position: absolute;
+            left: -12px;
+            top: 8px;
+          }
+        }
+        button.story-unchecked {
+          position: relative;
+          &::before {
+            content: "";
+            height: 8px;
+            width: 8px;
+            background: var(--button-color-primary-hover);
             border-radius: 50%;
             position: absolute;
             left: -12px;

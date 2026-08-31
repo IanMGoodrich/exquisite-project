@@ -59,7 +59,7 @@ a:not(:disabled) {
     text-decoration: underline;
     color: var(--link-primary);
     font-family: var(--ff-primary);
-
+    font-size: var(--fs-body);
     &:hover {
       color: var(--link-primary-hover);
     }
