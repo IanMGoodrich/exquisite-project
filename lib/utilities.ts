@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { resend, YOUR_TURN_EMAIL } from "./resend";
+import { resend, YOUR_TURN_EMAIL, NEW_STORY_EMAIL } from "./resend";
 export const getUser = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -104,8 +104,36 @@ export const sendYourTurnNotification = async (userID: string) => {
       html: "<p>it works!</p>",
     });
     if (error) {
-      console.error("Error sending reset password email:", error);
-      throw new Error("Failed to send reset password email");
+      console.error("Error sending turn notification email:", error);
+      throw new Error("Failed to send turn notification email");
+    }
+  }
+};
+
+export const sendNewStoryNotification = async (
+  userID: string,
+  createdByUserName: string,
+  storyTitle: string,
+) => {
+  const userEmail = await prisma.user.findUnique({
+    where: { id: userID },
+    select: {
+      email: true,
+    },
+  });
+
+  if (userEmail && userEmail.email !== undefined) {
+    const { data, error } = await resend.emails.send({
+      from: NEW_STORY_EMAIL!,
+      to: userEmail.email,
+      subject: "A new story needs you.",
+      html: `<div>
+                <p>Good news! ${createdByUserName} wants you to join <a href='https://exquisite-corpse.art/${userID}'>${storyTitle}</a></p>
+              </div>`,
+    });
+    if (error) {
+      console.error("Error sending turn notification email:", error);
+      throw new Error("Failed to send turn notification email");
     }
   }
 };
