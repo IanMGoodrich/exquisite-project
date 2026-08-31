@@ -34,6 +34,7 @@ model Story {
   promptImageUrl    String?
   promptText        String?
   sharePrompt       String?   
+  acknowledged      Boolean   @default(false)
 }
 
 model Segment {
