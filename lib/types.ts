@@ -10,6 +10,7 @@ export type StoryType = {
   completedRounds?: number;
   completedAt?: Date | null;
   nextContributorId?: string;
+  acknowledged: boolean;
 }
 
 export type SegmentType = {

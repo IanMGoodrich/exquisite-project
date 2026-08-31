@@ -34,6 +34,7 @@ export default async function StoryPage({ params }: Props) {
       completedAt: true,
       completedRounds: true,
       nextContributorId: true,
+      acknowledged: true,
     },
   });
   if (

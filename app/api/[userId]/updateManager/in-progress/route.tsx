@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { auth  } from "@/lib/auth";
-import { headers } from 'next/headers';
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export async function GET(
   request: NextRequest,
@@ -12,24 +12,29 @@ export async function GET(
     const sessionId = session?.user.id;
     const { userId } = await params;
 
-    if (!userId ) {
+    if (!userId) {
       return NextResponse.json({ error: "Missing userId" }, { status: 400 });
     }
 
-    if(userId !== sessionId) {
-      return NextResponse.json({error: "Not Authorized User"}, {status: 400})
+    if (userId !== sessionId) {
+      return NextResponse.json(
+        { error: "Not Authorized User" },
+        { status: 400 },
+      );
     }
 
     const data = await prisma.user.findUnique({
       where: { id: userId },
       select: {
         stories: {
-          where: {completed: false},
+          where: { completed: false },
           select: {
             completed: true,
             title: true,
             nextContributorId: true,
             id: true,
+            acknowledged: true,
+            createdAt: true,
           },
         },
       },
@@ -38,7 +43,6 @@ export async function GET(
     if (!data) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    
     return NextResponse.json(data.stories ?? []);
   } catch (error) {
     console.error(error);
