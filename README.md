@@ -33,7 +33,7 @@
  - **Update profile page routing to allow other users to view public content**
  - **Update Stories to allow for public/private viewing**
  - **Revamp theme colors to address accessibility/contrast issues**
- - **Update Story page to allow creator to rename stories after completion**
+ - ~~**Update Story page to allow creator to rename stories after completion**~~
 
 
 
