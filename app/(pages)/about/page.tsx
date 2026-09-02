@@ -32,6 +32,10 @@ export default function AboutPage() {
         Fixing how you edit revealed text is another feature update in the works.
       </p>
       <p>
+        You&apos;ll get an email when you&apos;ve been added to a new story, and new stories and stories where it is your turn will
+        be highlighted with a dot next to them in your &quot;Stories in progress&quot; list.
+      </p>
+      <p>
         That&apos;s about it. More features are coming. Feedback is great. There is also a chat/message system, and the ability to 
         &quot;like&quot; segments of completed stories to give friends props for a particularly good section.
       </p>
