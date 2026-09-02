@@ -21,8 +21,7 @@ export default function AboutPage() {
       <p>
         Splendiferous Eructations works the same way. On your homepage, scroll down and click the Create New Story button. 
         On the new story creation screen, set the number of rounds, add players by typing their usernames 
-        (real names may be included later), and add a title if you want to. The ability to change titles after the story is complete
-        is one of the many features on the way.
+        (real names may be included later), and add a title if you want to, or if you created the story, you can change the title after it&apos;s complete.
       </p>
       <p>
         Each round you will write your little heart out, using what context you&apos;ve been given by the previous player, 
