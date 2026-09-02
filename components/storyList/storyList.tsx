@@ -66,10 +66,6 @@ const StoryList: React.FC<StoryListProps> = ({
 
   const storiesListTemplate = (isCompleted: boolean) => {
     if (!stories || !Array.isArray(stories)) return null;
-    console.log('storieslist',stories);
-    console.log('filtered', stories.filter((story: StoryData) =>
-        isCompleted ? story.completed : !story.completed,
-      ));
     
     return stories
       .filter((story: StoryData) =>
