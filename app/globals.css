@@ -538,8 +538,15 @@
     }
 
     .profile-homepage--messages {
-      .message-form--wrapper {
-        margin: 0 auto;
+      .message-form--close-button  {
+        margin: unset;
+        margin-left: auto;
+      }
+
+      .message-form--detail {
+        summary {
+          margin: 0 auto;
+        }
       }
     }
 
