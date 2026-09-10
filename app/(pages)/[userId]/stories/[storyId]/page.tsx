@@ -35,6 +35,7 @@ export default async function StoryPage({ params }: Props) {
       completedRounds: true,
       nextContributorId: true,
       acknowledged: true,
+      isPublic: true,
     },
   });
   if (
@@ -49,7 +50,7 @@ export default async function StoryPage({ params }: Props) {
         userName: true,
       },
     });
-    nextUserName = typeof nextUser === "string" ? nextUser : "the next person";
+    nextUserName = (nextUser && nextUser.userName) ? nextUser.userName : "the next person";
   }
   const isCreator = userId === story?.createdById;
   const maxRounds = story ? (story?.rounds * story?.contributors.length) : 0;
@@ -64,12 +65,24 @@ export default async function StoryPage({ params }: Props) {
     }
     return "Your turn!"
   }
+  const contributorTemplate = () => {
+    if (!story?.contributors) return null;
+
+    return story.contributors
+      .filter((contrib) => contrib.id !== userId)
+      .map((contrib) => (
+        <li key={contrib.id} className="in-progress--contributor">
+          <a href={`/${userId}/${contrib.id}/public`}>{contrib.userName}</a>
+        </li>
+      ));
+  };
+
   const inProgressTemplate = () => {
     return (
       <div className="in-progress--wrapper">
-        <div>
           <h1>{story?.title}</h1>
-        </div>
+          <p className="in-progress--label">Contributors</p>
+          <ul className="in-progress--contributor-list">{contributorTemplate()}</ul>
         <h2>This story in still a work in progress</h2>
         <p>
           Round:&nbsp;
