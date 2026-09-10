@@ -18,6 +18,7 @@ export async function getAuthenticatedUser(
     headers: await headers(),
   });
 
+  // TODO: change to reroute to users public facing page.
   if (!session?.user?.id || session.user.id !== requestedUserId) {
     redirect("/");
   }
@@ -137,6 +138,47 @@ export async function getAuthenticatedUserWithStories(
     notFound();
   }
 
+  return user;
+}
+
+
+/**
+ * Fetch public facing User info from different authenticated User.
+ */
+export async function getUserPublicInfo(
+  requestedUserId: string
+) {
+  // Check auth first - fail fast if unauthorized
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+
+  if (!session?.user?.id) {
+    redirect("/");
+  }
+
+  // Fetch user data with full story objects
+  const user = await prisma.user.findUnique({
+    where: { id: requestedUserId },
+    select: {
+      email: true,
+      userName: true,
+      image: true,
+      stories: {
+        where: {
+          completed: true, 
+          isPublic: true,
+        }
+      },
+      profileColumnOne: true,
+      profileColumnTwo: true,
+    },
+  });
+
+  if (!user) {
+    notFound();
+  }  
   return user;
 }
 
