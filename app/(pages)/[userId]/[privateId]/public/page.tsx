@@ -13,7 +13,7 @@ export default async function UserPublicPage({ params }: Props) {
   
   return (
     <div className="profile-homepage">
-      <h1 className="profile-homepage--heading">Hello {user.userName}!</h1>
+      <h1 className="profile-homepage--heading">Welcome to {user.userName}&apos;s public page.</h1>
       <div className="profile-homepage--upper-content">
         {user.image && (
           <div className="profile-homepage--hero">
@@ -41,7 +41,7 @@ export default async function UserPublicPage({ params }: Props) {
       <div className="profile-homepage--main-content">
         <div className="profile-homepage--stories-wrapper">
           <div className="profile-homepage--stories-list-wrapper">
-            <span className="label">Shared stories</span>
+            <span className="label">{user.userName}&apos;s public stories</span>
             <StoryList
               userID={privateId}
               variant="public"
