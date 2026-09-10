@@ -8,4 +8,9 @@
     border: solid 2px var(--button-border-primary);
     border-radius: 50%;
   }
+  .image-wrapper {
+    img {
+      object-fit: cover;
+    }
+  }
 }

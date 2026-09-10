@@ -16,7 +16,7 @@ const ImageWrapper = ({
     <Image
       src={src}
       alt={alt}
-      className={`custom-image-component ${className || ""}`}
+      className={`image-wrapper ${className || ""}`}
       loading="lazy"
       variant={props.variant}
       {...props}
