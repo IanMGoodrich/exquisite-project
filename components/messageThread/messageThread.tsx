@@ -42,7 +42,7 @@ const MessageThread: React.FC<MessageThreadProps> = ({
                   className="message-thread--participant"
                   as="link"
                   el="link"
-                  href={`/${p.id}`}
+                  href={`/${userId}/${p.id}/public`}
                 >
                   <ImageWrapper
                     className="message-thread--participant-icon"
