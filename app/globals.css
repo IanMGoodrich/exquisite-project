@@ -348,6 +348,10 @@
     padding: 1rem;
     clip-path: circle();
     shape-outside: circle();
+    
+    img {
+      object-fit: cover;
+    }
   }
 
   .profile-homepage--upper-content {
