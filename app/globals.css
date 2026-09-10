@@ -203,7 +203,7 @@
       opacity: 1;
     }
     body::after {
-      border: solid black (var(--default-container-padding) * 2);
+      border: solid black calc(var(--default-container-padding) * 2);
       position: fixed;
       inset: calc(var(--default-container-padding) * -1);
       content: "";
