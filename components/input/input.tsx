@@ -9,6 +9,7 @@ type InputType =
   | "tel"
   | "email"
   | "password"
+  | "checkbox"
 
 type InputProps = {
   label: string;
