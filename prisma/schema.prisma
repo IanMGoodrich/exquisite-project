@@ -33,8 +33,9 @@ model Story {
   completedRounds   Int       @default(0)
   promptImageUrl    String?
   promptText        String?
-  sharePrompt       String?   
+  sharePrompt       String?
   acknowledged      Boolean   @default(false)
+  isPublic          Boolean   @default(false)
 }
 
 model Segment {
