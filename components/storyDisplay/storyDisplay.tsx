@@ -1,17 +1,13 @@
 "use client";
 
 import { useState, useRef, type FC } from "react";
-import { useRouter } from 'next/navigation'; // Correct import for App Router
+import { useRouter } from "next/navigation"; // Correct import for App Router
 import Segment from "../segment/segment";
-import {
-  type StoryType,
-  type SegmentType,
-  type UserType,
-} from "@/lib/types";
+import { type StoryType, type SegmentType, type UserType } from "@/lib/types";
 import Button from "../button/button";
 import Input from "../input/input";
 import Icon from "../icon/icon";
-import './storyDisplay.css';
+import "./storyDisplay.css";
 interface StoryDisplayProps {
   storyData: StoryType;
   isCreator: boolean;
@@ -26,7 +22,9 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [titleInputExpanded, setTitleInputExpanded] = useState(false);
   const [newTitle, setNewTitle] = useState(storyData.title);
+  const [isPublic, setIsPublic] = useState(storyData.isPublic);
   const titleRef = useRef(null);
+  const publicRef = useRef(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -42,7 +40,7 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
       ? segmentData.likedBy?.some((user) => user.userId === userId)
       : false;
 
-  const handleTitleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const storyId = storyData.id;
     if (newTitle.trim() !== "") {
@@ -52,19 +50,19 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-             title: newTitle 
+            title: newTitle,
+            isPublic: isPublic,
           }),
         });
-
       } catch (err) {
         setError(`The following error is reported: ${err}`);
         console.error(err);
-        setLoading(false)
+        setLoading(false);
       } finally {
         setTimeout(() => {
           setLoading(false);
           setTitleInputExpanded(false);
-          return router.refresh()
+          return router.refresh();
         }, 1500);
       }
     }
@@ -74,8 +72,7 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
     <section className="story-display" data-expanded={isExpanded}>
       <div className="story-display--title-wrapper">
         <div className="story-display--title-editable">
-          {!titleInputExpanded && 
-          <h1>{storyData.title}</h1>}
+          {!titleInputExpanded && <h1>{storyData.title}</h1>}
           {isCreator && !titleInputExpanded && (
             <Button
               el="button"
@@ -83,13 +80,13 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
               classes="edit-button"
               onClick={() => setTitleInputExpanded(!titleInputExpanded)}
             >
-            <Icon name="pen" />
+              <Icon name="pen" />
             </Button>
           )}
         </div>
         {titleInputExpanded && (
           <div className="story-display--title-edit-form">
-            <form onSubmit={handleTitleUpdate}>
+            <form onSubmit={handleUpdate}>
               <Input
                 type="text"
                 label="edit story title"
@@ -100,12 +97,34 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
                 onChange={(e) => setNewTitle(e.target.value)}
               />
               <div className="form-buttons">
-                <Button el="button" as="button" type="submit">
-                  { loading ? "Updating" : "Change Title"}
+                <Button
+                  el="button"
+                  as="button"
+                  classes={loading ? "Updating" : isPublic ? "public-story" : "private-story"}
+                  onClick={() => setIsPublic(!isPublic)}
+                >
+                  {isPublic? "Make Private" : "Make Public"}
                 </Button>
-                <Button el="button" as="button" onClick={() =>setTitleInputExpanded(false)}>
+                <Button el="button" as="button" type="submit">
+                  {loading ? "Updating" : "Update Story"}
+                </Button>
+                <Button
+                  el="button"
+                  as="button"
+                  onClick={() => setTitleInputExpanded(false)}
+                >
                   Cancel
                 </Button>
+                <Input
+                  type="checkbox"
+                  label="Make Public"
+                  labelHidden
+                  aria-hidden
+                  classes="hidden"
+                  id="story_is_public"
+                  ref={publicRef}
+                  checked={isPublic}
+                />
               </div>
             </form>
           </div>

@@ -38,4 +38,10 @@
       row-gap: 2rem;
     }
   }
+
+  .hidden {
+    visibility: hidden;
+    position: absolute;
+    pointer-events: none;
+  }
 }
