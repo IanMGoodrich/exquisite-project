@@ -19,6 +19,7 @@ export async function POST(
   }
   let body: {
     title: string;
+    isPublic: boolean;
   };
 
   try {
@@ -47,6 +48,7 @@ export async function POST(
         where: { id: storyId },
         data: {
           title: body.title,
+          isPublic: body.isPublic,
         },
       });
     }
