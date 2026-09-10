@@ -2,6 +2,7 @@ export type StoryType = {
   id: string;
   title: string;
   createdAt: Date | undefined;
+  createdById: string;
   updatedAt?: Date | undefined;
   completed?: boolean;
   contributors: UserType[];
@@ -11,6 +12,7 @@ export type StoryType = {
   completedAt?: Date | null;
   nextContributorId?: string;
   acknowledged: boolean;
+  isPublic: boolean;
 }
 
 export type SegmentType = {
