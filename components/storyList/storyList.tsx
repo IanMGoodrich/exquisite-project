@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
-type StoryListVariant = "completed" | "in-progress";
+type StoryListVariant = "completed" | "in-progress" | "public";
 
 type StoryData = {
   id: string;
@@ -20,6 +20,7 @@ type StoryData = {
   promptText: string | null;
   sharePrompt: string | null;
   acknowledged: boolean;
+  isPublic: boolean;
 };
 
 type StoryListProps = {
@@ -61,17 +62,30 @@ const StoryList: React.FC<StoryListProps> = ({
     throw new Error("Could not acknowledge story");
   }
 
-  router.push(`/${userID}/stories/${storyId}`);
+  if(variant === 'public') {    
+    return router.push(`/${userID}/stories/${storyId}/public`);
+  }
+  return router.push(`/${userID}/stories/${storyId}`);
 };
 
-  const storiesListTemplate = (isCompleted: boolean) => {
+  const storiesListTemplate = () => {
     if (!stories || !Array.isArray(stories)) return null;
-    
-    return stories
-      .filter((story: StoryData) =>
-        isCompleted ? story.completed : !story.completed,
-      )
-      .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+
+    const selectedStories = (): Array<StoryData> => {
+      if(variant === 'public') {
+        return stories.filter((story: StoryData) => story.isPublic && story.completed)
+      }
+      if (variant === 'in-progress') {
+        return stories.filter((story: StoryData) => !story.completed)
+      }
+      if (variant === 'completed') {
+        return stories.filter((story: StoryData) => story.completed)
+      }
+      return []
+    }
+
+    return selectedStories()
+      .sort((a:StoryData, b:StoryData) => Date.parse(b.createdAt as unknown as string) - Date.parse(a.createdAt as unknown as string ))
       .map((story: StoryData) => (
         <li key={story.id}>
           <Button
@@ -90,11 +104,11 @@ const StoryList: React.FC<StoryListProps> = ({
     <>
       <div className={`profile-homepage--stories-list ${variant} mobile`}>
         <Dropdown label="view stories">
-          {storiesListTemplate(variant === "completed" ? true : false)}
+          {storiesListTemplate()}
         </Dropdown>
       </div>
       <ul className={`profile-homepage--stories-list ${variant} desktop`}>
-        {storiesListTemplate(variant === "completed" ? true : false)}
+        {storiesListTemplate()}
       </ul>
     </>
   );
