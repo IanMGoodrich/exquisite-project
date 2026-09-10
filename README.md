@@ -26,9 +26,11 @@
    - ~~**Incorporate messaging system**~~
    - ~~**New story email**~~
    - ~~**Implement new story and your turn styles**~~
-   - **Implement new message styles**
+ - **Implement new message styles**
  - **Refinement of UI/UX**
  - **Implement optional text notifications**
+ - **Implement user search**
+ - **Incorporate WYSIWYG into segment creation**
  - ~~**Deploy and enjoy with friends**~~
  - ~~**Update profile page routing to allow other users to view public content**~~
  - ~~**Update Stories to allow for public/private viewing**~~
