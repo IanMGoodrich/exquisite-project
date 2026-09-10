@@ -13,9 +13,7 @@ export default async function Home() {
     const userId = session.user.id;
     redirect(`/${userId}`)
     
-  } //else {
-   // console.log('no session');
-  //}
+  }
   
   return (
     <div className="page home">
