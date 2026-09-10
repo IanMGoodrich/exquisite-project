@@ -28,6 +28,8 @@
   &.input--textarea {
     textarea {
       min-height: 100px;
+      padding: 1rem;
+      font-size: var(--fs-body);
     }
   }
 }
