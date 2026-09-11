@@ -348,7 +348,7 @@
     padding: 1rem;
     clip-path: circle();
     shape-outside: circle();
-    
+
     img {
       object-fit: cover;
     }
@@ -538,7 +538,7 @@
     }
 
     .profile-homepage--messages {
-      .message-form--close-button  {
+      .message-form--close-button {
         margin: unset;
         margin-left: auto;
       }
@@ -591,6 +591,19 @@
     }
   }
 
+  /* Story UPDATE Page */
+  .story-update-page {
+    h1 {
+      width: fit-content;
+      margin: auto;
+    }
+    .input-wrapper label {
+      font-size: var(--fs-heading-5);
+      margin: 0 auto;
+      font-weight:unset;
+    }
+  }
+  
   /* Profile Edit page */
   /* Pell Editor */
   .pell-content {
