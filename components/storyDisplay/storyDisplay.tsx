@@ -133,7 +133,8 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
       <div className="story-display--story-content">
         {storyData.content &&
           storyData.content.length > 0 &&
-          storyData.content.map((segment) => (
+          storyData.content.sort((a:SegmentType, b:SegmentType) => Date.parse(a.createdAt as unknown as string) - Date.parse(b.createdAt as unknown as string))
+          .map((segment:SegmentType) => (
             <Segment
               currentUserLikes={currentUserLikes(userId, segment)}
               key={segment.id}
