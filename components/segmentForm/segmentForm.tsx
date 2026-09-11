@@ -93,7 +93,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
 
             <Input
               id="content"
-              label={firstPass ? "Write your next instalment" : ""}
+              label={firstPass ? "Write your next installment" : ""}
               type="textarea"
               rows={10}
               ref={textareaRef}
