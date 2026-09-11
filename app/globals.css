@@ -597,6 +597,11 @@
       width: fit-content;
       margin: auto;
     }
+    .last-reveal--wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .last-reveal--label,
     .input-wrapper label {
       font-size: var(--fs-heading-5);
