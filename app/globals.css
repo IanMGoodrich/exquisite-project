@@ -597,13 +597,18 @@
       width: fit-content;
       margin: auto;
     }
+    .last-reveal--label,
     .input-wrapper label {
       font-size: var(--fs-heading-5);
       margin: 0 auto;
       font-weight:unset;
     }
+    .last-reveal--text {
+      font-style: italic;
+      font-size: var(--fs-body);
+    }
   }
-  
+
   /* Profile Edit page */
   /* Pell Editor */
   .pell-content {

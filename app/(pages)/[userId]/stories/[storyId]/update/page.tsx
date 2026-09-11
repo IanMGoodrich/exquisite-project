@@ -22,8 +22,8 @@ export default async function UpdateStoryPage({params} : Props) {
      <h1>It&apos;s your turn {user?.userName}</h1>
       {lastReveal && lastReveal.length > 0 && (
         <div className="last-reveal--wrapper">
-          <span>Here&apos;s what you&apos;ve got to work with:</span>
-          <p>{lastReveal}...</p>
+          <span className="last-reveal--label">Here&apos;s what you&apos;ve got to work with:</span>
+          <p className="last-reveal--text">{`"${lastReveal}..."`}</p>
         </div>
       )}
       {sharePrompt() && promptInfo?.promptImageUrl &&(
