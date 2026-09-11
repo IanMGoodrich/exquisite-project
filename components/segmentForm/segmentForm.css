@@ -1,0 +1,31 @@
+:root {
+  .segment-form--form {
+    display: grid;
+    row-gap: 1.25rem;
+  }
+  .segment-form--summary {
+    width: auto;
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .reveal-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: var(--fs-heading-5);
+    }
+    p {
+      font-size: var(--fs-body);
+      font-style: italic;
+    }
+  }
+}
