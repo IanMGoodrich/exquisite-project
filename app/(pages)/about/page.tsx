@@ -1,4 +1,5 @@
 import React from "react";
+const videoURL = `https://${process.env.AWS_USER_IMAGE_S3_BUCKET}.s3.${process.env.AWS_USER_IMAGE_REGION}.amazonaws.com/video/${process.env.AWS_DEMO_VIDEO}`;
 
 export default function AboutPage() {
   return (
@@ -41,6 +42,14 @@ export default function AboutPage() {
       <p>&nbsp;</p>
       <p>Good luck, have fun, surprise each other,</p>
       <p><strong>Ian</strong></p>
+
+      <div>
+        <p>TLDR: Here&apos;s how a story get&apos; made!</p>
+        <video min-width="300" width="100%" height="240" controls aria-label="life cycle of a story">
+          <source src={videoURL} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
   );
 }
