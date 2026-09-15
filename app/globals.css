@@ -625,6 +625,13 @@
     }
   }
 
+  /* About Page */
+  .about-page--video-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   /* Storybook only */
   &[data-theme="floral"],
   &[data-theme="sprawl"],

@@ -43,9 +43,9 @@ export default function AboutPage() {
       <p>Good luck, have fun, surprise each other,</p>
       <p><strong>Ian</strong></p>
 
-      <div>
+      <div className="about-page--video-wrapper">
         <p>TLDR: Here&apos;s how a story get&apos; made!</p>
-        <video min-width="300" width="100%" height="240" controls aria-label="life cycle of a story">
+        <video width="300" height="240" controls aria-label="life cycle of a story">
           <source src={videoURL} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
