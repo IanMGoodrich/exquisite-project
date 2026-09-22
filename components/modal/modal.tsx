@@ -1,5 +1,5 @@
 "use client"
-
+import { useEffect } from "react";
 import Button from "../button/button";
 import './modal.css';
 import { useDraggable } from "../../lib/useDraggable";
@@ -24,6 +24,19 @@ const Modal: React.FC<MovableModalProps> = ({
     window.innerWidth * 0.25,
     window.innerHeight * 0.02,
   );
+
+  useEffect(()=> {
+    const closeOnEsc = (e:KeyboardEvent) => {
+      if (e.key==='Escape') {        
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', closeOnEsc);
+
+    return ()=> {
+      window.removeEventListener('keydown', closeOnEsc)
+    }
+  }, []);
 
   return (
     <div
