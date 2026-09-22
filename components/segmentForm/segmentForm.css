@@ -7,8 +7,19 @@
     width: auto;
     &.hidden {
       visibility: hidden;
+      height: 0px;
+      width: 0px;
+      padding: 0px;
     }
   }
+
+  .segment-form--label{
+    display: flex;
+    justify-content: center;
+    font-size: var(--fs-body);
+    padding: 0.75rem 0;
+  }
+
   .form-buttons {
     display: flex;
     justify-content: space-between;
@@ -26,6 +37,13 @@
     p {
       font-size: var(--fs-body);
       font-style: italic;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .segment-form--label{
+      flex-direction: column;
+      align-items: center;
     }
   }
 }

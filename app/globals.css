@@ -593,9 +593,22 @@
 
   /* Story UPDATE Page */
   .story-update-page {
-    h1 {
+    h1.story-update-page--heading {
+      margin: auto;
+      width: fit-content;
+      font-size: var(--fs-heading-3);
+    }
+    h2.story-update-page--title {
+      font-size: var(--fs-heading-4);
       width: fit-content;
       margin: auto;
+      font-style: italic;
+    }
+    h3.story-update-page--attribution {
+      font-size: var(--fs-eyebrow);
+      width: fit-content;
+      margin: auto;
+      padding-bottom: 1rem;
     }
     .last-reveal--wrapper {
       display: flex;
@@ -604,13 +617,23 @@
     }
     .last-reveal--label,
     .input-wrapper label {
-      font-size: var(--fs-heading-5);
+      font-size: var(--fs-body);
       margin: 0 auto;
       font-weight:unset;
+      padding: .5rem 0;
     }
     .last-reveal--text {
       font-style: italic;
-      font-size: var(--fs-body);
+      font-size: var(--fs-heading-6);
+      margin: 0;
+    }
+
+    @media (max-width:639px) {
+      .last-reveal--label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
 

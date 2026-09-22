@@ -45,6 +45,19 @@ export const setRoundNumber = (
   return Math.ceil(segmentCount / contributorCount);
 };
 
+export const getStoryContributors = async (storyId: string) => {
+  const storyData = await prisma.story.findUnique({
+    where: { id: storyId },
+    select: {
+      title: true,
+      createdById: true,
+      contributors: true,
+      nextContributorId: true,
+    },
+  });
+  return storyData;
+}
+
 export const getStoryPromptInfo = async (storyId: string) => {
   const storyPromptInfo = await prisma.story.findUnique({
     where: { id: storyId },

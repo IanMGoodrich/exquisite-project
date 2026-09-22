@@ -4,11 +4,18 @@ import { useRouter } from "next/navigation";
 import Input from "../input/input";
 import Button from "../button/button";
 import "./segmentForm.css";
+
+type NextUserData = {
+  userId: string;
+  userName: string;
+}
+
 type SegmentFormProps = {
   userId: string;
   storyId: string;
   promptText?: string;
   isLast?: boolean;
+  nextUser?: NextUserData | undefined;
 };
 
 /** Segment component */
@@ -17,6 +24,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
   storyId,
   promptText,
   isLast,
+  nextUser,
 }) => {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -74,6 +82,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
     }
   };
 
+
   const createNewSegmentTemplate = () => {
     return (
       <section className="segment segment--create">
@@ -90,11 +99,16 @@ const SegmentForm: FC<SegmentFormProps> = ({
             >
               Open to review or change the reveal, or hit submit!
             </summary>
-
+            {nextUser && !isLast &&
+              (
+                <span className="segment-form--label">You&apos;re writing for&nbsp;<a href={`${nextUser.userId}/public`}>{nextUser.userName}</a> </span>
+              )
+            }
             <Input
               id="content"
-              label={firstPass ? "Write your next installment" : ""}
+              label={firstPass && nextUser && !isLast? `You're writing for ${nextUser.userName}` : "enter your story segment here."}
               type="textarea"
+              labelHidden
               rows={10}
               ref={textareaRef}
               value={content}
