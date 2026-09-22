@@ -90,7 +90,7 @@ model User {
   sessions         Session[]
   accounts         Account[]
 
-  userName       String?
+  userName       String
   sentMessages   Message[]       @relation("MessageSender")
   messageThreads MessageThread[] @relation("ThreadParticipants")
 

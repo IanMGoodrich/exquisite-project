@@ -32,7 +32,7 @@ export type UserType = {
   nameLast?: string | null;
   email: string | null;
   phone?: string | null;
-  userName?: string | null;
+  userName: string;
   profileColumnOne?: string | null;
   profileColumnTwo?: string | null;
   image?: string | null;

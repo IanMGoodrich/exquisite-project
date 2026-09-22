@@ -234,7 +234,8 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         label="User Name (optional)"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
-        placeholder="Will default to first name and last initial"
+        placeholder="Create username"
+        required
       />
       <Input
         type="tel"
