@@ -101,7 +101,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
             </summary>
             {nextUser && !isLast &&
               (
-                <span className="segment-form--label">You&apos;re writing for&nbsp;<a href={`${nextUser.userId}/public`}>{nextUser.userName}</a> </span>
+                <span className="segment-form--label">You&apos;re writing for&nbsp;<a href={`/${userId}/${nextUser.userId}/public`}>{nextUser.userName}</a> </span>
               )
             }
             <Input
