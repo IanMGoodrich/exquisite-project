@@ -4,6 +4,7 @@ import {
   checkForLastSegment,
   getStoryPromptInfo,
   getUser,
+  getNextContributor,
   getStoryContributors,
 } from "@/lib/utilities";
 import SegmentForm from "@/components/segmentForm/segmentForm";
@@ -28,16 +29,16 @@ export default async function UpdateStoryPage({ params }: Props) {
     promptInfo.sharePrompt !== "FALSE" &&
     promptInfo.sharePrompt !== "AT_COMPLETION";
 
-  const { title, createdById, contributors, nextContributorId } =
+  const { title, createdById, contributors } =
     (await getStoryContributors(storyId)) ?? {
       title: "",
       createdById: "",
       contributors: [],
-      nextContributorId: "",
     };
 
   const author = await getUser(createdById);
-  const nextUser = await getUser(nextContributorId);
+  const nextUserId = await getNextContributor(contributors.map(contrib => contrib.id), userId);
+  const nextUser = await getUser(nextUserId);  
   const nextUserInfo = () => {
     if (nextUser) {
       return { userId: nextUser.id, userName: nextUser.userName };
@@ -50,7 +51,7 @@ export default async function UpdateStoryPage({ params }: Props) {
       return (
         <span className="last-reveal--label">
           Here&apos;s what{" "}
-          <a href={`${previousUserId}/public`}>{prevUser.userName}</a> left you
+          <a href={`/${userId}/${previousUserId}/public`}>{prevUser.userName}</a> left you
           to work with:
         </span>
       );
@@ -74,7 +75,7 @@ export default async function UpdateStoryPage({ params }: Props) {
       }
       {
         <h3 className="story-update-page--attribution">
-          by <a href={`${author?.id}/public`}>{author?.userName}</a>
+          by <a href={`/${userId}/${author?.id}/public`}>{author?.userName}</a>
         </h3>
       }
       {lastReveal && lastReveal.length > 0 && (
