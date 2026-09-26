@@ -41,7 +41,7 @@ const Message: React.FC<MessageProps> = ({
   // Use senderName if provided, otherwise use sender.userName
   const displayName = senderName || sender.userName || "Unknown User";
 
-  const handleReply = () => {
+  const handleOpenReplyForm = () => {
     setReplyOpen(true);
   };
 
@@ -70,7 +70,6 @@ const Message: React.FC<MessageProps> = ({
 
     if (replyResponse.ok) {
       const createdReply = await replyResponse.json();
-      console.log(`Reply created successfully:`, createdReply);
       setReply("");
       setReplyOpen(false);
       // TODO: Consider refreshing thread data or optimistically updating UI
@@ -109,6 +108,15 @@ const Message: React.FC<MessageProps> = ({
 
       <div className="message-content">{content}</div>
       <div className="message--actions">
+        <Button
+          svg="reply"
+          variant="icon-only"
+          el="button"
+          as="button"
+          aria-label="open reply form"
+          classes="message--reply-button"
+          onClick={() => handleOpenReplyForm()}
+        ></Button>
         {replies && replies.length > 0 && (
           <Button
             svg={repliesExpanded ? "chevron-up" : "chevron-down"}
@@ -119,15 +127,6 @@ const Message: React.FC<MessageProps> = ({
             onClick={() => setRepliesExpanded(!repliesExpanded)}
           ></Button>
         )}
-        <Button
-          svg="reply"
-          variant="icon-only"
-          el="button"
-          as="button"
-          aria-label="open reply form"
-          classes="message--reply-button"
-          onClick={() => handleReply()}
-        ></Button>
       </div>
       {replies && replies.length > 0 && repliesExpanded && (
         <div className="message--replies">
@@ -144,9 +143,9 @@ const Message: React.FC<MessageProps> = ({
               type="textarea"
               value={reply}
               onChange={(e) => setReply(e.target.value)}
-              label={`Replying to ${displayName}`}
+              label={`Replying to "${content.slice(0, 20)}..." from ${displayName}`}
               labelHidden
-              placeholder={`Replying to ${displayName}`}
+              placeholder={`Replying to "${content.slice(0,20)}..." from ${displayName}`}
             />
             <Button
               variant="primary"

@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-const MAX_REPLY_DEPTH = 3;
+const MAX_REPLY_DEPTH = 6;
 
 /**
  * Validates that a reply doesn't exceed maximum nesting depth

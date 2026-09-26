@@ -5,21 +5,20 @@
     font-size: var(--fs-legal);
     align-items: center;
     position: relative;
-    
-    
+
     &:hover,
     &:focus {
       .message--sender-name {
         visibility: visible;
         opacity: 1;
-        transition: opacity .5s ease-in-out;
-        transition-delay: 1s ;
+        transition: opacity 0.5s ease-in-out;
+        transition-delay: 1s;
       }
     }
   }
 
   .message--sender {
-    padding: .25rem;
+    padding: 0.25rem;
     img {
       width: 16px;
       height: 16px;
@@ -33,8 +32,8 @@
     font-size: var(--fs-legal);
     top: calc(var(--fs-legal) * -1.5);
     left: 0;
-    line-height: var(--lh-normal); 
-    transition: opacity .3s ease-in-out;
+    line-height: var(--lh-normal);
+    transition: opacity 0.3s ease-in-out;
     z-index: 2;
     width: max-content;
   }
@@ -45,6 +44,29 @@
     padding: 1rem;
   }
 
+  .message--replies {
+    position: relative;
+    padding-bottom: 0.25rem;
+    border-end-start-radius: 20%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      border-left: 1px solid var(--button-border-primary);
+      border-bottom: 1px solid var(--button-border-primary);
+      top: 97%;
+      bottom: 0;
+      width: 2rem;
+      border-bottom-left-radius: 100px;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      border-left: 1px solid var(--button-border-primary);
+      top: 0;
+      bottom: 3%;
+    }
+  }
   .message {
     padding-left: 1rem;
   }
@@ -54,7 +76,18 @@
   }
 
   /* hide reply button at max depth */
-  .message--replies > .message > .message--replies > .message > .message--replies .message--reply-button {
+  .message--replies
+    > .message
+    > .message--replies
+    > .message
+    > .message--replies
+    > .message
+    > .message--replies
+    > .message
+    > .message--replies
+    > .message
+    > .message--replies
+    .message--reply-button {
     display: none;
   }
 }

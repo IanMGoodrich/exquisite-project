@@ -117,6 +117,33 @@ export async function getAuthenticatedUserWithStories(
                           sender: {
                             select: { id: true, userName: true, image: true },
                           },
+                          // Replies to replies to replies to replies (level 4)
+                          replies: {
+                            where: { deleted: false },
+                            include: {
+                              sender: {
+                                select: { id: true, userName: true, image: true },
+                              },
+                              // Replies to replies to replies to replies to replies (level 5)
+                              replies: {
+                                where: { deleted: false },
+                                include: {
+                                  sender: {
+                                    select: { id: true, userName: true, image: true },
+                                  },
+                                  // Replies to replies to replies to replies to replies to replies (level 6)
+                                  replies: {
+                                    where: { deleted: false },
+                                    include: {
+                                      sender: {
+                                        select: { id: true, userName: true, image: true },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
                         },
                       },
                     },
