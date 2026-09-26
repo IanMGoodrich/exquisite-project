@@ -87,7 +87,7 @@
     > .message--replies
     > .message
     > .message--replies
-    .message--reply-button {
+    .message--actions {
     display: none;
   }
 }
