@@ -12,7 +12,7 @@ export default async function UserProfileUpdatePage({ params }: Props) {
 
   return (
     <div className="profile-update-page">
-      <h1>{user.userName ?? `${user.nameFirst} ${user.nameLast}`}</h1>
+      <h1 className="profile-update-page--heading">{user.userName ?? `${user.nameFirst} ${user.nameLast}`}</h1>
       <div className="profile-update-page--main-content">
         <div className="profile-update-page--image-wrapper">
           {user.image && (
