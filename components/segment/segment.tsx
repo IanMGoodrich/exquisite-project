@@ -125,12 +125,14 @@ const Segment: FC<SegmentProps> = ({
         )}
         {isExpandable && (
           <div className="segment--expand-toggle">
-            <button
+            <Button
+              el="button"
+              as="button"
               onClick={() => setExpanded(!expanded)}
               aria-expanded={expanded}
             >
               {expanded ? "Show Less" : "Show More"}
-            </button>
+            </Button>
           </div>
         )}
       </div>
