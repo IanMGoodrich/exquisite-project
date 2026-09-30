@@ -84,7 +84,8 @@ export default async function UserHomePage({ params }: Props) {
               userID={userId}
               variant="completed"
               initialUserStoryData={user.stories}
-            ></StoryList>
+              absolute="none"
+              ></StoryList>
           </div>
           <div className="profile-homepage--stories-list-wrapper">
             <span className="label">Stories in progress</span>
@@ -92,6 +93,7 @@ export default async function UserHomePage({ params }: Props) {
               userID={userId}
               variant="in-progress"
               initialUserStoryData={user.stories}
+              absolute="none"
             ></StoryList>
           </div>
         </div>
