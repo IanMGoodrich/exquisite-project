@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { MessageProps } from "@/components/message/message";
 import Button from "@/components/button/button";
 import ImageWrapper from "@/components/image/image";
@@ -29,9 +31,11 @@ const MessageThread: React.FC<MessageThreadProps> = ({
   createdAt,
   userId,
 }) => {
+  const [isOpen, setOpen] = useState(false);
+
   return (
-    <details key={threadId} className="message-thread">
-      <summary className="message-thread--header">
+    <div key={threadId} className="message-thread">
+      <div className="message-thread--header" onClick={() => setOpen(!isOpen)}>
         <h3 className="message-thread--title">{subject || "No Subject"}</h3>
         <ul className="message-thread--participants">
           {participants
@@ -50,8 +54,11 @@ const MessageThread: React.FC<MessageThreadProps> = ({
                     width={25}
                     height={25}
                     variant="circle"
-                    src={p.image || `${process.env.NEXT_PUBLIC_S3_BASE_URL}/users/placeholder-user-id_1781127059625.jpeg`}
-                    alt={`image for ${p.userName}`}
+                    src={
+                      p.image ||
+                      `${process.env.NEXT_PUBLIC_S3_BASE_URL}/users/placeholder-user-id_1781127059625.jpeg`
+                    }
+                    alt={``}
                   />
                   <span className="message-thread--participant-name">
                     {p.userName}
@@ -60,18 +67,17 @@ const MessageThread: React.FC<MessageThreadProps> = ({
               </li>
             ))}
         </ul>
-      </summary>
-      {messages.length > 0 ? (
-        messages.map((message) => (
-          <Message key={message.id} {...message} userId={userId} />
-        ))
-      ) : (
-        <p>No messages in this thread yet.</p>
-      )}
-      {/* <Button el="link" as="button">
-        View Thread
-      </Button> */}
-    </details>
+      </div>
+      <div className={isOpen ? "" : "hidden"}>
+        {messages.length > 0 ? (
+          messages.map((message) => (
+            <Message key={message.id} {...message} userId={userId} />
+          ))
+        ) : (
+          <p>No messages in this thread yet.</p>
+        )}
+      </div>
+    </div>
   );
 };
 export default MessageThread;
