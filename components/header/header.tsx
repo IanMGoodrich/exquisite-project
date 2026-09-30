@@ -161,7 +161,7 @@ const Header: FC<HeaderProps> = ({ initialSession }) => {
             </li>
           </ul>
           <div className="mobile-nav-wrapper">
-            <Dropdown label="Menu">
+            <Dropdown label="Menu" hasNested>
               <ul className="main-nav--list mobile">
                 {pathOfInspiration && (
                   <li className="main-nav--item">
