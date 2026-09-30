@@ -34,7 +34,7 @@
 
       @media (max-width: 640px) {
         li.main-nav--item {
-          padding: 0;
+          padding: .25rem .5rem 0;
           font-size: var(--fs-body);
           button {
             font-size: var(--fs-body);
@@ -65,6 +65,7 @@
         button,
         .dropdown-wrapper {
           width: -webkit-fill-available;
+          height: auto;
         }
       }
     }
