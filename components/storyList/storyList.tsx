@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
+import { PositionAbsoluteOptions } from "../dropdown/dropdown";
 type StoryListVariant = "completed" | "in-progress" | "public";
 
 type StoryData = {
@@ -27,12 +28,14 @@ type StoryListProps = {
   userID: string;
   variant: StoryListVariant;
   initialUserStoryData?: StoryData[];
+  absolute?: PositionAbsoluteOptions;
 };
 
 const StoryList: React.FC<StoryListProps> = ({
   userID,
   variant,
   initialUserStoryData,
+  absolute,
 }) => {
   const { data: stories } = useQuery({
     queryKey: [variant, userID],
@@ -51,7 +54,7 @@ const StoryList: React.FC<StoryListProps> = ({
     refetchIntervalInBackground: false,
   });
   const router = useRouter();
-
+  const dropdownAbsolutePosition = !absolute ? 'both' : absolute;
   const handleClick = async (storyId: string) => {
   const response = await fetch(`/api/${userID}/stories/${storyId}/update`, {
     method: "PATCH",
@@ -103,7 +106,7 @@ const StoryList: React.FC<StoryListProps> = ({
   return (
     <>
       <div className={`profile-homepage--stories-list ${variant} mobile`}>
-        <Dropdown label="view stories">
+        <Dropdown label="view stories" absolute={dropdownAbsolutePosition}>
           {storiesListTemplate()}
         </Dropdown>
       </div>
