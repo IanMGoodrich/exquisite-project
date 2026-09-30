@@ -1,11 +1,11 @@
 .dropdown-wrapper {
   position: relative;
   width: fit-content;
+  height: 45px;
 }
 
 .dropdown-list {
   display: flex;
-  position: absolute;
   flex-direction: column;
   transition: transform 0.3s ease-in-out;
   transform-origin: top;
@@ -23,12 +23,18 @@
   &.open {
     transform: scaleY(1);
   }
-
+  
   &.closed {
     transform: scaleY(0);
     li {
       display: none;
     }
+  }
+  &.both, &.mobile {
+    position: absolute;
+  }
+  &.none {
+    position: relative;
   }
 }
 
@@ -57,7 +63,12 @@
 }
 
 @media (min-width: 640px) {
-
+  .dropdown-list {
+    position: relative;
+    &.desktop, &.both {
+      position: absolute;
+    }
+  }
   .dropdown-item {
     padding: 0.5rem 1rem;
   }

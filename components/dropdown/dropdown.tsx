@@ -4,6 +4,8 @@ import { useState, useRef, useId, useEffect } from "react";
 import Button from "../button/button";
 import "./dropdown.css";
 
+export type PositionAbsoluteOptions = "none" | "mobile" | "desktop" | "both";
+
 type DropdownProps = {
   options?: string[];
   children?: React.ReactNode;
@@ -13,6 +15,10 @@ type DropdownProps = {
   startOpen?: boolean;
   forceClose?: boolean;
   externallySetActiveValue?: string;
+  //Set optional absolute position styles
+  absolute?: PositionAbsoluteOptions;
+  //If is nested inside other dropdown pass true to prevent clickhandler from closing parent menu.
+  hasNested?: boolean;
 };
 
 const Dropdown = ({
@@ -24,31 +30,24 @@ const Dropdown = ({
   startOpen,
   forceClose,
   externallySetActiveValue,
+  absolute,
+  hasNested,
 }: DropdownProps) => {
   const buttonId = useId();
   const firstItemRef = useRef(null);
   const menuRef = useRef(null);
   const [open, setOpen] = useState(startOpen);
-
-  const toggleOpenClass = (e: React.SyntheticEvent) => {
-    const clickedElem = e.target as HTMLElement;
-    const clickedId = clickedElem.getAttribute("data-button-id");
-
-    // prevent nested buttons from closing parent dropdown
-    if (clickedElem && clickedId && buttonId !== clickedId) {
-      return;
+  const absolutePosition = !absolute ? "both" : absolute;
+  
+  const toggleAttributes = (el: HTMLElement) => {
+    if (open) {
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("aria-hidden", "false");
+    } else {
+      el.setAttribute("tabindex", "-1");
+      el.setAttribute("aria-hidden", "true");
     }
-    if (menuRef.current) {
-      const menu = menuRef?.current as HTMLElement;
-      if (menu.classList.contains("open")) {
-        if (!forceClose) {
-          menu.classList.remove("open");
-          setTimeout(() => setOpen(false), 300);
-        }
-      } else {
-        menu.classList.add("open");
-      }
-    }
+    return el;
   };
 
   const handleMenuClick = () => {
@@ -80,23 +79,17 @@ const Dropdown = ({
     }
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     const toggleChildVisibility = (menu: HTMLElement) => {
       if (menu) {
         menu.querySelectorAll("li").forEach((el) => {
           const hasNested = el.children.length;
           if (hasNested) {
-            if (el.children[0].matches('button, a')) {
-              return (el.children[0] as HTMLElement)?.setAttribute(
-                "tabindex",
-                open ? "0" : "-1",
-              );
-            }             
+            if (el.children[0].matches("button, a")) {
+              toggleAttributes(el.children[0] as HTMLElement);
+            }
           } else {
-            return el.setAttribute(
-              "tabindex",
-              open ? "0" : "-1",
-            );
+            toggleAttributes(el);
           }
         });
       }
@@ -104,6 +97,39 @@ const Dropdown = ({
     if (menuRef.current) {
       toggleChildVisibility(menuRef.current);
     }
+
+    const closeOnOtherMenuOpen = (e: MouseEvent) => {
+      const isTrigger = (e.target as HTMLElement).classList.contains(
+        "dropdown-trigger",
+      );
+
+      if (isTrigger) {
+        const triggerID = (e.target as HTMLElement).getAttribute(
+          "data-button-id",
+        );
+
+        if (triggerID !== buttonId) {
+          return setOpen(false);
+        }
+      }
+    };
+
+    const closeOnEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", closeOnEsc);
+    if(!hasNested) {
+      window.addEventListener("click", closeOnOtherMenuOpen);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", closeOnEsc);
+      if(!hasNested) {
+        window.removeEventListener("click", closeOnOtherMenuOpen);
+      }
+    };
   }, [open]);
 
   return (
@@ -122,9 +148,8 @@ const Dropdown = ({
       <ul
         ref={menuRef}
         aria-atomic="true"
-        className={`dropdown-list ${open ? "open" : "closed"}`}
+        className={`dropdown-list ${open ? "open" : "closed"} ${absolutePosition}`}
         role="list"
-        onClick={toggleOpenClass}
       >
         {options && options.length > 0 && (
           <li
