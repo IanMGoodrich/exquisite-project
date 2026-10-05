@@ -31,7 +31,6 @@ export default async function PublicStoryPage({ params }: Props) {
       completedAt: true,
       completedRounds: true,
       nextContributorId: true,
-      acknowledged: true,
       isPublic: true,
     },
   });
