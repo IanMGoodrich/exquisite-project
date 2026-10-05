@@ -33,7 +33,6 @@ export async function GET(
             title: true,
             nextContributorId: true,
             id: true,
-            acknowledged: true,
             createdAt: true,
           },
         },

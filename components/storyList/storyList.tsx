@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
@@ -20,7 +19,6 @@ type StoryData = {
   promptImageUrl: string | null;
   promptText: string | null;
   sharePrompt: string | null;
-  acknowledged: boolean;
   isPublic: boolean;
 };
 
@@ -53,23 +51,7 @@ const StoryList: React.FC<StoryListProps> = ({
     refetchInterval: variant === "in-progress" ? 60_000 : 60_000,
     refetchIntervalInBackground: false,
   });
-  const router = useRouter();
   const dropdownAbsolutePosition = !absolute ? 'both' : absolute;
-  const handleClick = async (storyId: string) => {
-  const response = await fetch(`/api/${userID}/stories/${storyId}/update`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-  });
-
-  if (!response.ok) {
-    throw new Error("Could not acknowledge story");
-  }
-
-  if(variant === 'public') {    
-    return router.push(`/${userID}/stories/${storyId}/public`);
-  }
-  return router.push(`/${userID}/stories/${storyId}`);
-};
 
   const storiesListTemplate = () => {
     if (!stories || !Array.isArray(stories)) return null;
@@ -93,9 +75,9 @@ const StoryList: React.FC<StoryListProps> = ({
         <li key={story.id}>
           <Button
             as="link"
-            el="button"
-            className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""} ${!story.acknowledged ? "story-unchecked" : ""}`}
-            onClick={() => handleClick(story.id)}
+            el="link"
+            className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""}`}
+            href={`${userID}/stories/${story.id}`}
           >
             {story.title}
           </Button>

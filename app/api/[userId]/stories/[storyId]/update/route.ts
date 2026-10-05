@@ -130,30 +130,3 @@ export async function POST(
     );
   }
 }
-
-// Update acknowledged status
-export async function PATCH(
-  _request: NextRequest,
-  context: { params: Promise<{ userId: string; storyId: string }> }
-) {
-  const { userId, storyId } = await context.params;
-
-  if (!userId || !storyId) {
-    return NextResponse.json({ error: "Missing ids" }, { status: 400 });
-  }
-
-  try {
-    const story = await prisma.story.update({
-      where: { id: storyId },
-      data: { acknowledged: true },
-    });
-
-    return NextResponse.json({ story }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: "Failed to acknowledge story" },
-      { status: 500 }
-    );
-  }
-}
