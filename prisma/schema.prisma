@@ -34,7 +34,6 @@ model Story {
   promptImageUrl    String?
   promptText        String?
   sharePrompt       String?
-  acknowledged      Boolean   @default(false)
   isPublic          Boolean   @default(false)
 }
 
