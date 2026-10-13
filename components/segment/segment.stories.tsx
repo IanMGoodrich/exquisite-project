@@ -44,6 +44,7 @@ export const Expandable: Story = {
       userName: "John Doe",
       id: "John Doe",
       email: "",
+      emailReminders: true,
     },
     isExpandable: true,
     currentUserLikes: false,
@@ -73,6 +74,7 @@ export const NotExpandable: Story = {
       userName: "John Doe",
       id: "John Doe",
       email: "",
+      emailReminders: true
     },
     isExpandable: false,
     currentUserLikes: false,
