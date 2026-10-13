@@ -111,6 +111,8 @@ export async function POST(
             completedRounds: storyIsCompleted ? rounds : updatedRoundsData,
             completed: storyIsCompleted,
             completedAt: storyIsCompleted ? new Date() : null,
+            turnStartedAt: new Date(),
+            remindersSent: 0,
           },
         });
       }
