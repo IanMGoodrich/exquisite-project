@@ -36,6 +36,7 @@ export async function getAuthenticatedUser(
       image: true,
       profileColumnOne: true,
       profileColumnTwo: true,
+      emailReminders: true,
       stories: {
         select: {
           id: true,

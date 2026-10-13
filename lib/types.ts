@@ -38,6 +38,7 @@ export type UserType = {
   createdAt?: Date;
   updatedAt?: Date;
   loggedOn?: boolean;
+  emailReminders: boolean;
   stories?: string[];
   authoredSegments?: string[];
   likedSegments?: string[];

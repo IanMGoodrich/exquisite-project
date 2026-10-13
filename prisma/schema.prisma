@@ -35,6 +35,10 @@ model Story {
   promptText        String?
   sharePrompt       String?
   isPublic          Boolean   @default(false)
+  turnStartedAt     DateTime  @default(now())
+  remindersSent     Int       @default(0)
+
+  @@index([completed, turnStartedAt])
 }
 
 model Segment {
@@ -69,29 +73,29 @@ model SegmentLike {
 }
 
 model User {
-  id               String        @id @default(uuid())
+  id               String          @id @default(uuid())
   name             String
   nameFirst        String?
   nameLast         String?
-  email            String        @unique
+  email            String          @unique
   phone            String?
   profileColumnOne String?
   profileColumnTwo String?
-  authoredSegments Segment[]     @relation("SegmentAuthor")
-  likedSegments    SegmentLike[] @relation("SegmentLikes")
-  stories          Story[]       @relation("StoryContributors")
-  createdStories   Story[]       @relation("StoryCreator")
-  loggedOn         Boolean       @default(false)
-  emailVerified    Boolean       @default(false)
+  authoredSegments Segment[]       @relation("SegmentAuthor")
+  likedSegments    SegmentLike[]   @relation("SegmentLikes")
+  stories          Story[]         @relation("StoryContributors")
+  createdStories   Story[]         @relation("StoryCreator")
+  loggedOn         Boolean         @default(false)
+  emailVerified    Boolean         @default(false)
   image            String?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @default(now()) @updatedAt
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @default(now()) @updatedAt
   sessions         Session[]
   accounts         Account[]
-
-  userName       String
-  sentMessages   Message[]       @relation("MessageSender")
-  messageThreads MessageThread[] @relation("ThreadParticipants")
+  emailReminders   Boolean         @default(true)
+  userName         String
+  sentMessages     Message[]       @relation("MessageSender")
+  messageThreads   MessageThread[] @relation("ThreadParticipants")
 
   @@unique([userName])
   @@map("user")

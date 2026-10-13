@@ -20,6 +20,8 @@
   z-index: 1;
   row-gap: 0.5rem;
   padding: 0.25rem;
+  width: 100%;
+  min-width: fit-content;
   &.open {
     transform: scaleY(1);
   }

@@ -84,6 +84,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
   const [firstName, setFirstName] = useState(props.user?.nameFirst ?? "");
   const [lastName, setLastName] = useState(props.user?.nameLast ?? "");
   const [phoneNumber, setPhoneNumber] = useState(props.user?.phone ?? "");
+  const [emailReminders, setEmailReminders] = useState(props.user?.emailReminders);
   const [profileColumnOne, setProfileColumnOne] = useState(props.user?.profileColumnOne ?? "");
   const [profileColumnTwo, setProfileColumnTwo] = useState(props.user?.profileColumnTwo ?? "");
   const [image, setImage] = useState(props.user?.image ?? "");
@@ -134,6 +135,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
             lastName,
             phoneNumber,
             image,
+            emailReminders,
             profileColumnOne: DOMPurify.sanitize(profileColumnOne),
             profileColumnTwo: DOMPurify.sanitize(profileColumnTwo),
           }),
@@ -244,6 +246,13 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
         placeholder="If you wish to receive SMS notifications"
+      />
+      <Input
+        type="checkbox"
+        id="emailReminder"
+        label="Receive story waiting email notifications (optional)"
+        checked={emailReminders}
+        onChange={(e) => setEmailReminders(e.target.checked)}
       />
 
       <DragAndDrop
