@@ -17,6 +17,7 @@
 - **Functional MVP gameplay experience**
 - **Likes and player message system**
 - **Email notification of new story**
+- **Email notification of story waiting on player for 1/3/8 days.**
 
 ## TODO:
  - ~~**Fine tune existing architecture**~~
@@ -26,7 +27,7 @@
    - ~~**Incorporate messaging system**~~
    - ~~**New story email**~~
    - ~~**Implement new story and your turn styles**~~
- - **Implement new message styles**
+ - ~~**Implement new message styles**~~
  - **Refinement of UI/UX**
  - **Implement optional text notifications**
  - **Implement user search**
@@ -36,6 +37,5 @@
  - ~~**Update Stories to allow for public/private viewing**~~
  - **Revamp theme colors to address accessibility/contrast issues**
  - ~~**Update Story page to allow creator to rename stories after completion**~~
-
-
+ - **Add ability to remove self/player from stories**
 
