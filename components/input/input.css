@@ -32,4 +32,30 @@
       font-size: var(--fs-body);
     }
   }
+
+  input[type="checkbox"] {
+    display: grid;
+    appearance: none;
+    margin: 0;
+    color: currentColor;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--link-primary);
+    background-color: var(--background);
+    transform: translateY(-0.075em);
+    place-content: center;
+
+    &::before {
+      content: "";
+      width: 1.5rem;
+      height: 1.5rem;
+      transition: transform 0.12s ease-in-out;
+      transform: scale(0);
+      background: var(--link-primary);
+    }
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
 }
