@@ -29,8 +29,6 @@ const Segment: FC<SegmentProps> = ({
 
   useEffect(() => {
     const likesOnLoad = () => (content.likedBy ? content.likedBy.length : 0);
-    setLikesCount(likesOnLoad);
-    setUserLikes(currentUserLikes);
     const fetchCurrentUser = async () => {
       try {
         const response = await fetch(`/api/${currentUserId}`,{
@@ -38,10 +36,13 @@ const Segment: FC<SegmentProps> = ({
           headers: { "Content-Type": "application/json" },
         });
         const userData = await response.json();
-        
+        if (response.ok) {
+          setLikesCount(likesOnLoad);
+          setUserLikes(currentUserLikes);
+        }
         setCurrentUser(userData);
       } catch (error) {
-        console.error("Failed to fetch current user");
+        console.error(`Failed to fetch current user: ${error}`);
       }
     };
     
@@ -78,9 +79,17 @@ const Segment: FC<SegmentProps> = ({
         <span className="segment--content-main">{content.content}</span>
         {isExpandable && expanded && (
           <div className="segment--content-expanded">
+            {author && author.userName ? (
             <div className="segment--attribution">
               author -- <p className="author">{author.userName}</p>
             </div>
+            )
+            : (
+              <div className="segment--attribution">
+              author -- <p className="author">UNKNOWN</p>
+            </div>
+            )
+          }
             {content.promptText && (
               <div className="segment--prompt">
                   <strong>Prompt: </strong>
