@@ -21,7 +21,6 @@ export default function CreateStoryPage() {
 
   useEffect(() => {
     if (!searchTerm) {
-      setResults([]);
       return;
     }
     const controller = new AbortController();
