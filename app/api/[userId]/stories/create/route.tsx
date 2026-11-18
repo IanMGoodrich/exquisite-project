@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getUser } from "@/lib/utilities";
-import {sendNewStoryNotification} from '../../../../../lib/utilities';
+import {sendNewStoryNotification} from '../../../../../lib/resend-utilities';
 // CREATE NEW STORY
 export async function POST(
   request: NextRequest,
@@ -51,7 +51,9 @@ export async function POST(
         contributors: {
           connect: uniqueIds.map((id) => ({ id })),
         },
+        contributorOrder: uniqueIds,
         nextContributorId: currentUserId,
+        maxTurns: rounds * uniqueIds.length,
       },
       include: {
         contributors: {
