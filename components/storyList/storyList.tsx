@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
+import RemoveUserButton from "../removeUserButton/removeUserButton";
 import { PositionAbsoluteOptions } from "../dropdown/dropdown";
 type StoryListVariant = "completed" | "in-progress" | "public";
 
@@ -16,10 +17,12 @@ type StoryData = {
   nextContributorId: string;
   rounds: number;
   completedRounds: number;
+  contributorOrder: string[] | null;
   promptImageUrl: string | null;
   promptText: string | null;
   sharePrompt: string | null;
   isPublic: boolean;
+  maxTurns: number;
 };
 
 type StoryListProps = {
@@ -51,38 +54,68 @@ const StoryList: React.FC<StoryListProps> = ({
     refetchInterval: variant === "in-progress" ? 60_000 : 60_000,
     refetchIntervalInBackground: false,
   });
-  const dropdownAbsolutePosition = !absolute ? 'both' : absolute;
+  const dropdownAbsolutePosition = !absolute ? "both" : absolute;
 
   const storiesListTemplate = () => {
     if (!stories || !Array.isArray(stories)) return null;
 
     const selectedStories = (): Array<StoryData> => {
-      if(variant === 'public') {
-        return stories.filter((story: StoryData) => story.isPublic && story.completed)
+      if (variant === "in-progress") {
+        return stories
+          .filter((story: StoryData) => !story.completed)
+          .sort(
+            (a: StoryData, b: StoryData) =>
+              Date.parse(b.createdAt as unknown as string) -
+              Date.parse(a.createdAt as unknown as string),
+          );
       }
-      if (variant === 'in-progress') {
-        return stories.filter((story: StoryData) => !story.completed)
+      if (variant === "public") {
+        return stories
+          .filter((story: StoryData) => story.isPublic && story.completed)
+          .sort(
+            (a: StoryData, b: StoryData) =>
+              Date.parse(b.completedAt as unknown as string) -
+              Date.parse(a.completedAt as unknown as string),
+          );
       }
-      if (variant === 'completed') {
-        return stories.filter((story: StoryData) => story.completed)
+      if (variant === "completed") {
+        return stories
+          .filter((story: StoryData) => story.completed)
+          .sort(
+            (a: StoryData, b: StoryData) =>
+              Date.parse(b.completedAt as unknown as string) -
+              Date.parse(a.completedAt as unknown as string),
+          );
       }
-      return []
-    }
+      return [];
+    };
 
     return selectedStories()
-      .sort((a:StoryData, b:StoryData) => Date.parse(b.createdAt as unknown as string) - Date.parse(a.createdAt as unknown as string ))
-      .map((story: StoryData) => (
-        <li key={story.id}>
-          <Button
-            as="link"
-            el="link"
-            className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""}`}
-            href={`${userID}/stories/${story.id}`}
-          >
-            {story.title}
-          </Button>
-        </li>
-      ));
+      .map(
+        (story: StoryData) =>
+          (variant !== "in-progress" ||
+            (variant === "in-progress" &&
+              story.contributorOrder &&
+              story.contributorOrder.includes(userID))) && (
+            <li key={story.id}>
+              <Button
+                as="link"
+                el="link"
+                className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""}`}
+                href={`${userID}/stories/${story.id}`}
+              >
+                {story.title}
+              </Button>
+              <RemoveUserButton
+                variant={variant === "completed" ? "remove" : "leave"}
+                listVariant={variant}
+                storyId={story.id}
+                userId={userID}
+                userToRemoveId={userID}
+              />
+            </li>
+          ),
+      );
   };
 
   return (

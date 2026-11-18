@@ -1,0 +1,88 @@
+.remove-user-button {
+  position: relative;
+  .remove-user-button--wrapper {
+    display: none;
+    cursor: none;
+    pointer-events: none;
+    transform: scale(0);
+    transition-property: opacity, display;
+    transition-behavior: allow-discrete;
+    transition-duration: 1.5s;
+    position: absolute;
+    &.active {
+      display: grid;
+      cursor: pointer;
+      pointer-events: all;
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+      @starting-style {
+        opacity: 0;
+      }
+    }
+    &.main {
+      display: flex;
+      column-gap: 2rem;
+    }
+  }
+  .remove-user-button--remove-dialogue[open] {
+    background-color: var(--background);
+    position: fixed;
+    display: flex;
+    z-index: 4;
+    color: var(--text-body-primary);
+    position: fixed;
+    inset: 25%;
+    width: 50%;
+    margin: auto;
+  }
+  .remove-user-button--toggle-open {
+    display: flex;
+    width: 45px;
+    --svg-height: 42px;
+  }
+
+  .top-rail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: auto;
+    }
+  }
+  button.remove-user-button--toggle-modal-open {
+    position: absolute;
+    right: 1rem;
+    --svg-height: 24px;
+  }
+
+  .remove-user-button--remove {
+    width: 100%;
+  }
+  .remove-user-button--remove-dialogue-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    p {
+      margin-top: 0px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    button.remove-user-button--toggle-modal-open {
+      --svg-height: 24px;
+      width: 32px;
+      padding: 2px;
+      display: flex;
+      right: 1rem;
+      position: absolute;
+    }
+    .remove-user-button--remove-dialogue[open] {
+      inset: 0;
+      height: fit-content;
+      width: fit-content;
+      margin: 0;
+    }
+  }
+}

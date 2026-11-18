@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { resend, YOUR_TURN_EMAIL, NEW_STORY_EMAIL } from "./resend";
 export const getUser = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -17,6 +16,35 @@ export const getUser = async (userId: string) => {
   return user;
 };
 
+export const generateContributorsOrder = async (storyId: string) => {
+  const contributorsData = await getStoryInfoWithContributors(storyId);
+  if (!contributorsData) {
+    throw new Error(`Story ${storyId} not found`);
+  }
+  const newlyGeneratedContributorsOrder = contributorsData.contributors.map(
+    (contrib) => contrib.id,
+  );
+  await prisma.story.update({
+    where: {
+      id: storyId,
+    },
+    data: {
+      contributorOrder: newlyGeneratedContributorsOrder,
+    },
+  });
+  return newlyGeneratedContributorsOrder;
+};
+
+// return the index position of user in story contributors list.
+// requires target userID and either a story ID, or an array of contributor IDs.
+// TODO: UPDATE TO REMOVE contributorsList requirement after all old stories have been updated.
+export const getUserIndex = async (
+  userId: string,
+  contributorOrder: string[],
+) => {
+  return contributorOrder.indexOf(userId);
+};
+
 export const getNextContributor = (
   contributors: string[],
   currentUserId: string,
@@ -30,33 +58,42 @@ export const getNextContributor = (
   return contributors[nextIndex];
 };
 
-export const setRoundNumber = (
-  segmentCount: number,
-  contributors: string[],
-) => {
-  const contributorCount = contributors.length;
-
-  if (segmentCount < contributors.length) {
-    return 1;
-  }
-  if (segmentCount % contributorCount === 0) {
-    return segmentCount / contributorCount + 1;
-  }
-  return Math.ceil(segmentCount / contributorCount);
+export const isLastUserInRound = (userId: string, contributors: string[]) => {
+  return contributors.at(-1) === userId;
 };
 
-export const getStoryContributors = async (storyId: string) => {
+export const setRoundNumber = (
+  userId: string,
+  contributors: string[],
+  completedRounds: number,
+) => {
+  const isLastUserOfRound = isLastUserInRound(userId, contributors);
+  if (isLastUserOfRound) {
+    return completedRounds + 1;
+  }
+  return completedRounds;
+};
+
+export const updateContributors = (
+  userId: string,
+  contributors: { id: string }[],
+) => {
+  return new Set([...contributors, userId]);
+};
+
+export const getStoryInfoWithContributors = async (storyId: string) => {
   const storyData = await prisma.story.findUnique({
     where: { id: storyId },
     select: {
       title: true,
       createdById: true,
       contributors: true,
+      contributorOrder: true,
       nextContributorId: true,
     },
   });
   return storyData;
-}
+};
 
 export const getStoryPromptInfo = async (storyId: string) => {
   const storyPromptInfo = await prisma.story.findUnique({
@@ -86,67 +123,57 @@ export const getStorySegments = async (storyId: string) => {
   return segments;
 };
 
-export const checkForLastSegment = async (storyId: string) => {
+export const checkForLastSegmentOfRound = async (
+  storyId: string,
+  userID: string,
+) => {
   const story = await prisma.story.findUnique({
     where: { id: storyId },
     select: {
-      content: true,
+      content: {
+        orderBy: { createdAt: "asc" },
+        select: {
+          authorId: true,
+          createdAt: true,
+        },
+      },
       rounds: true,
       contributors: true,
+      contributorOrder: true,
+      completedRounds: true,
     },
   });
-  if (story) {
-    return (
-      story.content.length === story.contributors.length * story.rounds - 1
-    );
-  }
-};
+  const contribIds = story?.contributorOrder
+    ? story.contributorOrder
+    : [
+        ...new Set(
+          story?.content
+            .slice(0, story.contributors.length)
+            .map((segment) => segment.authorId),
+        ),
+      ];
 
-export const sendYourTurnNotification = async (userID: string) => {
-  const userEmail = await prisma.user.findUnique({
-    where: { id: userID },
+  const userIndexPos = await getUserIndex(userID, contribIds);
+
+  return userIndexPos === contribIds!.length - 1;
+};
+ 
+
+export const checkForLastSegment = async (  storyId: string) => {
+  const story = await prisma.story.findUnique({
+    where: { id: storyId },
     select: {
-      email: true,
+      content: {
+        select: {
+          id: true,
+        },
+      },
+      rounds: true,
+      maxTurns:true, 
+      completedRounds: true,
     },
   });
-  if (userEmail && userEmail.email !== undefined) {
-    const { data, error } = await resend.emails.send({
-      from: YOUR_TURN_EMAIL!,
-      to: [userEmail.email],
-      subject: "It's your turn",
-      html: "<p>it works!</p>",
-    });
-    if (error) {
-      console.error("Error sending turn notification email:", error);
-      throw new Error("Failed to send turn notification email");
-    }
+  if (story) {    
+    return (story.rounds === story.completedRounds + 1) && (story.content.length === story.maxTurns - 1);
   }
-};
-
-export const sendNewStoryNotification = async (
-  userID: string,
-  createdByUserName: string,
-  storyTitle: string,
-) => {
-  const userEmail = await prisma.user.findUnique({
-    where: { id: userID },
-    select: {
-      email: true,
-    },
-  });
-
-  if (userEmail && userEmail.email !== undefined) {
-    const { data, error } = await resend.emails.send({
-      from: NEW_STORY_EMAIL!,
-      to: userEmail.email,
-      subject: "A new story needs you.",
-      html: `<div>
-                <p>Good news! ${createdByUserName} wants you to join <a href='https://exquisite-corpse.art/${userID}'>${storyTitle}</a></p>
-              </div>`,
-    });
-    if (error) {
-      console.error("Error sending turn notification email:", error);
-      throw new Error("Failed to send turn notification email");
-    }
-  }
-};
+}

@@ -5,7 +5,8 @@ import {
   getStoryPromptInfo,
   getUser,
   getNextContributor,
-  getStoryContributors,
+  getStoryInfoWithContributors,
+  generateContributorsOrder,
 } from "@/lib/utilities";
 import SegmentForm from "@/components/segmentForm/segmentForm";
 import Image from "@/components/image/image";
@@ -15,7 +16,6 @@ type Props = {
 
 export default async function UpdateStoryPage({ params }: Props) {
   const { userId, storyId } = await params;
-
   const user = await getAuthenticatedUser(userId);
   const segments = await getStorySegments(storyId);
   const promptInfo = await getStoryPromptInfo(storyId);
@@ -29,15 +29,21 @@ export default async function UpdateStoryPage({ params }: Props) {
     promptInfo.sharePrompt !== "FALSE" &&
     promptInfo.sharePrompt !== "AT_COMPLETION";
 
-  const { title, createdById, contributors } =
-    (await getStoryContributors(storyId)) ?? {
+  const { title, createdById, contributorOrder } =
+    (await getStoryInfoWithContributors(storyId)) ?? {
       title: "",
       createdById: "",
-      contributors: [],
+      contributorOrder: [],
     };
 
+  // handle empty contribOrder Until DB updated
+
+  const contribOrder = contributorOrder.length > 0
+    ? contributorOrder
+    : await generateContributorsOrder(storyId);
+
   const author = await getUser(createdById);
-  const nextUserId = await getNextContributor(contributors.map(contrib => contrib.id), userId);
+  const nextUserId = await getNextContributor(contribOrder, userId);
   const nextUser = await getUser(nextUserId);  
   const nextUserInfo = () => {
     if (nextUser) {

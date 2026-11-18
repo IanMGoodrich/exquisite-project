@@ -40,6 +40,15 @@
     }
   }
 
+  .segment--error {
+    font-size: var(--fs-heading-5);
+  }
+
+  .segment--message {
+    font-size: var(--fs-heading-3);
+    font-weight: 700;
+  }
+
   @media (max-width: 639px) {
     .segment-form--label{
       flex-direction: column;

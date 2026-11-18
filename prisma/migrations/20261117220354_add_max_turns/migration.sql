@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Story" ADD COLUMN     "maxTurns" INTEGER NOT NULL DEFAULT 1;

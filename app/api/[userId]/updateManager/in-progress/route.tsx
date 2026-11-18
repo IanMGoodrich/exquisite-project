@@ -34,6 +34,7 @@ export async function GET(
             nextContributorId: true,
             id: true,
             createdAt: true,
+            contributorOrder: true,
           },
         },
       },

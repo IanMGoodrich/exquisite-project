@@ -28,6 +28,7 @@ model Story {
   completedAt       DateTime?
   contributors      User[]    @relation("StoryContributors")
   content           Segment[]
+  contributorOrder  String[]  @default([])
   nextContributorId String
   rounds            Int       @default(3)
   completedRounds   Int       @default(0)
@@ -37,7 +38,7 @@ model Story {
   isPublic          Boolean   @default(false)
   turnStartedAt     DateTime  @default(now())
   remindersSent     Int       @default(0)
-
+  maxTurns          Int       @default(1)
   @@index([completed, turnStartedAt])
 }
 

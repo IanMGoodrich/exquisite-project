@@ -7,7 +7,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ userId: string }> },
 ) {
-  try {
+  try {    
     const session = await auth.api.getSession({ headers: await headers() });
     const sessionId = session?.user.id;
     const { userId } = await params;
@@ -28,7 +28,9 @@ export async function GET(
             completed: true,
             title: true,
             nextContributorId: true,
+            completedAt: true,
             id: true,
+            contributorOrder: true,
           },
         },
       },
