@@ -6,12 +6,14 @@ export type StoryType = {
   updatedAt?: Date | undefined;
   completed?: boolean;
   contributors: UserType[];
+  contributorOrder?: string[];
   content: SegmentType[];
   rounds?: number;
   completedRounds?: number;
   completedAt?: Date | null;
   nextContributorId?: string;
   isPublic: boolean;
+  maxTurns: number;
 }
 
 export type SegmentType = {
