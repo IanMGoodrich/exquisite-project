@@ -17,7 +17,6 @@ const MessageForm: FC<MessageFormProps> = ({ userId }) => {
   const [results, setResults] = useState<UserType[]>([]);
   const [selected, setSelected] = useState<UserType[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [formIsOpen, setFormIsOpen] = useState(false);
   const detailRef = useRef(null);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +43,6 @@ const MessageForm: FC<MessageFormProps> = ({ userId }) => {
 
   useEffect(() => {
     if (!searchTerm) {
-      setResults([]);
       return;
     }
     const controller = new AbortController();
