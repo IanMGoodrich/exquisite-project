@@ -122,6 +122,7 @@ export default async function StoryPage({ params }: Props) {
             userId={userId}
             storyData={story}
             isCreator={isCreator}
+            publicDisplay={false}
           />
         ) : (
           inProgressTemplate()

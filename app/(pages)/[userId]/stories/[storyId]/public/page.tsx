@@ -40,7 +40,7 @@ export default async function PublicStoryPage({ params }: Props) {
   return (
     <main className="story-main-page page main story">
       {story && story?.completed && (
-        <StoryDisplay userId={userId} storyData={story} isCreator={false} />
+        <StoryDisplay userId={userId} storyData={story} isCreator={false} publicDisplay/>
       )}
     </main>
   );
