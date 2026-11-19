@@ -76,7 +76,7 @@ const Segment: FC<SegmentProps> = ({
   return (
     <section className="segment">
       <div className="segment--content">
-        <span className="segment--content-main">{content.content}</span>
+        <p className="segment--content-main">{content.content}</p>
         {isExpandable && expanded && (
           <div className="segment--content-expanded">
             {author && author.userName ? (
