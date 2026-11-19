@@ -21,7 +21,7 @@ type StoryData = {
   promptImageUrl: string | null;
   promptText: string | null;
   sharePrompt: string | null;
-  isPublic: boolean;
+  isPublic: string[];
   maxTurns: number;
 };
 
@@ -71,7 +71,10 @@ const StoryList: React.FC<StoryListProps> = ({
       }
       if (variant === "public") {
         return stories
-          .filter((story: StoryData) => story.isPublic && story.completed)
+          .filter(
+            (story: StoryData) =>
+              story.isPublic.includes(userID) && story.completed,
+          )
           .sort(
             (a: StoryData, b: StoryData) =>
               Date.parse(b.completedAt as unknown as string) -
@@ -90,22 +93,22 @@ const StoryList: React.FC<StoryListProps> = ({
       return [];
     };
 
-    return selectedStories()
-      .map(
-        (story: StoryData) =>
-          (variant !== "in-progress" ||
-            (variant === "in-progress" &&
-              story.contributorOrder &&
-              story.contributorOrder.includes(userID))) && (
-            <li key={story.id}>
-              <Button
-                as="link"
-                el="link"
-                className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""}`}
-                href={`${userID}/stories/${story.id}`}
-              >
-                {story.title}
-              </Button>
+    return selectedStories().map(
+      (story: StoryData) =>
+        (variant !== "in-progress" ||
+          (variant === "in-progress" &&
+            story.contributorOrder &&
+            story.contributorOrder.includes(userID))) && (
+          <li key={story.id}>
+            <Button
+              as="link"
+              el="link"
+              className={`button as-link ${story.nextContributorId === userID ? "story-ready" : ""}`}
+              href={variant === 'public' ? `/${userID}/stories/${story.id}/public` : `/${userID}/stories/${story.id}`}
+            >
+              {story.title}
+            </Button>
+            {variant !== "public" && (
               <RemoveUserButton
                 variant={variant === "completed" ? "remove" : "leave"}
                 listVariant={variant}
@@ -113,9 +116,10 @@ const StoryList: React.FC<StoryListProps> = ({
                 userId={userID}
                 userToRemoveId={userID}
               />
-            </li>
-          ),
-      );
+            )}
+          </li>
+        ),
+    );
   };
 
   return (

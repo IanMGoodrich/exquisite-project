@@ -19,7 +19,7 @@ export async function POST(
   }
   let body: {
     title: string;
-    isPublic: boolean;
+    isPublic: string[];
   };
 
   try {

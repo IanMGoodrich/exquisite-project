@@ -12,7 +12,7 @@ export type StoryType = {
   completedRounds?: number;
   completedAt?: Date | null;
   nextContributorId?: string;
-  isPublic: boolean;
+  isPublic: string[];
   maxTurns: number;
 }
 

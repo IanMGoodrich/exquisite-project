@@ -35,7 +35,7 @@ model Story {
   promptImageUrl    String?
   promptText        String?
   sharePrompt       String?
-  isPublic          Boolean   @default(false)
+  isPublic          String[]   @default([])
   turnStartedAt     DateTime  @default(now())
   remindersSent     Int       @default(0)
   maxTurns          Int       @default(1)

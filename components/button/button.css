@@ -79,5 +79,12 @@ a:not(:disabled) {
     & svg {
       --svg-fill: var(--button-color-primary);
     }
+    
+    &:hover,
+    &:focus {
+      & svg {
+        --svg-fill: var(--button-color-primary-hover);
+      }
+    }
   } 
 }

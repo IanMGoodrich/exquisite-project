@@ -196,7 +196,7 @@ export async function getUserPublicInfo(
       stories: {
         where: {
           completed: true, 
-          isPublic: true,
+          isPublic: { has: requestedUserId },
         }
       },
       profileColumnOne: true,
