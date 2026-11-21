@@ -1,6 +1,5 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { username } from "better-auth/plugins";
 import prisma from "./prisma";
 import { getResetPasswordEmailHtml } from "./email-template";
 import { resend, FROM_EMAIL } from "./resend";
@@ -33,6 +32,13 @@ export const auth = betterAuth({
       } 
     },
   },
-  plugins: [username()],
+  user: {
+    additionalFields: {
+      userName: {
+        type: "string",
+        required: true,
+      },
+    },
+  },
   secret: process.env.BETTER_AUTH_SECRET,
 });
