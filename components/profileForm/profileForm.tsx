@@ -159,6 +159,7 @@ const ProfileForm: FC<UserProfileProps | UserSignUpProps> = (props) => {
           email,
           password,
           name: `${firstName} ${lastName}`,
+          userName,
         });
 
         if (result.error) {
