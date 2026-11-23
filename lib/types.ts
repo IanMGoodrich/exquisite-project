@@ -25,6 +25,7 @@ export type SegmentType = {
   promptText?: string | null;
   likedBy?: {userId: string, userName: string, email: string}[];
   reveal?: string | null;
+  peeked: boolean;
 }
 
 export type UserType = {
