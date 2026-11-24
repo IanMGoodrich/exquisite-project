@@ -1,8 +1,9 @@
 "use client";
-import { useState, useRef, type FC } from "react";
+import { useState, useRef, type FC, type MouseEventHandler } from "react";
 import { useRouter } from "next/navigation";
 import Input from "../input/input";
 import Button from "../button/button";
+import CheatPanel from "../cheatPanel/cheatPanel";
 import "./segmentForm.css";
 
 type NextUserData = {
@@ -35,6 +36,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
   const detailRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [firstPass, setFirstPass] = useState(true);
+  const [peeked, setPeeked] = useState(false);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -48,6 +50,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
           storyId,
           reveal,
           promptText,
+          peeked,
         }),
       });
 
@@ -96,6 +99,10 @@ const SegmentForm: FC<SegmentFormProps> = ({
     }
   };
 
+  const handlePeek: MouseEventHandler<HTMLElement> = () => {
+    setPeeked(true);
+  };
+
   const createNewSegmentTemplate = () => {
     return (
       <section className="segment segment--create">
@@ -105,6 +112,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
             <p>{`"${reveal}..."`}</p>
           </div>
         )}
+        <CheatPanel userId={userId} storyId={storyId} onClick={handlePeek} />
         {message !== "" && (
           <div className="reveal-wrapper">
             <p className="segment--error">{error}</p>
@@ -153,6 +161,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
                   )}
                   {reveal.length === 0 && !isLast && (
                     <Button
+                    classes="create-reveal-button"
                       onClick={handleCreateReveal}
                       el="button"
                       disabled={content.length === 0}
@@ -161,7 +170,7 @@ const SegmentForm: FC<SegmentFormProps> = ({
                     </Button>
                   )}
                   {reveal.length > 0 && !isLast && (
-                    <Button onClick={handleCreateReveal} el="button">
+                    <Button classes="create-reveal-button" onClick={handleCreateReveal} el="button">
                       Correct Reveal
                     </Button>
                   )}

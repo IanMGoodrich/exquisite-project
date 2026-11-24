@@ -35,10 +35,11 @@ model Story {
   promptImageUrl    String?
   promptText        String?
   sharePrompt       String?
-  isPublic          String[]   @default([])
+  isPublic          String[]  @default([])
   turnStartedAt     DateTime  @default(now())
   remindersSent     Int       @default(0)
   maxTurns          Int       @default(1)
+
   @@index([completed, turnStartedAt])
 }
 
@@ -54,6 +55,7 @@ model Segment {
   promptText String?
   likedBy    SegmentLike[]
   reveal     String?
+  peeked     Boolean       @default(false)
 
   @@index([authorId])
   @@index([storyId])

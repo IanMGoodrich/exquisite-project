@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, type FC } from "react";
 import { type UserType, type SegmentType } from "@/lib/types";
 import "./segment.css";
 import Button from "../button/button";
+import Icon from "../icon/icon";
 
 interface SegmentProps {
   content: SegmentType;
@@ -10,6 +11,7 @@ interface SegmentProps {
   isExpandable?: boolean;
   currentUserId: string;
   currentUserLikes: boolean;
+  peeked: boolean;
 }
 
 /** Segment component */
@@ -19,6 +21,7 @@ const Segment: FC<SegmentProps> = ({
   isExpandable,
   currentUserId,
   currentUserLikes,
+  peeked,
 }) => {
   const [expanded, setExpanded] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
@@ -81,12 +84,14 @@ const Segment: FC<SegmentProps> = ({
           <div className="segment--content-expanded">
             {author && author.userName ? (
             <div className="segment--attribution">
-              author -- <p className="author">{author.userName}</p>
+              author -- <p className="author">{author.userName}{peeked && (<Icon name="eye"></Icon>)}</p>
+              
             </div>
             )
             : (
               <div className="segment--attribution">
-              author -- <p className="author">UNKNOWN</p>
+              author -- <p className="author">UNKNOWN{peeked && (<Icon name="eye"></Icon>)}</p>
+                
             </div>
             )
           }

@@ -39,6 +39,7 @@ export const Expandable: Story = {
       storyId: "story1",
       id: "segment1",
       promptText: "It provides insights and additional information when expanded.",
+      peeked: true,
     },
     author: {
       userName: "John Doe",
@@ -69,6 +70,7 @@ export const NotExpandable: Story = {
       storyId: "story1",
       id: "segment1",
       promptText: "It provides insights and additional information when expanded.",
+      peeked: false,
     },
     author: {
       userName: "John Doe",

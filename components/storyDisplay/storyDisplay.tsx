@@ -6,8 +6,8 @@ import Segment from "../segment/segment";
 import { type StoryType, type SegmentType, type UserType } from "@/lib/types";
 import Button from "../button/button";
 import Input from "../input/input";
-import Icon from "../icon/icon";
 import "./storyDisplay.css";
+
 interface StoryDisplayProps {
   storyData: StoryType;
   isCreator: boolean;
@@ -169,6 +169,7 @@ const StoryDisplay: FC<StoryDisplayProps> = ({
                 author={getContributor(segment.authorId)}
                 content={segment}
                 isExpandable={isExpanded}
+                peeked={segment.peeked}
               />
             ))}
         <Button
