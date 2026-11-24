@@ -1,0 +1,34 @@
+.cheat-panel {
+  .cheat-panel--detail {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+  .cheat-panel--summary {
+    list-style: none;
+    margin: 1rem 0 auto 0;
+    display: flex;
+    width: 100%
+  }
+
+  span.cheat-panel--button {
+    width: 100%;
+  }
+  
+  .cheat-panel--content-wrapper {
+    border: var(--button-border-primary) solid 2px;
+    border-radius: 5px;
+    padding: 0 1rem;
+  }
+
+  .cheat-panel--content {
+    font-size: var(--fs-body);
+  }
+  
+  @media(max-width: 639px) {
+    .cheat-panel--content-wrapper{
+      max-height: 200px;
+      overflow: auto;
+    }
+  }
+}
