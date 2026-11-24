@@ -51,6 +51,7 @@ export async function POST(
     authorId?: string;
     reveal?: string;
     promptText?: string;
+    peeked?: boolean;
   };
   
   try {
@@ -69,7 +70,8 @@ export async function POST(
     typeof body.reveal === "string" ? body.reveal.trim() : "";
   const promptText =
     typeof body.promptText === "string" ? body.promptText.trim() : "";
-
+  const peeked = body.peeked;
+  
   if (!content) {
     return NextResponse.json(
       { error: "Content is required" },
@@ -109,6 +111,7 @@ export async function POST(
           storyId,
           reveal,
           promptText,
+          peeked,
         },
       });
 

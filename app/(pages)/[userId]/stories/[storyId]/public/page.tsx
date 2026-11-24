@@ -20,6 +20,7 @@ export default async function PublicStoryPage({ params }: Props) {
           createdAt: true,
           reveal: true,
           promptText: true,
+          peeked: true,
           likedBy: { select: { userId: true, userName: true, email: true } },
         },
       },
